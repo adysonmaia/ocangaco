@@ -7,7 +7,7 @@ import br.ufc.model.Player;
 /**
  * @author André Fonteles, Rafael de Lima e Benedito Neto
  *
- * utility class to parse entities in a well formatted string and strings to entities.
+ * Utility class to parse entities in a well formatted string and strings to entities.
  * 
  */
 public class EntityParser {
