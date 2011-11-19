@@ -65,7 +65,7 @@ public class DB {
             conn.setAutoCommit(false);
     	
             PreparedStatement prep = conn.prepareStatement("INSERT INTO player (playerName) values('?')");
-            prep.setString(1, player.getUserName());
+            prep.setString(1, player.getNome());
             ResultSet rs = prep.executeQuery();
             
             if(rs.rowInserted()){

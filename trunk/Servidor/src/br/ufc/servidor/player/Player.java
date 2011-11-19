@@ -1,36 +1,72 @@
 package br.ufc.servidor.player;
 
+/**
+ * @author André Fonteles, Rafael de Lima e Benedito Neto
+ *
+ * Class that defines a player
+ * 
+ */
 public class Player {
-	private int id;
-	private String userName;
 	
-	
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
+	private String nome;
+	private int tipo;
+	private double latitude;
+	private double longitude;
+
+	public Player(String nome, int tipo) {
+		super();
+		this.nome = nome;
+		this.tipo = tipo;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
+	public Player(String nome) {
+		super();
+		this.nome = nome;
 	}
 
-	/**
-	 * @return the userName
-	 */
-	public String getUserName() {
-		return userName;
+	public Player(String nome, int tipo, double latitude, double longitude) {
+		super();
+		this.nome = nome;
+		this.tipo = tipo;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 
-	/**
-	 * @param userName the userName to set
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public String getNome() {
+		return nome;
 	}
 
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public int getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [latitude=" + latitude + ", longitude=" + longitude
+				+ ", nome=" + nome + ", tipo=" + tipo + "]";
+	}
 }

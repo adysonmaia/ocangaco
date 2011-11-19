@@ -24,6 +24,14 @@ public class Player {
 		this.nome = nome;
 	}
 
+	public Player(String nome, int tipo, double latitude, double longitude) {
+		super();
+		this.nome = nome;
+		this.tipo = tipo;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+
 	public String getNome() {
 		return nome;
 	}
