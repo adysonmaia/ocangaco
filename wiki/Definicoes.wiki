@@ -25,3 +25,14 @@ Envia:
 
 Recebe:
   Não recebe nada, para evitar overhead.
+
+==Alteração de Posição de Jogador próximo==
+
+Estou olhando o lado do cliente, por isso só tem Recebe
+*Questões:* 
+  # De início, poderia ser uma mensagem para cada usuário que se mexer por perto, poderíamos ver a viabilidade de enviar mais de uma atualização em uma mesma mensagem - isso pode causar lag e acho que o tempo é muito curto para implementar isto.
+
+Recebe:
+  * String: nome do usuário
+  * int: time do usuário
+  * coordenadas: posição atual do usuário
