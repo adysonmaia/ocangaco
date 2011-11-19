@@ -1,0 +1,37 @@
+package br.ufc.net;
+
+import android.location.Location;
+import br.ufc.model.Player;
+
+/**
+ * @author Andre
+ * Interface de comunicação com o Servidor.
+ */
+public interface IServer {
+
+	/**
+	 * Método que um jogador utiliza para se connectar em um jogo.
+	 * @param player com as informações do novo jogador.
+	 */
+	public void connect(Player player);
+	
+	
+	/**
+	 * Método usado para desvincular um jogador de um jogo.
+	 * @param player
+	 */
+	public void closeConnection(Player player);
+	
+	/**
+	 * Método que atualiza a posição de um jogador já registrado no servidor.
+	 * @param nova localização do jogador
+	 */
+	public void updatePlayersLocation(Location location);
+	
+	
+	/**
+	 * Método utilizado para informar se o jogador já está connectado ao servidor
+	 * @return
+	 */
+	public boolean isConnected();
+}

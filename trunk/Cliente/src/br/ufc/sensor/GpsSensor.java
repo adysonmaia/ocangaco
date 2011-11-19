@@ -50,10 +50,14 @@ public class GpsSensor {
 	}
 
 	private LocationListener locationListener = new LocationListener() {
+		
+		@Override
+		public void onLocationChanged(Location location) {
+			// TODO : Atualizar localização para o responsável por enviar mudanças de estado do player ao servidor
+		}
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO : Atualizar localização para o responsável por enviar mudanças de estado do player ao servidor
 		}
 
 		@Override
@@ -62,10 +66,6 @@ public class GpsSensor {
 
 		@Override
 		public void onProviderDisabled(String provider) {
-		}
-
-		@Override
-		public void onLocationChanged(Location location) {
 		}
 	};
 
