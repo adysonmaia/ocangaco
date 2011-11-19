@@ -2,22 +2,7 @@ package br.ufc.servidor;
 
 import java.io.IOException;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
 import br.ufc.util.Conexao;
-
-import myserver.kernel.CmdSoma;
-import myserver.kernel.CommandExecute;
-import myserver.kernel.CommandParser;
-import myserver.kernel.ServerService;
-import myserver.kernel.Service;
 
 /*  Definição do comando:
 
