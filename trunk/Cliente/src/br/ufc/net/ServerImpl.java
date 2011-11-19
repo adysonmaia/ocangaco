@@ -1,6 +1,5 @@
 package br.ufc.net;
 
-import android.location.Location;
 import br.ufc.model.Player;
 
 public class ServerImpl implements IServer{
@@ -18,12 +17,13 @@ public class ServerImpl implements IServer{
 	}
 
 	@Override
-	public void updatePlayersLocation(Location location) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
 	public void closeConnection(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void updatePlayersLocation(Player player) {
 		// TODO Auto-generated method stub
 		
 	}

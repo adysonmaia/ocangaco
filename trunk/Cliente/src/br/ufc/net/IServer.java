@@ -1,6 +1,5 @@
 package br.ufc.net;
 
-import android.location.Location;
 import br.ufc.model.Player;
 
 /**
@@ -24,9 +23,9 @@ public interface IServer {
 	
 	/**
 	 * Método que atualiza a posição de um jogador já registrado no servidor.
-	 * @param nova localização do jogador
+	 * @param player contento a nova localização do jogador
 	 */
-	public void updatePlayersLocation(Location location);
+	public void updatePlayersLocation(Player player);
 	
 	
 	/**
