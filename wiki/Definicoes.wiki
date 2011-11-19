@@ -1,0 +1,13 @@
+#summary One-sentence summary of this page.
+
+= Mensagens =
+
+*Registar no servidor*
+Envia:
+* String: Nome do Usuário
+Recebe:
+* int: id do usuário
+* String: time do usuário // O servidor irá distribuir os pedidos de registro entre os times. Alguém discorda?
+* String: Estado do jogo // Para o primeiro sprint, podemos ignorar esta parte, o jogador já entra no mapa direto, só precisa saber o time
+** Aguardando outros jogadores
+** Aguardando partida encerrar
