@@ -10,6 +10,8 @@ public class Player {
 	
 	private String nome;
 	private int tipo;
+	private double latitude;
+	private double longitude;
 
 	public Player(String nome, int tipo) {
 		super();
@@ -36,6 +38,22 @@ public class Player {
 
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
 }
