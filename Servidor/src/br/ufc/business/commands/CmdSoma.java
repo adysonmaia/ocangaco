@@ -1,4 +1,6 @@
-package myserver.kernel;
+package br.ufc.business.commands;
+
+import myserver.kernel.CommandExecute;
 
 public class CmdSoma extends CommandExecute {
 

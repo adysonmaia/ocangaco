@@ -8,6 +8,9 @@ package myserver.kernel;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+
+import br.ufc.business.commands.CmdMovimentacao;
+import br.ufc.business.commands.CommandFactory;
 import myserver.ui.IconList;
 import myserver.ui.ListItem;
 
@@ -27,8 +30,7 @@ public class ServerService implements RegisterLogable {
 	/**
 	 *  
 	 */
-	static ServerService    instance;
-	static CommandExecute cmd;
+	static ServerService    instance;	
 	/**
 	 * 
 	 */
@@ -38,8 +40,7 @@ public class ServerService implements RegisterLogable {
 //	 final String led2 = "..\\util\\LED2ON.GIF";
      
      static {
-      	cmd = new CmdSoma();
-     	CommandParser.addCommand("<soma>",0,cmd);
+    	CommandFactory.Create();
      }
     /**
      * 
