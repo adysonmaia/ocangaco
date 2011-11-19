@@ -4,9 +4,10 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
+    <com.google.android.maps.MapView
+        android:id="@+id/mapa"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:layout_height="fill_parent"
+        android:apiKey="073Mbv_YQ_HqPMoerD7vc3Icu4FGhU6qxTvQX4A" />
 
 </LinearLayout>
