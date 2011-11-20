@@ -12,6 +12,8 @@ Seria bom também comentar aquele método toString(). Acho que vocês vão preci
   * double latitude;
   * double longitude;
 
+---- 
+
 = Mensagens =
 
 ==Registar no servidor==
