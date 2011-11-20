@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import br.ufc.model.Player;
 
 /**
- * @author André Fonteles, Rafael de Lima e Benedito Neto
+ * @author Andrï¿½ Fonteles, Rafael de Lima e Benedito Neto
  *
  * Utility class to parse entities in a well formatted string and strings to entities.
  * 
