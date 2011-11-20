@@ -1,5 +1,17 @@
 #summary One-sentence summary of this page.
 
+= Classe Player =
+
+Pessoal, vocês colocaram uma classe Player lá. Eu acho que está boa. Mas ainda acho chato essa classe não ter sido sequer discutida entre todo o grupo.
+O que seria o tipo que vocês colocaram lá? Seria o time não é? Não tem nenhum comentário no código. Não seria melhor mudar a variável para time?
+Seria bom também comentar aquele método toString(). Acho que vocês vão precisar dele, por isso criaram, mas seria bom sempre comentar bem o código e não deixar que os outros infiram isso. Lembrem que estamos trabalhando em equipe, e uma equipe bem grande e diversa.. :)
+
+== Atributos ==
+  * String nome;
+  * int tipo;
+  * double latitude;
+  * double longitude;
+
 = Mensagens =
 
 ==Registar no servidor==
