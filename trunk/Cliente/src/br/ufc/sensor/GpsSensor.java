@@ -1,26 +1,54 @@
 package br.ufc.sensor;
 
+import br.ufc.activity.R;
+
+import com.google.android.maps.MapView;
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
+
 
 /**
  * @author Andre, Benedito
  * Class that represents the GPS Sensor.
+ * 
+ * Inicializa o serviço de localização por GPS, responsavel 
+ * por modificar as localizaçao no mapa
  */
 public class GpsSensor {
-
+	
+		
 	private LocationManager locationManager;
+	private LocationProvider locationProvider;
+	private Location lastKnownLocation;
+	private MapSensor mapSensor;
 
+	// Distancia minima percorrida para uma nova atualização
 	private static final int MIN_DISTANCE_UPDATE = 5;
+	
+	// Tempo minimo de uma nova atualização
 	private static final int MIN_TIME_UPDATE = 0;
 
 	private boolean running;
 
+	
+	
+	public MapSensor getMapSensor() {
+		return mapSensor;
+	}
+
+	public void setMapSensor(MapSensor mapSensor) {
+		this.mapSensor = mapSensor;
+	}
+
 	public GpsSensor(Context context) {
 		locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		locationProvider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
+		lastKnownLocation = locationManager.getLastKnownLocation(locationProvider.getName());
 		running = false;
 	}
 
@@ -28,8 +56,8 @@ public class GpsSensor {
 	 * Start GPS sensing
 	 */
 	public void start() {
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-				MIN_TIME_UPDATE, MIN_DISTANCE_UPDATE, locationListener);
+		if(lastKnownLocation != null){getMapSensor().setLastKnownLocation(lastKnownLocation);}		
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_UPDATE, MIN_DISTANCE_UPDATE, locationListener);		
 		running = true;
 	}
 
@@ -51,9 +79,12 @@ public class GpsSensor {
 
 	private LocationListener locationListener = new LocationListener() {
 		
+		/**
+		 * Responsavel por atualizar o novo posicionamento do usuario na tela do mapa.
+		 */
 		@Override
 		public void onLocationChanged(Location location) {
-			// TODO : Atualizar localiza��o para o respons�vel por enviar mudan�as de estado do player ao servidor
+			getMapSensor().setLastKnownLocation(location);
 		}
 
 		@Override

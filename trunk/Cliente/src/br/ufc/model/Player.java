@@ -1,7 +1,7 @@
 package br.ufc.model;
 
 /**
- * @author André Fonteles, Rafael de Lima e Benedito Neto
+ * @author Andrï¿½ Fonteles, Rafael de Lima e Benedito Neto
  *
  * Class that defines a player
  * 
@@ -10,8 +10,8 @@ public class Player {
 	
 	private String nome;
 	private int tipo;
-	private double latitude;
-	private double longitude;
+	private int latitude;
+	private int longitude;
 
 	public Player(String nome, int tipo) {
 		super();
@@ -24,7 +24,7 @@ public class Player {
 		this.nome = nome;
 	}
 
-	public Player(String nome, int tipo, double latitude, double longitude) {
+	public Player(String nome, int tipo, int latitude, int longitude) {
 		super();
 		this.nome = nome;
 		this.tipo = tipo;
@@ -48,19 +48,19 @@ public class Player {
 		this.tipo = tipo;
 	}
 
-	public double getLatitude() {
+	public int getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(int latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public int getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(int longitude) {
 		this.longitude = longitude;
 	}
 

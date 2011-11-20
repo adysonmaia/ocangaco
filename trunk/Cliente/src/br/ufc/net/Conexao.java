@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+
 public class Conexao {
 
 	public static String executaComando(String comando, String ip, int porta)
