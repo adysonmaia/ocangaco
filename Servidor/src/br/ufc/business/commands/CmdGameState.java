@@ -1,7 +1,6 @@
 package br.ufc.business.commands;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import myserver.kernel.CommandExecute;
 import br.ufc.servidor.player.Player;
@@ -32,6 +31,14 @@ public class CmdGameState extends CommandExecute {
 		playerList.add(player2);
 		
 		return playerList;
+		
+		/**
+		 * Usar interface - chamar Servidor.gs.listaJogadores()
+		 * ex:
+		 * 
+		 * return Servidor.gs.listaJogadores();
+		 * 
+		 */
 	}
 	
 	
