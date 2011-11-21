@@ -1,5 +1,7 @@
 package br.ufc.model;
 
+import com.google.android.maps.GeoPoint;
+
 /**
  * @author Andr� Fonteles, Rafael de Lima e Benedito Neto
  *
@@ -64,4 +66,7 @@ public class Player {
 		this.longitude = longitude;
 	}
 
+	public GeoPoint createLocationGeoPoint() {
+		return new GeoPoint(latitude, longitude);
+	}
 }

@@ -11,8 +11,9 @@ public interface IServer {
 	/**
 	 * Método que um jogador utiliza para se connectar em um jogo.
 	 * @param player com as informações do novo jogador.
+	 * @return inteiro com o id do player
 	 */
-	public void connect(Player player);
+	public int connect(Player player);
 	
 	
 	/**

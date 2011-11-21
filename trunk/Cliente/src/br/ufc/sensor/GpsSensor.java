@@ -1,16 +1,11 @@
 package br.ufc.sensor;
 
-import br.ufc.activity.R;
-
-import com.google.android.maps.MapView;
-
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
-
 
 /**
  * @author Andre, Benedito
