@@ -1,7 +1,7 @@
 package br.ufc.servidor.player;
 
 /**
- * @author André Fonteles, Rafael de Lima e Benedito Neto
+ * @author Andre Fonteles, Rafael de Lima e Benedito Neto
  *
  * Class that defines a player
  * 
@@ -19,6 +19,10 @@ public class Player {
 		this.tipo = tipo;
 	}
 
+	/**
+	 * 
+	 * @param nome Nome do Jogador
+	 */
 	public Player(String nome) {
 		super();
 		this.nome = nome;
