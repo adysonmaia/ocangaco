@@ -11,16 +11,20 @@ import com.google.android.maps.MapView;
 
 public class ClienteActivity  extends MapActivity {
 	
-	GpsSensor gpsSensor;	
+	private GpsSensor gpsSensor;	
+	private MapView mapa;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
+		mapa = (MapView)findViewById(R.id.mapa);
+		mapa.setBuiltInZoomControls(true);
+		
 		// Inicializa os sensores e repassa os listeners que controlam as mudanças
 		gpsSensor = new GpsSensor(this);
-		gpsSensor.setMapSensor(new MapSensor((MapView)findViewById(R.id.mapa), getResources()));
+		gpsSensor.setMapSensor(new MapSensor(mapa, getResources()));
 		gpsSensor.start();	
 		
 	}
@@ -29,7 +33,6 @@ public class ClienteActivity  extends MapActivity {
 	
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

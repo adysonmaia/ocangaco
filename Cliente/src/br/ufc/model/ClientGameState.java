@@ -3,13 +3,13 @@ package br.ufc.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.android.maps.GeoPoint;
-
-public class Players {
+public class ClientGameState {
 
 	public static List<Player> amigos = new ArrayList<Player>();
 	public static List<Player> inimigos = new ArrayList<Player>();
 	
+	// Belo nome pra uma vari�vel :) kkkkkkkkkkkkkk
+	public static Player eu = null;
 
 	static{
 		// Teste de inicialização dos amigos

@@ -16,8 +16,9 @@ public class ServerImpl implements IServer{
 	}
 	
 	@Override
-	public void connect(Player player) {
+	public int connect(Player player) {
 		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
