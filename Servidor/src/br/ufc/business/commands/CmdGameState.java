@@ -3,6 +3,7 @@ package br.ufc.business.commands;
 import java.util.ArrayList;
 
 import myserver.kernel.CommandExecute;
+import br.ufc.location.test.GameStateTest;
 import br.ufc.servidor.player.Player;
 import br.ufc.util.EntityParser;
 
@@ -21,16 +22,8 @@ public class CmdGameState extends CommandExecute {
 	 * get List of players and his correct positions to send to clients
 	 */
 
-	public ArrayList<Player> getPlayerList(){
-		Player player = new Player("player1", 1, 33.33333, 22.22222);
-		Player player2 = new Player("player2", 2, 34.33333, 23.22222);
-		
-		ArrayList<Player> playerList = new ArrayList<Player>();
-		
-		playerList.add(player);
-		playerList.add(player2);
-		
-		return playerList;
+	public ArrayList<Player> getPlayerList(){			
+		return GameStateTest.getInstance().getPlayerList();
 		
 		/**
 		 * Usar interface - chamar Servidor.gs.listaJogadores()

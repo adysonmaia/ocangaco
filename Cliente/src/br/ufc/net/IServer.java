@@ -1,5 +1,7 @@
 package br.ufc.net;
 
+import java.util.ArrayList;
+
 import br.ufc.model.Player;
 
 /**
@@ -26,8 +28,12 @@ public interface IServer {
 	 * Método que atualiza a posição de um jogador já registrado no servidor.
 	 * @param player contento a nova localização do jogador
 	 */
-	public void updatePlayersLocation(Player player);
+	public void updatePlayerLocation(Player player);
 	
+	/**
+	 * Método que retorna uma lista com todos os jogadores conectados no servidor.
+	 */
+	public ArrayList<Player> getGameState();	
 	
 	/**
 	 * Método utilizado para informar se o jogador já está connectado ao servidor

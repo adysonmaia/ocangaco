@@ -11,6 +11,10 @@ import android.os.Message;
 import br.ufc.activity.R;
 import br.ufc.model.Player;
 import br.ufc.model.ClientGameState;
+import br.ufc.net.Conexao;
+import br.ufc.net.ServerFactory;
+import br.ufc.net.ServerImpl;
+import br.ufc.util.Constants;
 import br.ufc.util.LocationOverlay;
 
 import com.google.android.maps.GeoPoint;
@@ -24,22 +28,45 @@ public class MapSensor {
 	private Location lastKnownLocation;	
 	GeoPoint lastUserGeoPoint;
 	
+	
+	
 	Resources resources; //Usado para capturar as imagens locais
 	
 	public MapSensor(MapView mapa, Resources resources) {
+		initiateObjects(mapa, resources);
+		setInitialLocation();
+		setMapConfigurations(true, false);
+		startGameLoop();
+	}
+
+	private void initiateObjects(MapView mapa, Resources resources) {
 		this.resources = resources;
 		this.mapa = mapa;
-		this.mapController = mapa.getController();
+		this.mapController = mapa.getController();		
+	}
+
+	private void setInitialLocation() {
 		// Caso do JP
-		double lat = -3.7307950;// No emulador -3.7307950  
-		double log = -38.575991;// No emulador -38.575991
+		double lat = Constants.DEFAULT_LATITUDE; //-3.7307950;// No emulador -3.7307950  
+		double log = Constants.DEFAULT_LONGITUDE; //-38.575991;// No emulador -38.575991
+		
 		Location location = new Location("");
 		location.setLatitude(lat);
 		location.setLongitude(log);
 		
 		this.lastUserGeoPoint = new GeoPoint((int)(lat * 1E6), (int)(log * 1E6));	
-		setLastKnownLocation(location);
+		setLastKnownLocation(location);	
 		
+		//Atualiza posição do jogador no servidor. 
+		//ServerFactory.getServer().updatePlayerLocation(ClientGameState.eu);
+	}	
+
+	private void setMapConfigurations(boolean sattelite, boolean streetView) {
+		mapa.setSatellite(true);
+		mapa.setStreetView(false);		
+	}
+	
+	private void startGameLoop() {
 		// Game Loop do jogo. OBS: Esse é o local ideal para ele?.
 		new Thread(new Runnable() {
 			@Override
@@ -52,7 +79,7 @@ public class MapSensor {
 					handler.sendMessage(handler.obtainMessage());
 					
 					try {
-						Thread.sleep(200);
+						Thread.sleep(200);				
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -60,7 +87,7 @@ public class MapSensor {
 			}
 		}).start();
 	}
-	
+
 	// Handler utilizado para atualizar o mapa sem gerar exceção de Threads
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -83,12 +110,13 @@ public class MapSensor {
 		 */
 		{ // TODO : instanciar o player  apartir de uma conexão com o server
 			if(ClientGameState.eu == null) 
-				ClientGameState.eu = new Player("Fulano");
+				//ClientGameState.eu = new Player("Fulano");
+				ClientGameState.eu = new Player("Sicrano");
 		}
 
 //		System.out.println("LOCA: " + lastKnownLocation.getLatitude() + "," + lastKnownLocation.getLongitude());
 		
-		ClientGameState.eu.setLatitude(lastKnownLocation.getLatitude());
+		ClientGameState.eu.setLatitude(lastKnownLocation.getLatitude() + Constants.LOCATION_INCREMENT);
 		ClientGameState.eu.setLongitude(lastKnownLocation.getLongitude());
 		
 		// Posiciona o usuario em sua posiÃ§Ã£o atual no mapa
@@ -96,10 +124,9 @@ public class MapSensor {
 		
 		mapController.animateTo(lastUserGeoPoint);
 		mapController.setZoom(mapa.getMaxZoomLevel() - 3);
-		
 	}
 	
-	private void atualizaPlayers() {
+	private void atualizaPlayers() {			
 		ArrayList<GeoPoint> locais = desenhaPlayers();
 		ArrayList<Drawable> images = desenhaIcones();
 
@@ -132,7 +159,7 @@ public class MapSensor {
 
 		// TODO Mudar o icone de acordo com o tipo de avatar do amigo
 		for(int i = 0; i < ClientGameState.amigos.size(); i++) {
-			images.add(getResources().getDrawable(R.drawable.icon));
+			images.add(getResources().getDrawable(R.drawable.icon_amigo));
 		}
 
 		// Adiciona icone do proprio player "eu"
@@ -144,19 +171,20 @@ public class MapSensor {
 	}
 	
 	private ArrayList<GeoPoint> desenhaPlayers() {
+		ArrayList<GeoPoint> locais = new ArrayList<GeoPoint>();
 		
 		List<Player> amigos = ClientGameState.amigos;
-		ArrayList<GeoPoint> locais = new ArrayList<GeoPoint>();
+		
 		for(Player amigo : amigos){
 			locais.add(amigo.createLocationGeoPoint());
 		}
 		
 		// Adiciona o player "eu"
 		if(ClientGameState.eu != null) {
-			locais.add(ClientGameState.eu.createLocationGeoPoint());
-			
+			locais.add(ClientGameState.eu.createLocationGeoPoint());			
 			System.out.println("GEOPOINT: " + ClientGameState.eu.createLocationGeoPoint());
 		}
+		
 		return locais;
 	}
 }
