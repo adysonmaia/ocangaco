@@ -9,6 +9,9 @@ public class ClientGameState {
 	public static List<Player> inimigos = new ArrayList<Player>();
 	
 	// Belo nome pra uma variável :) kkkkkkkkkkkkkk
+	/**
+	 * Variável que representa o Player do usuário do celular.
+	 */
 	public static Player eu = null;
 
 	static{
