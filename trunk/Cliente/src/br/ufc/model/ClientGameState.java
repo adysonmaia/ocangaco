@@ -18,8 +18,8 @@ public class ClientGameState {
 		// Teste de inicialização dos amigos
 		Player player = new Player("Joao Paulo");
 		
-		player.setLatitude((int)-3730715.0);
-		player.setLongitude((int)-3.8575982E7);
+		player.setLatitude(-3730715.0);
+		player.setLongitude(-3.8575982E7);
 		amigos.add(player);
 	}
 }

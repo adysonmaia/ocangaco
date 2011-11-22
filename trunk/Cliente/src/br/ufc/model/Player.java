@@ -12,8 +12,8 @@ public class Player {
 	
 	private String nome;
 	private int tipo;
-	private int latitude;
-	private int longitude;
+	private double latitude;
+	private double longitude;
 
 	public Player(String nome, int tipo) {
 		super();
@@ -26,7 +26,7 @@ public class Player {
 		this.nome = nome;
 	}
 
-	public Player(String nome, int tipo, int latitude, int longitude) {
+	public Player(String nome, int tipo, double latitude, double longitude) {
 		super();
 		this.nome = nome;
 		this.tipo = tipo;
@@ -50,23 +50,23 @@ public class Player {
 		this.tipo = tipo;
 	}
 
-	public int getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(int latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
-	public int getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(int longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
 	public GeoPoint createLocationGeoPoint() {
-		return new GeoPoint(latitude, longitude);
+		return new GeoPoint((int)(latitude * 1E6), (int) (longitude * 1E6));
 	}
 }
