@@ -11,8 +11,8 @@ import br.ufc.util.EntityParser;
 public class LocationClientTest {
 	public static void main(String[] args) throws IOException {
 		//testSoma();		
-		//testMovimentacao();
-		testGameState();
+		testMovimentacao();
+		//testGameState();
 	}
 
 	private static void testGameState() {
@@ -23,9 +23,9 @@ public class LocationClientTest {
 		}
 	}
 
-	private static void testMovimentacao() {
-		String comando2 = "<movimentacao>, " + 
-		"playerName" + "," + "1" + "," + "-3.746573" + "," + "-38.577791" + 
+	private static void testMovimentacao() {		
+		String comando2 = "<movimentacao>," + 
+		"Fulano" + "," + "1" + "," + "-3.746373" + "," + "-38.577791" + 
 		  ",<movimentacao>";
 		System.out.println("Movimentacao = " + getServerResponse(comando2));
 	}

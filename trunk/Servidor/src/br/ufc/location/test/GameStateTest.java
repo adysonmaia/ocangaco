@@ -17,6 +17,11 @@ public class GameStateTest {
 
 	private ArrayList<Player> players = null;
 
+	//variaveis para contar o numero de jogadores de cada time de forma a distribuir
+	//uniformemente os jogadores com preferencia para cangaceiros
+	private int cangaceirosContador = 0;
+	private int jaguncosContador = 0;
+
 	public GameStateTest() {
 		super();
 		players = new ArrayList<Player>();
@@ -35,12 +40,29 @@ public class GameStateTest {
 		if (players != null && players.size() > 0) {
 			for (Player p : players) {
 				if (player.getNome().equals(p.getNome())) {
-					p = player;
+					p.setLatitude(player.getLatitude());
+					p.setLongitude(player.getLongitude());					
 					updated = true;
 				}
 			}
 		}
+		
+		//Tipo: 1 cangaceiro; Tipo: 2 jagunco
+		//Com a evolução da aplicação, haverá outra variavel para definir a "classe" do jogador: 
+		//doutô, pexero, etc
+		
 		if (!updated) {
+			if(jaguncosContador >= cangaceirosContador)
+			{
+				player.setTipo(1);
+				cangaceirosContador++;
+			}
+			else
+			{
+				player.setTipo(2);
+				jaguncosContador++;
+			}
+			
 			players.add(player);
 		}
 	}

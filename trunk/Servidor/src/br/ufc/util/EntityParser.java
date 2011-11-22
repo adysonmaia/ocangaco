@@ -17,7 +17,7 @@ public class EntityParser {
 	public static final String OBJECT_SEPARATOR = "@";
 
 	public static Player parsePlayerToMessage(String message) {
-		System.out.println("EntityParser: message to parse: " + message);
+		System.out.println("Parsed message: " + message + " to player");
 		String fields[] = message.split(FIELD_SEPARATOR);
 		Player player = new Player(fields[0], Integer.parseInt(fields[1]),
 				Double.parseDouble(fields[2]), Double.parseDouble(fields[3]));
@@ -26,15 +26,16 @@ public class EntityParser {
 	}
 
 	public static String parseMessageToPlayer(Player player) {
+		
 		String message = player.getNome() + FIELD_SEPARATOR + player.getTipo()
 				+ FIELD_SEPARATOR + player.getLatitude() + FIELD_SEPARATOR
 				+ player.getLongitude();
-		System.out.println("EntityParser: parsed message: " + message);
+		System.out.println("Parsed player to message: " + message);
 		return message;
 	}
 
 	public static ArrayList<Player> parseMessageToPlayerList(String message) {
-		System.out.println("EntityParser: message to parse: " + message);
+		System.out.println("Parsed message: " + message + " to playerList");
 		String players[] = message.split(OBJECT_SEPARATOR);
 
 		ArrayList<Player> playerList = new ArrayList<Player>();
@@ -56,7 +57,8 @@ public class EntityParser {
 			message = message.substring(0, message.length() - 1);
 		}
 
-		System.out.println("EntityParser: parsed message: " + message);
+		System.out.println("Parsed playerList to message: " + message);
+		
 		return message;
 	}
 
