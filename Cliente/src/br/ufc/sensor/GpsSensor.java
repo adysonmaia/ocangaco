@@ -79,7 +79,8 @@ public class GpsSensor {
 		 */
 		@Override
 		public void onLocationChanged(Location location) {
-			getMapSensor().setLastKnownLocation(location);
+			System.out.println("Location changed to: " + location.getLatitude() + "; " + location.getLongitude());
+			getMapSensor().setLastKnownLocation(location);			
 		}
 
 		@Override

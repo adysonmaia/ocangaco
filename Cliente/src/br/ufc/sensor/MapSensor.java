@@ -28,8 +28,6 @@ public class MapSensor {
 	private Location lastKnownLocation;	
 	GeoPoint lastUserGeoPoint;
 	
-	
-	
 	Resources resources; //Usado para capturar as imagens locais
 	
 	public MapSensor(MapView mapa, Resources resources) {
@@ -56,9 +54,6 @@ public class MapSensor {
 		
 		this.lastUserGeoPoint = new GeoPoint((int)(lat * 1E6), (int)(log * 1E6));	
 		setLastKnownLocation(location);	
-		
-		//Atualiza posição do jogador no servidor. 
-		//ServerFactory.getServer().updatePlayerLocation(ClientGameState.eu);
 	}	
 
 	private void setMapConfigurations(boolean sattelite, boolean streetView) {
@@ -72,6 +67,10 @@ public class MapSensor {
 			@Override
 			public void run() {
 				while(true) {
+					/**
+					 * Atualiza estado do jogo
+					 */
+					ClientGameState.testeAtualizacaoServidor();
 					/*
 					 *  Atualizações em uma View não podem ser efetuadas em Threas secundárias.
 					 *  A solução para o problema é a utilização de Handlers.
@@ -79,7 +78,7 @@ public class MapSensor {
 					handler.sendMessage(handler.obtainMessage());
 					
 					try {
-						Thread.sleep(200);				
+						Thread.sleep(3000);				
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -110,27 +109,32 @@ public class MapSensor {
 		 */
 		{ // TODO : instanciar o player  apartir de uma conexão com o server
 			if(ClientGameState.eu == null) 
-				//ClientGameState.eu = new Player("Fulano");
-				ClientGameState.eu = new Player("Sicrano");
+				ClientGameState.eu = new Player("Fulano");
+				//ClientGameState.eu = new Player("Sicrano");
 		}
 
 //		System.out.println("LOCA: " + lastKnownLocation.getLatitude() + "," + lastKnownLocation.getLongitude());
 		
-		ClientGameState.eu.setLatitude(lastKnownLocation.getLatitude() + Constants.LOCATION_INCREMENT);
+		ClientGameState.eu.setLatitude(lastKnownLocation.getLatitude());				
 		ClientGameState.eu.setLongitude(lastKnownLocation.getLongitude());
+		
+		//ClientGameState.eu.setLatitude(lastKnownLocation.getLatitude() + Constants.LOCATION_INCREMENT);
+		
+		//Atualiza posição do jogador no servidor. 
+		ServerFactory.getServer().updatePlayerLocation(ClientGameState.eu);
 		
 		// Posiciona o usuario em sua posiÃ§Ã£o atual no mapa
 		lastUserGeoPoint = ClientGameState.eu.createLocationGeoPoint();
 		
 		mapController.animateTo(lastUserGeoPoint);
-		mapController.setZoom(mapa.getMaxZoomLevel() - 3);
+		mapController.setZoom(mapa.getMaxZoomLevel() - 4);		
 	}
 	
-	private void atualizaPlayers() {			
+	private void atualizaPlayers() {		
 		ArrayList<GeoPoint> locais = desenhaPlayers();
 		ArrayList<Drawable> images = desenhaIcones();
 
-		LocationOverlay myOverlay = new LocationOverlay(getResources().getDrawable(R.drawable.icon));
+		LocationOverlay myOverlay = new LocationOverlay(getResources().getDrawable(R.drawable.icon_cangaceiro_eu));
 		
 		myOverlay.setItems(locais, images);
 		getMapa().getOverlays().clear();
@@ -152,37 +156,44 @@ public class MapSensor {
 		return lastKnownLocation;
 	}
 	
-	
-	
 	private ArrayList<Drawable> desenhaIcones() {
 		ArrayList<Drawable> images = new ArrayList<Drawable>();
 
 		// TODO Mudar o icone de acordo com o tipo de avatar do amigo
-		for(int i = 0; i < ClientGameState.amigos.size(); i++) {
-			images.add(getResources().getDrawable(R.drawable.icon_amigo));
+		for(int i = 0; i < ClientGameState.cangaceiros.size(); i++) {
+			images.add(getResources().getDrawable(R.drawable.icon_cangaceiro_time));
+		}
+		for (int i = 0; i < ClientGameState.jaguncos.size(); i++) {
+			images.add(getResources().getDrawable(R.drawable.icon_jagunco_time));
 		}
 
 		// Adiciona icone do proprio player "eu"
-		if(ClientGameState.eu != null)
-			images.add(getResources().getDrawable(R.drawable.icon));
+		if(ClientGameState.eu != null){
+			if(ClientGameState.eu.getTipo() == 1)
+				images.add(getResources().getDrawable(R.drawable.icon_cangaceiro_eu));
+			else
+				images.add(getResources().getDrawable(R.drawable.icon_jagunco_eu));
+		}
 		
 		return images;
-
 	}
 	
 	private ArrayList<GeoPoint> desenhaPlayers() {
 		ArrayList<GeoPoint> locais = new ArrayList<GeoPoint>();
 		
-		List<Player> amigos = ClientGameState.amigos;
+		List<Player> cangaceiros = ClientGameState.cangaceiros;		
+		for(Player cangaceiro : cangaceiros){
+			locais.add(cangaceiro.createLocationGeoPoint());
+		}
 		
-		for(Player amigo : amigos){
-			locais.add(amigo.createLocationGeoPoint());
+		List<Player> jaguncos = ClientGameState.jaguncos;
+		for (Player jagunco : jaguncos) {
+			locais.add(jagunco.createLocationGeoPoint());
 		}
 		
 		// Adiciona o player "eu"
 		if(ClientGameState.eu != null) {
-			locais.add(ClientGameState.eu.createLocationGeoPoint());			
-			System.out.println("GEOPOINT: " + ClientGameState.eu.createLocationGeoPoint());
+			locais.add(ClientGameState.eu.createLocationGeoPoint());
 		}
 		
 		return locais;
