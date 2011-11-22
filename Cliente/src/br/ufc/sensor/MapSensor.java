@@ -31,13 +31,13 @@ public class MapSensor {
 		this.mapa = mapa;
 		this.mapController = mapa.getController();
 		// Caso do JP
-		double lat = -3.7307950;// No emulador -3.7307950 
+		double lat = -3.7307950;// No emulador -3.7307950  
 		double log = -38.575991;// No emulador -38.575991
 		Location location = new Location("");
 		location.setLatitude(lat);
 		location.setLongitude(log);
 		
-		this.lastUserGeoPoint = new GeoPoint((int)(lat), (int)(log));	
+		this.lastUserGeoPoint = new GeoPoint((int)(lat * 1E6), (int)(log * 1E6));	
 		setLastKnownLocation(location);
 		
 		// Game Loop do jogo. OBS: Esse � o local ideal para ele?.
@@ -88,14 +88,14 @@ public class MapSensor {
 
 //		System.out.println("LOCA: " + lastKnownLocation.getLatitude() + "," + lastKnownLocation.getLongitude());
 		
-		ClientGameState.eu.setLatitude((int)(lastKnownLocation.getLatitude()));
-		ClientGameState.eu.setLongitude((int)(lastKnownLocation.getLongitude()));
+		ClientGameState.eu.setLatitude(lastKnownLocation.getLatitude());
+		ClientGameState.eu.setLongitude(lastKnownLocation.getLongitude());
 		
 		// Posiciona o usuario em sua posição atual no mapa
 		lastUserGeoPoint = ClientGameState.eu.createLocationGeoPoint();
 		
 		mapController.animateTo(lastUserGeoPoint);
-		mapController.setZoom(15);
+		mapController.setZoom(mapa.getMaxZoomLevel() - 3);
 		
 	}
 	
