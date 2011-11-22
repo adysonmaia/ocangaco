@@ -25,7 +25,7 @@ public class LocationClientTest {
 
 	private static void testMovimentacao() {
 		String comando2 = "<movimentacao>, " + 
-		"playerName" + ", " + "playerLatitude" + ", "+ "playerLongitude" + 
+		"playerName" + "," + "1" + "," + "-3.746573" + "," + "-38.577791" + 
 		  ",<movimentacao>";
 		System.out.println("Movimentacao = " + getServerResponse(comando2));
 	}

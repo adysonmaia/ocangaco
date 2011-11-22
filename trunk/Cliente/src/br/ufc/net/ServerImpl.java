@@ -1,6 +1,9 @@
 package br.ufc.net;
 
+import java.util.ArrayList;
+
 import br.ufc.model.Player;
+import br.ufc.util.EntityParser;
 
 public class ServerImpl implements IServer{
 
@@ -28,11 +31,11 @@ public class ServerImpl implements IServer{
 	}
 	
 	@Override
-	public void updatePlayersLocation(Player player) {
+	public void updatePlayerLocation(Player player) {
 		String comando;
 		
 		comando = "<movimentacao>, " + 
-				player.getNome() + ", " + player.getLatitude() + ", "+ player.getLongitude() + 
+				player.getNome() + ", " + player.getTipo() + ", " + player.getLatitude() + ", "+ player.getLongitude() + 
 				  ",<movimentacao>";
 		
 		try {
@@ -40,6 +43,25 @@ public class ServerImpl implements IServer{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public ArrayList<Player> getGameState() {
+		String comando = "<gamestate>, " +	"" + ",<gamestate>";
+		
+		try {
+			ArrayList<Player> playerList = 
+				EntityParser.parseMessageToPlayerList(Conexao.executaComando(comando, SERVER_IP, PORT));		
+			for (Player player : playerList) {
+				System.out.println(player.toString());
+			}
+			
+			return playerList;			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 	@Override

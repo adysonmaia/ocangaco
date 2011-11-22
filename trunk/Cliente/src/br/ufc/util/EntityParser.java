@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import br.ufc.model.Player;
 
 /**
- * @author Andrï¿½ Fonteles, Rafael de Lima e Benedito Neto
+ * @author André Fonteles, Rafael de Lima e Benedito Neto
  *
  * Utility class to parse entities in a well formatted string and strings to entities.
  * 
@@ -16,17 +16,23 @@ public class EntityParser {
 	public static final String OBJECT_SEPARATOR = "@";
 	
 	public static Player parsePlayerToMessage(String message){
+		System.out.println("EntityParser: message to parse: " + message);
 		String fields[] = message.split(FIELD_SEPARATOR);		
-		Player player = new Player(fields[0], Integer.parseInt(fields[1]));
+		Player player = new Player(fields[0], Integer.parseInt(fields[1]), 
+				Double.parseDouble(fields[2]), Double.parseDouble(fields[3]));
 		
 	    return player;	
 	}
 	
 	public static String parseMessageToPlayer(Player player){
-		return player.getNome() + FIELD_SEPARATOR + player.getTipo();
+		String message = player.getNome() + FIELD_SEPARATOR + player.getTipo() 
+		+ FIELD_SEPARATOR + player.getLatitude() + FIELD_SEPARATOR + player.getLongitude();
+		System.out.println("EntityParser: parsed message: " + message);
+		return message; 
 	}
 	
-	public static ArrayList<Player> parsePlayerListToMessage(String message){
+	public static ArrayList<Player> parseMessageToPlayerList(String message){
+		System.out.println("EntityParser: message to parse: " + message);
 		String players[] = message.split(OBJECT_SEPARATOR);
 		
 		ArrayList<Player> playerList = new ArrayList<Player>();
@@ -37,13 +43,14 @@ public class EntityParser {
 		return playerList;
 	}
 	
-	public static String parseMessageToPlayerList(ArrayList<Player> playerList){
+	public static String parsePlayerListToMessage(ArrayList<Player> playerList){
 		String message = "";
 		for (Player player : playerList) {
 			message += parseMessageToPlayer(player) + OBJECT_SEPARATOR;
 		}		
 		message = message.substring(0,message.length()-1);
 		
+		System.out.println("EntityParser: parsed message: " + message);
 		return message;
 	}
 	
@@ -66,12 +73,12 @@ public class EntityParser {
 		playerList.add(player);
 		playerList.add(player2);
 		
-		String list = parseMessageToPlayerList(playerList);
+		String list = parsePlayerListToMessage(playerList);
 		
 		System.out.println(list);
 		
 		playerList = null;
-		playerList = parsePlayerListToMessage(list);
+		playerList = parseMessageToPlayerList(list);
 		
 		for (Player p : playerList) {
 			System.out.println(p.getNome() + " " + p.getTipo());

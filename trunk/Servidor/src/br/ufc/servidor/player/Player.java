@@ -68,7 +68,7 @@ public class Player {
 		this.longitude = longitude;
 	}
 
-	@Override
+	@Override //sobrecarga apenas para fins de visualização do estado do objeto
 	public String toString() {
 		return "Player [latitude=" + latitude + ", longitude=" + longitude
 				+ ", nome=" + nome + ", tipo=" + tipo + "]";

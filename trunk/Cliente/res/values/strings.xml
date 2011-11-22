@@ -2,7 +2,6 @@
 <resources>
 
     <string name="hello">Hello World, ClienteActivity!</string>
-    <string name="app_name">Cliente</string>
+    <string name="app_name">uCangaço</string>
     <string name="rafaKey">0ApRckOhkwsbj0Zc2_e7TcPbf_THEwx5VXvBxew</string>
-
 </resources>

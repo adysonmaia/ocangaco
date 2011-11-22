@@ -29,7 +29,12 @@ public class Servidor {
 		server.start();
 		System.out.println("Inicializando servidor do jogo");
 		
+		//Teste de exemplo
+		testeServer();
 		
+	}
+
+	private static void testeServer() {
 		// Dados de exemplo
 		Player p = new Player("Zé",1);
 		gs.addPlayer(p);
@@ -37,8 +42,7 @@ public class Servidor {
 		gs.addPlayer(p);
 		System.out.println("Primeiro jogador: "+gs.listaJogadores().get(0).getNome());
 		System.out.println("Primeiro jogador do time 2: "+gs.listaJogadoresTipo(2).get(0).getNome());
-				
-
+		
 	}
 
 }
