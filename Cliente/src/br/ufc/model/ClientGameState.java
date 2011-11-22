@@ -40,7 +40,7 @@ public class ClientGameState {
 			for (Player player : players) {
 				if (player.getNome().equals(eu.getNome())) {
 					eu = player;
-				} else if (player.getTipo() == eu.getTipo()) {
+				} else if (player.getTipo() == 1) {
 					cangaceiros.add(player);
 				} else {
 					jaguncos.add(player);
