@@ -12,7 +12,6 @@ import br.ufc.activity.R;
 import br.ufc.model.ClientGameState;
 import br.ufc.model.Player;
 import br.ufc.net.ServerFactory;
-import br.ufc.util.Constants;
 import br.ufc.util.LocationOverlay;
 
 import com.google.android.maps.GeoPoint;
@@ -26,7 +25,6 @@ public class GameController {
 	private GpsSensor gpsSensor;	
 	
 	private Location lastKnownLocation;	
-	private GeoPoint lastUserGeoPoint;
 
 	private Thread gameThread;
 	
@@ -35,16 +33,6 @@ public class GameController {
 	public GameController(MapView mapa, Context context) {
 		initiateObjects(mapa, context.getResources());
 		
-		/*
-		 *  BLOCO USADO PARA FINS DE TESTE. Variável "Eu" deve ser instanciada
-		 *  a partir de uma conexão com o server.
-		 */
-		{ // TODO : instanciar o player  apartir de uma conexão com o server
-			if(ClientGameState.eu == null) 
-				ClientGameState.eu = new Player("Fulano");
-//				ClientGameState.eu = new Player("Sicrano");
-		}
-
 		gpsSensor = new GpsSensor(context);
 		gpsSensor.setGameController(this);
 		gpsSensor.start();
@@ -109,9 +97,6 @@ public class GameController {
 		
 		//Atualiza posição do jogador no servidor. 
 		ServerFactory.getServer().updatePlayerLocation(ClientGameState.eu);
-		
-		// Posiciona o usuario em sua posiÃ§Ã£o atual no mapa
-		lastUserGeoPoint = ClientGameState.eu.createLocationGeoPoint();
 	}
 	
 	private void updateMap() {		
