@@ -27,7 +27,7 @@ public class ServerImpl implements IServer{
 	@Override
 	public void closeConnection(Player player) {
 		// TODO Auto-generated method stub
-		
+		 
 	}
 	
 	@Override

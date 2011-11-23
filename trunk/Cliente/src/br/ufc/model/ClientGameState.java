@@ -1,6 +1,6 @@
 package br.ufc.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import br.ufc.net.ServerFactory;
@@ -8,9 +8,8 @@ import br.ufc.util.Constants;
 
 public class ClientGameState {
 
-	public static List<Player> cangaceiros = new ArrayList<Player>();
-	public static List<Player> jaguncos = new ArrayList<Player>();
-
+	public static HashMap<String, Player> players = new HashMap<String, Player>();
+	
 	// Belo nome pra uma variável :) kkkkkkkkkkkkkk
 	/**
 	 * Variável que representa o Player do usuário do celular.
@@ -22,28 +21,31 @@ public class ClientGameState {
 		// testeAtualizacaoServidor();
 	}
 
-	public static void testInicializacaoAmigos() {
-		// Teste de inicializaÃ§Ã£o dos amigos
-		cangaceiros.add(new Player("Player 1", 1, Constants.DEFAULT_LATITUDE
+	public static void adicionarAmigosDeTeste() {
+		// Teste de inicialização dos amigos
+		players.put("Player 1", new Player("Player 1", 1, Constants.DEFAULT_LATITUDE
 				+ Constants.LOCATION_INCREMENT, Constants.DEFAULT_LONGITUDE));
-		cangaceiros.add(new Player("Player 2", 1, Constants.DEFAULT_LATITUDE,
+		players.put("Player 2", new Player("Player 2", 1, Constants.DEFAULT_LATITUDE,
 				Constants.DEFAULT_LONGITUDE + Constants.LOCATION_INCREMENT));
 	}
 
-	public static void testeAtualizacaoServidor() {
-		// Recupera lista de jogadores/objetos no servidor
-		List<Player> players = ServerFactory.getServer().getGameState();
-
-		if (players != null && players.size() > 0) {
-			cangaceiros = new ArrayList<Player>();
-			jaguncos = new ArrayList<Player>();
-			for (Player player : players) {
-				if (player.getNome().equals(eu.getNome())) {
-					eu = player;
-				} else if (player.getTipo() == 1) {
-					cangaceiros.add(player);
+	public static void updateState() {
+		// Recupera lista de jogadores no servidor
+		List<Player> playersOnServer = ServerFactory.getServer().getGameState();
+		
+		Player playerAux;
+		
+		if (playersOnServer != null && playersOnServer.size() > 0) {
+			for (Player player : playersOnServer) {
+				playerAux = players.get(player.getNome());
+				
+				// Caso o player ainda não esteja no GameState, adiciona-o
+				if(playerAux == null) {
+					players.put(player.getNome(), player);
 				} else {
-					jaguncos.add(player);
+					// Caso já exita, atualiza a posição geográfica
+					playerAux.setLatitude(player.getLatitude());
+					playerAux.setLongitude(player.getLongitude());
 				}
 			}
 		}
