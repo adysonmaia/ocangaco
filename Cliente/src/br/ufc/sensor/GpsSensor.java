@@ -20,7 +20,7 @@ public class GpsSensor {
 	private LocationManager locationManager;
 	private LocationProvider locationProvider;
 	private Location lastKnownLocation;
-	private MapSensor mapSensor;
+	private GameController gameController;
 
 	// Distancia minima percorrida para uma nova atualização
 	private static final int MIN_DISTANCE_UPDATE = 5;
@@ -32,12 +32,12 @@ public class GpsSensor {
 
 	
 	
-	public MapSensor getMapSensor() {
-		return mapSensor;
+	public GameController getGameController() {
+		return gameController;
 	}
 
-	public void setMapSensor(MapSensor mapSensor) {
-		this.mapSensor = mapSensor;
+	public void setGameController(GameController mapSensor) {
+		this.gameController = mapSensor;
 	}
 
 	public GpsSensor(Context context) {
@@ -51,7 +51,7 @@ public class GpsSensor {
 	 * Start GPS sensing
 	 */
 	public void start() {
-		if(lastKnownLocation != null){getMapSensor().setLastKnownLocation(lastKnownLocation);}		
+		if(lastKnownLocation != null){getGameController().setLastKnownLocation(lastKnownLocation);}		
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_UPDATE, MIN_DISTANCE_UPDATE, locationListener);		
 		running = true;
 	}
@@ -79,8 +79,7 @@ public class GpsSensor {
 		 */
 		@Override
 		public void onLocationChanged(Location location) {
-			System.out.println("Location changed to: " + location.getLatitude() + "; " + location.getLongitude());
-			getMapSensor().setLastKnownLocation(location);			
+			getGameController().setLastKnownLocation(location);			
 		}
 
 		@Override

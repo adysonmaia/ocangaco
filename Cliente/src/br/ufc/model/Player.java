@@ -10,6 +10,9 @@ import com.google.android.maps.GeoPoint;
  */
 public class Player {
 	
+	public static final int CANGACEIRO = 1;
+	public static final int JAGUNCO = 2;
+	
 	private String nome;
 	private int tipo;
 	private double latitude;
