@@ -25,7 +25,7 @@ public class Servidor {
 		/**
 		 * Inicia o serviço de Comunicação
 		 */
-		ServerService server = new ServerService(8888, 1024, false);
+		ServerService server = new ServerService(8080, 1024, false);
 		server.start();
 		System.out.println("Inicializando servidor do jogo");
 		
