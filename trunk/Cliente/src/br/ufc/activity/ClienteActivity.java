@@ -1,12 +1,9 @@
 package br.ufc.activity;
 
 
-import java.util.HashMap;
-
 import android.os.Bundle;
 import android.widget.Toast;
 import br.ufc.model.ClientGameState;
-import br.ufc.model.Player;
 import br.ufc.net.ServerFactory;
 import br.ufc.sensor.GameController;
 
@@ -17,6 +14,7 @@ import com.google.android.maps.MapView;
 public class ClienteActivity  extends MapActivity {
 	
 	private MapView mapView;
+	private GameController gameController;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -25,15 +23,15 @@ public class ClienteActivity  extends MapActivity {
 		
 		mapView = (MapView)findViewById(R.id.mapa);
 		mapView.setBuiltInZoomControls(true);
+		mapView.getOverlays().clear();
 		
-		GameController gameController = new GameController(mapView, this);
+		gameController = new GameController(mapView, this);
 		gameController.start();
 	}
 	
 	@Override
 	public void onBackPressed() {
-		ServerFactory.getServer().closeConnection(ClientGameState.eu);
-		ClientGameState.players = new HashMap<String, Player>();
+		gameController.stop();
 		
 		super.onBackPressed();
 		
