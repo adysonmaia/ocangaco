@@ -33,20 +33,12 @@ public class ClientGameState {
 		// Recupera lista de jogadores no servidor
 		List<Player> playersOnServer = ServerFactory.getServer().getGameState();
 		
-		Player playerAux;
+		//Reinicia o game state pois algum jogador pode ter desconectado
+		players = new HashMap<String, Player>();
 		
 		if (playersOnServer != null && playersOnServer.size() > 0) {
 			for (Player player : playersOnServer) {
-				playerAux = players.get(player.getNome());
-				
-				// Caso o player ainda não esteja no GameState, adiciona-o
-				if(playerAux == null) {
-					players.put(player.getNome(), player);
-				} else {
-					// Caso já exita, atualiza a posição geográfica
-					playerAux.setLatitude(player.getLatitude());
-					playerAux.setLongitude(player.getLongitude());
-				}
+				players.put(player.getNome(), player);	
 			}
 		}
 	}

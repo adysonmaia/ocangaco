@@ -34,6 +34,21 @@ public class GameStateTest {
 	public void disconnectPlayer(Player player) {
 		players.remove(player);
 	}
+	
+	public String disconnectPlayer(String name) {
+		if(players != null && players.size() > 0)
+		{
+			for (Player player : players) {
+				if(player.getNome().equals(name))
+				{
+					players.remove(player);
+					return "Player: " + player.getNome() + " disconnected.";
+				}				
+			}			
+		}
+		
+		return "Player was not connected";
+	}
 
 	public void updateOrConnectPlayer(Player player) {
 		boolean updated = false;

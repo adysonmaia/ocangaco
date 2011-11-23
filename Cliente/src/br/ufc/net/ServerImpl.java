@@ -1,8 +1,11 @@
 package br.ufc.net;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import br.ufc.model.ClientGameState;
 import br.ufc.model.Player;
+import br.ufc.sensor.GameController;
 import br.ufc.util.EntityParser;
 
 public class ServerImpl implements IServer{
@@ -26,8 +29,14 @@ public class ServerImpl implements IServer{
 
 	@Override
 	public void closeConnection(Player player) {
-		// TODO Auto-generated method stub
-		 
+		String comando = "<disconnect>," +	player.getNome() + ",<disconnect>";	
+		
+		try {
+			System.out.println(Conexao.executaComando(comando, SERVER_IP, PORT));		   
+		} catch (Exception e) {
+			System.out.println("Error disconnecting player from server. " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

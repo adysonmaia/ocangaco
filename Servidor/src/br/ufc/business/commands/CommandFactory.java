@@ -14,6 +14,9 @@ public class CommandFactory {
 	 	CommandParser.addCommand("<movimentacao>",3,cmd);		
 	 	
 	 	cmd = new CmdGameState();
-	 	CommandParser.addCommand("<gamestate>",0,cmd);		
+	 	CommandParser.addCommand("<gamestate>",0,cmd);	
+	 	
+	 	cmd = new CmdDisconnect();
+	 	CommandParser.addCommand("<disconnect>",1,cmd);	
 	}
 }
