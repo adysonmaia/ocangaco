@@ -61,18 +61,35 @@ public interface GameState {
 	public void alteraCoordenadas(Player player, double latitude, double longitude);
 	
 	/**
+	 * Retorma uma lista com todos os jogadores do jogo
+	 * 
+	 * @return returna uma List<Player> de todos os jogadores do jogo ou null em caso de erro
+	 */
+	public ArrayList<Player> getPlayerList();
+	
+	
+	/**
 	 * Retorma uma lista com todos os jogadores do time passado como parâmetro
+	 * 
 	 * @param time Parâmetro que determina o tipo do jogador
 	 * @return returna uma List<Player> dos jogadores do time enviado como parâmetro ou null em caso de erro
 	 */
 	public ArrayList<Player> getPlayerListByType(int tipo);
 	
 	/**
-	 * Retorma uma lista com todos os jogadores do jogo
-	 * @return returna uma List<Player> de todos os jogadores do jogo ou null em caso de erro
+	 * Retorma uma lista com todos os jogadores do mesmo time do jogador passado como parametro
+	 * 
+	 * @param Jogador cujo time se quer retornar
+	 * @return returna uma List<Player> dos jogadores do mesmo time do jogador enviado como parâmetro ou null em caso de erro
 	 */
-	public ArrayList<Player> getPlayerList();
+	public ArrayList<Player> getPlayerListByType(Player player);
 	
-	
+	/**
+	 * Retorma uma lista com todos os jogadores do mesmo time do nome do jogador passado como parametro
+	 * 
+	 * @param Jogador cujo time se quer retornar
+	 * @return returna uma List<Player> dos jogadores do mesmo time do jogador enviado como parâmetro ou null em caso de erro
+	 */
+	public ArrayList<Player> getPlayerListByType(String player);
 
 }
