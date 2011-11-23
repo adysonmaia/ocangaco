@@ -1,9 +1,12 @@
 package br.ufc.activity;
 
 
+import java.util.HashMap;
+
 import android.os.Bundle;
 import android.widget.Toast;
 import br.ufc.model.ClientGameState;
+import br.ufc.model.Player;
 import br.ufc.net.ServerFactory;
 import br.ufc.sensor.GameController;
 
@@ -30,6 +33,8 @@ public class ClienteActivity  extends MapActivity {
 	@Override
 	public void onBackPressed() {
 		ServerFactory.getServer().closeConnection(ClientGameState.eu);
+		ClientGameState.players = new HashMap<String, Player>();
+		
 		super.onBackPressed();
 		
 		Toast.makeText(this, "Log out efetuado!", Toast.LENGTH_LONG).show();
