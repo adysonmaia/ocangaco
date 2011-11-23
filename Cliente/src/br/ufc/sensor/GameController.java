@@ -1,10 +1,7 @@
 package br.ufc.sensor;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Handler;
 import android.os.Message;
@@ -12,23 +9,20 @@ import br.ufc.activity.R;
 import br.ufc.model.ClientGameState;
 import br.ufc.model.Player;
 import br.ufc.net.ServerFactory;
-import br.ufc.util.LocationOverlay;
+import br.ufc.util.PlayerItemizedOverlay;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
 public class GameController {
 	private MapView mapView;
-	private MapController mapController;	
-
 	private GpsSensor gpsSensor;	
-	
-	private Location lastKnownLocation;	
-
 	private Thread gameThread;
-	
 	private Resources resources; //Usado para capturar as imagens locais
+
+	private PlayerItemizedOverlay cangaceirosItemizedOverlay;
+	private PlayerItemizedOverlay jaguncosItemizedOverlay;
+	
+	private boolean running;
 	
 	public GameController(MapView mapa, Context context) {
 		initiateObjects(mapa, context.getResources());
@@ -43,7 +37,12 @@ public class GameController {
 	private void initiateObjects(MapView mapView, Resources resources) {
 		this.resources = resources;
 		this.mapView = mapView;
-		this.mapController = mapView.getController();		
+
+		cangaceirosItemizedOverlay = new PlayerItemizedOverlay(getResources().getDrawable(R.drawable.icon_cangaceiro), Player.CANGACEIRO);
+		jaguncosItemizedOverlay = new PlayerItemizedOverlay(getResources().getDrawable(R.drawable.icon_jagunco), Player.JAGUNCO);
+
+		getMapView().getOverlays().add(cangaceirosItemizedOverlay);
+		getMapView().getOverlays().add(jaguncosItemizedOverlay);
 	}
 
 	private void setMapConfigurations(boolean sattelite, boolean streetView) {
@@ -52,13 +51,16 @@ public class GameController {
 	}
 	
 	public void start() {
+		running = true;
 		
 		gameThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				while(true) {
+				while(running) {
 					 // Atualiza estado do jogo
 					ClientGameState.updateState();
+					cangaceirosItemizedOverlay.invokePopulate();
+					jaguncosItemizedOverlay.invokePopulate();
 					
 					// Atualiza o mapa
 					handler.sendMessage(handler.obtainMessage());
@@ -78,7 +80,6 @@ public class GameController {
 	// Handler utilizado para atualizar o mapa sem gerar exceção de Threads
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-        	updateMap();
         	mapView.invalidate();
         }
     };
@@ -88,8 +89,6 @@ public class GameController {
 	}
 
 	public void setLastKnownLocation(Location lastKnownLocation) {
-		this.lastKnownLocation = lastKnownLocation;
-		
 		ClientGameState.eu.setLatitude(lastKnownLocation.getLatitude());				
 		ClientGameState.eu.setLongitude(lastKnownLocation.getLongitude());
 		
@@ -99,63 +98,22 @@ public class GameController {
 		ServerFactory.getServer().updatePlayerLocation(ClientGameState.eu);
 	}
 	
-	private void updateMap() {		
-		ArrayList<GeoPoint> geoPoints = createPlayersGeoPoints();
-		ArrayList<Drawable> images = createImages();
-
-		LocationOverlay myOverlay = new LocationOverlay(getResources().getDrawable(R.drawable.icon_cangaceiro_eu));
-		
-		myOverlay.setItems(geoPoints, images);
-		getMapa().getOverlays().clear();
-        getMapa().getOverlays().add(myOverlay);
-	}
-	
-	public MapController getMapController() {
-		return mapController;
-	}
-	public MapView getMapa() {
+	public MapView getMapView() {
 		return mapView;
 	}
-
-	public void setMapa(MapView mapa) {
-		this.mapView = mapa;
-	}
-
-	public Location getLastKnownLocation() {
-		return lastKnownLocation;
-	}
 	
-	private ArrayList<Drawable> createImages() {
-		ArrayList<Drawable> images = new ArrayList<Drawable>();
+	public void stop() {
+		try {
+			gpsSensor.stop();
+			running = false;
+			gameThread.join();
 
-		for (Player p : ClientGameState.players.values()) {
+			ServerFactory.getServer().closeConnection(ClientGameState.eu);
+			ClientGameState.reset();
+			mapView.invalidate();
 			
-			// Adiciona o icone do player
-			if(ClientGameState.eu != null && p.getNome().equals(ClientGameState.eu.getNome())) {
-				if(ClientGameState.eu.getTipo() == Player.CANGACEIRO)
-					images.add(getResources().getDrawable(R.drawable.icon_cangaceiro_eu));
-				else
-					images.add(getResources().getDrawable(R.drawable.icon_jagunco_eu));
-			}
-			
-			// Adiciona o icone dos players restantes
-			if(p.getTipo() == Player.CANGACEIRO)
-				images.add(getResources().getDrawable(R.drawable.icon_cangaceiro_time));
-			else
-				images.add(getResources().getDrawable(R.drawable.icon_jagunco_time));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		
-		return images;
-	}
-	
-	private ArrayList<GeoPoint> createPlayersGeoPoints() {
-		ArrayList<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
-		
-		// Adiciona os players em seus devidos locais. OBS: player do jogador está incluso
-		for (Player player : ClientGameState.players.values()) {
-			geoPoints.add(player.createLocationGeoPoint());
-		}
-		
-		return geoPoints;
 	}
 }
