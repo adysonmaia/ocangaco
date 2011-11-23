@@ -96,6 +96,42 @@ public class DB {
    	
    }
     
+    /**
+     * Lista todos os jogadores do mesmo time do jogador passado como parametro
+     * 
+     * @param nome do jogador a ser passado como parametro
+     * @return ArrayList<Player> com todos os jogadores do mesmo time do jogador passado como parametro
+     * @throws ClassNotFoundException
+     */
+    public static ArrayList<Player> getPlayersFromTeam(Player jogador) throws ClassNotFoundException{
+   	 Class.forName("org.sqlite.JDBC");
+        Connection conn;
+        ArrayList<Player> list = new ArrayList<Player>();
+        Player p;
+		try {
+			conn = DriverManager.getConnection("jdbc:sqlite:gameserver.db"); 
+	        conn.setAutoCommit(true);
+	        PreparedStatement prep = conn.prepareStatement("select * from player where player.tipo = ?;");
+	        prep.setInt(1,jogador.getTipo());
+	        ResultSet rs = prep.executeQuery();
+	        while (rs.next()) {
+	        	p = new Player(rs.getString("nome"),rs.getInt("tipo"));
+	        	p.setLatitude(rs.getDouble("lat"));
+	        	p.setLongitude(rs.getDouble("lon"));
+	        	list.add(p);
+	        	
+	          // System.out.println("Player name = " + rs.getString("nome")+", Tipo = " + rs.getInt("tipo") + "Latitude: "+rs.getDouble("lat")+ "Longitude: "+rs.getDouble("lon"));
+	        }
+	        rs.close();
+	        conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+       return list;
+   	
+   }
+    
     
     /**
      * Adiciona um jogador ao jogo
@@ -207,11 +243,44 @@ public class DB {
     	} catch(ClassNotFoundException ce){
     		ce.printStackTrace();
     	} catch (SQLException e) {
-    		if(e.getMessage().equals("column nome is not unique"))
     			returnValue = -1;
 		}
     	return returnValue;
     }
 
+    /**
+     * Preeche todos os dados do jogador cujo nome é passado como parametro
+     * 
+     * @param nome nome do jogador que se quer pegar os dados
+     * @return jogador com todos os dados completos
+     */
+    public static Player getDataFromPlayer(String nome){
+    	Connection conn = null;
+    	Player player = null;
+    	try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:gameserver.db");
+            conn.setAutoCommit(false);
+
+            PreparedStatement prep = conn.prepareStatement("SELECT * from player p WHERE p.nome = ?");
+            prep.setString(1, nome);
+            
+	        ResultSet rs = prep.executeQuery();
+	    	if(rs.next()){
+	    		player = new Player(rs.getString("nome"),rs.getInt("tipo"),rs.getDouble("lat"),rs.getDouble("lon"));
+	    	}
+	    	
+	        prep.close();
+	        rs.close();
+            conn.close();
+            
+
+    	
+    	} catch(ClassNotFoundException ce){
+    		ce.printStackTrace();
+    	} catch (SQLException e) {
+		}
+    	return player;
+    }
 
 }

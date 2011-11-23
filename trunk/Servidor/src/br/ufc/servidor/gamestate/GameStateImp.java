@@ -65,7 +65,6 @@ public class GameStateImp implements GameState {
 	@Override
 	public ArrayList<Player> getPlayerListByType(int tipo) {
 		ArrayList<Player> list = null;
-		System.out.println("Recebi mensagem de getPlayerListByType");
 		try {
 			list = DB.getPlayersFromTeam(tipo);
 			/**
@@ -82,7 +81,6 @@ public class GameStateImp implements GameState {
 	@Override
 	public ArrayList<Player> getPlayerList() {
 		ArrayList<Player> list = null;
-		System.out.println("Recebi mensagem de getPlayerList");
 		try {
 			list = DB.getPlayers();
 			/*
@@ -140,6 +138,41 @@ public class GameStateImp implements GameState {
 		}
 		
 		return ret;
+	}
+
+	@Override
+	public ArrayList<Player> getPlayerListByType(Player player) {
+		ArrayList<Player> list = null;
+		try {
+			list = DB.getPlayersFromTeam(player.getTipo());
+			/*
+			for(int size = 0; size < list.size(); size++){
+				System.out.println("Player: " + list.get(size).getNome());
+			}
+			*/
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Override
+	public ArrayList<Player> getPlayerListByType(String player) {
+		ArrayList<Player> list = null;
+		try {
+			Player p = DB.getDataFromPlayer(player);
+			list = DB.getPlayersFromTeam(p.getTipo());
+			/*
+			for(int size = 0; size < list.size(); size++){
+				System.out.println("Player: " + list.get(size).getNome());
+			}
+			*/
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }
