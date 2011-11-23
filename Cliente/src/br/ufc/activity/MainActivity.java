@@ -10,10 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import br.ufc.model.ClientGameState;
 import br.ufc.model.Player;
+import br.ufc.util.Properties;
 
 
 public class MainActivity  extends Activity implements OnClickListener {
 	
+	private EditText editTextIP;
 	private EditText editTextName;
 	private EditText editTextTeam;
 	private Button button;
@@ -24,6 +26,7 @@ public class MainActivity  extends Activity implements OnClickListener {
 		
 		editTextName = (EditText)findViewById(R.id.editText1);
 		editTextTeam = (EditText)findViewById(R.id.editText2);
+		editTextIP = (EditText)findViewById(R.id.editText3);
 		
 		button = (Button)findViewById(R.id.button1);
 		button.setOnClickListener(this);
@@ -31,6 +34,8 @@ public class MainActivity  extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View arg0) {
+		Properties.SERVER_IP = editTextIP.getText().toString();
+
 		ClientGameState.eu = new Player(
 				editTextName.getText().toString(), 
 				Integer.parseInt(editTextTeam.getText().toString()));

@@ -1,17 +1,13 @@
 package br.ufc.net;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import br.ufc.model.ClientGameState;
 import br.ufc.model.Player;
-import br.ufc.sensor.GameController;
 import br.ufc.util.EntityParser;
+import br.ufc.util.Properties;
 
 public class ServerImpl implements IServer{
 
-	// TODO : Atualizar o SERVER_IP com o IP adequado para teste
-	public static final String SERVER_IP = "10.0.2.2";
 	public static final int PORT = 8080;
 	
 	/**
@@ -32,7 +28,7 @@ public class ServerImpl implements IServer{
 		String comando = "<disconnect>," +	player.getNome() + ",<disconnect>";	
 		
 		try {
-			System.out.println(Conexao.executaComando(comando, SERVER_IP, PORT));		   
+			System.out.println(Conexao.executaComando(comando, Properties.SERVER_IP, PORT));		   
 		} catch (Exception e) {
 			System.out.println("Error disconnecting player from server. " + e.getMessage());
 			e.printStackTrace();
@@ -47,7 +43,7 @@ public class ServerImpl implements IServer{
 				player.getNome() + "," + player.getTipo() + "," + player.getLatitude() + ","+ player.getLongitude() + 
 				  ",<movimentacao>";		
 		try {
-			System.out.println(Conexao.executaComando(comando, SERVER_IP, PORT));
+			System.out.println(Conexao.executaComando(comando, Properties.SERVER_IP, PORT));
 		} catch (Exception e) {
 			System.out.println("Error updating player position on server. " + e.getMessage());
 			e.printStackTrace();
@@ -60,7 +56,7 @@ public class ServerImpl implements IServer{
 		
 		try {
 			ArrayList<Player> playerList = 
-				EntityParser.parseMessageToPlayerList(Conexao.executaComando(comando, SERVER_IP, PORT));					
+				EntityParser.parseMessageToPlayerList(Conexao.executaComando(comando, Properties.SERVER_IP, PORT));					
 			return playerList;			 
 		} catch (Exception e) {
 			System.out.println("Error getting game state on server. " + e.getMessage());
