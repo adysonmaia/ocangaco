@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import myserver.kernel.CommandExecute;
 import br.ufc.location.test.GameStateTest;
+import br.ufc.servidor.Servidor;
 import br.ufc.servidor.player.Player;
 import br.ufc.util.EntityParser;
 
@@ -23,7 +24,8 @@ public class CmdGameState extends CommandExecute {
 	 */
 
 	public ArrayList<Player> getPlayerList(){			
-		return GameStateTest.getInstance().getPlayerList();
+//		return GameStateTest.getInstance().getPlayerList();
+		return Servidor.gs.getPlayerList();
 		
 		/**
 		 * Usar interface - chamar Servidor.gs.listaJogadores()

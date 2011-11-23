@@ -22,41 +22,8 @@ public class DB {
           Statement stat = conn.createStatement();
           conn.setAutoCommit(true);
           stat.executeUpdate("drop table if exists player;");
-          stat.executeUpdate("create table player (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(50), tipo int, lat double, long double);");
-          
-          /* exemplo de chave estrangeira
-          stat.executeUpdate("drop table if exists friendOf;");
-          stat.executeUpdate("create table friendOf (uId INTEGER, friendId INTEGER, "+
-                                             "CONSTRAINT PK PRIMARY KEY (uId,friendId), "+ 
-                                             "CONSTRAINT FK1 FOREIGN KEY (uId,friendId) REFERENCES users (id,id) ON DELETE CASCADE);");
-         */
+          stat.executeUpdate("create table player (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(50) UNIQUE, tipo int, lat double, lon double);");
 
-          /*
-          PreparedStatement prep = conn.prepareStatement(
-          "insert into player values (NULL, ?, ?, NULL, NULL);");
-
-          
-          // test users
-          prep.setString(1,"Ze");
-          prep.setInt(2,1);
-          prep.addBatch();
-          prep.setString(1, "Sa");
-          prep.setInt(2,1);
-          prep.addBatch();
-          prep.setString(1, "Silva");
-          prep.setInt(2,2);
-          prep.addBatch();
-
-          conn.setAutoCommit(false);
-          prep.executeBatch();
-          conn.setAutoCommit(true);
-
-          ResultSet rs = stat.executeQuery("select * from player;");
-          while (rs.next()) {
-            System.out.println("User = " + rs.getString("nome")+", Time = " + rs.getInt("time"));
-          }
-          rs.close();
-          */
           conn.close();
           
       }
@@ -79,7 +46,7 @@ public class DB {
 	        while (rs.next()) {
 	        	p = new Player(rs.getString("nome"),rs.getInt("tipo"));
 	        	p.setLatitude(rs.getDouble("lat"));
-	        	p.setLongitude(rs.getDouble("long"));
+	        	p.setLongitude(rs.getDouble("lon"));
 	        	list.add(p);
 	        	
 	          //System.out.println("Player name = " + rs.getString("nome")+", Time = " + rs.getInt("tipo") + "Latitude: "+rs.getDouble("lat")+ "Longitude: "+rs.getDouble("lon"));
@@ -108,13 +75,13 @@ public class DB {
 		try {
 			conn = DriverManager.getConnection("jdbc:sqlite:gameserver.db"); 
 	        conn.setAutoCommit(true);
-	        PreparedStatement prep = conn.prepareStatement("select * from player where player.id = ?;");
+	        PreparedStatement prep = conn.prepareStatement("select * from player where player.tipo = ?;");
 	        prep.setInt(1,team);
 	        ResultSet rs = prep.executeQuery();
 	        while (rs.next()) {
 	        	p = new Player(rs.getString("nome"),rs.getInt("tipo"));
 	        	p.setLatitude(rs.getDouble("lat"));
-	        	p.setLongitude(rs.getDouble("long"));
+	        	p.setLongitude(rs.getDouble("lon"));
 	        	list.add(p);
 	        	
 	          // System.out.println("Player name = " + rs.getString("nome")+", Tipo = " + rs.getInt("tipo") + "Latitude: "+rs.getDouble("lat")+ "Longitude: "+rs.getDouble("lon"));
@@ -134,6 +101,7 @@ public class DB {
      * Adiciona um jogador ao jogo
      * @param player Jogador a ser inserido
      * @return -1 em caso de erro e o ID do jogador caso contrário
+     * @throws ClassNotFoundException 
      */
     public static int addPlayer(Player player){
     	Connection conn = null;
@@ -153,70 +121,97 @@ public class DB {
             conn.setAutoCommit(false);
 	        prep = conn.prepareStatement("SELECT * FROM player where player.nome = ?");
 	        prep.setString(1, player.getNome());
-	        ResultSet rs = prep.executeQuery();
-	        // prep.close();
+	        ResultSet rs = null;
+	        
+	        rs = prep.executeQuery();
 	        if(rs.next()){
-	        	returnValue = rs.getInt("id");
-	        } else
-	        	returnValue = -1;
+	    		returnValue = rs.getInt("id");
+	    	} else
+	    		returnValue = -1;
+	    	
 	        prep.close();
 	        rs.close();
             conn.close();
             
 
-    	} catch (Exception e){
-    		e.printStackTrace();
-    	}
+    	
+    	} catch(ClassNotFoundException ce){
+    		ce.printStackTrace();
+    	} catch (SQLException e) {
+    		if(e.getMessage().equals("column nome is not unique"))
+    			returnValue = -1;
+		}
     	return returnValue;
     }
     	
-    	
-
     /**
-     * Check if the user and login suplied exists in the DB
-     * @param userName user name
-     * @param password password form user
-     * @return true if the user and password match or false if not 
+     * Remove um jogador do jogo
+     * 
+     * @param player Nome do Jogador a ser removido
+     * @return 1 em caso de sucesso, -1 em caso de falha
      */
-    	/*
-    public static boolean checkUser(String userName, String password){
-            Connection conn = null;
-            boolean returnVariable = false;
-            try {
-                    Class.forName("org.sqlite.JDBC");
-                    conn = DriverManager.getConnection("jdbc:sqlite:capim.db");
-                conn.setAutoCommit(false);
-                
-                // Debug only
-                // System.out.println("Usuario->"+userName+":pass->"+password);
-                
-                PreparedStatement prep = conn.prepareStatement("SELECT * FROM users u WHERE u.user = ? AND u.password = ?");
-                prep.setString(1, userName);
-                prep.setString(2, password);
-                ResultSet rs = prep.executeQuery();
-                if(rs.next()){
-                    returnVariable = true;
-                } else returnVariable = false;
-                rs.close();
-                
-            } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-            } catch (SQLException e1) {
-                    e1.printStackTrace();
-            } catch (ArrayIndexOutOfBoundsException e2) {
-                    e2.printStackTrace();
-            } finally {
-                    if(conn != null)
-                            try {
-                                    conn.close();
-                            } catch (SQLException e) {
-                                    e.printStackTrace();
-                            }
-            }
+    public static int delPlayer(String player){
+    	Connection conn = null;
+    	int returnValue = -1;
+    	try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:gameserver.db");
+            conn.setAutoCommit(false);
+    	
+            PreparedStatement prep = conn.prepareStatement("DELETE FROM player WHERE p.nome = ?");
+            prep.setString(1, player);
             
-            return returnVariable;
+	        ResultSet rs = prep.executeQuery();
+    		returnValue = 1;
+	    	
+	    	
+	        prep.close();
+	        rs.close();
+            conn.close();
+            
+
+    	
+    	} catch(ClassNotFoundException ce){
+    		ce.printStackTrace();
+    	} catch (SQLException e) {
+    		if(e.getMessage().equals("column nome is not unique"))
+    			returnValue = -1;
+		}
+    	return returnValue;
     }
-    */
+    
+    public static int updatePlayer(Player p){
+    	Connection conn = null;
+    	int returnValue = -1;
+    	try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:gameserver.db");
+            conn.setAutoCommit(false);
+
+            PreparedStatement prep = conn.prepareStatement("UPDATE player set player.tipo = ?, player.lat = ?, player.lon = ? where WHERE player.nome = ?");
+            prep.setInt(1, p.getTipo());
+            prep.setDouble(2, p.getLatitude());
+            prep.setDouble(3, p.getLongitude());
+            prep.setString(4, p.getNome());
+            
+	        ResultSet rs = prep.executeQuery();
+    		returnValue = 1;
+	    	
+	    	
+	        prep.close();
+	        rs.close();
+            conn.close();
+            
+
+    	
+    	} catch(ClassNotFoundException ce){
+    		ce.printStackTrace();
+    	} catch (SQLException e) {
+    		if(e.getMessage().equals("column nome is not unique"))
+    			returnValue = -1;
+		}
+    	return returnValue;
+    }
 
 
 }
