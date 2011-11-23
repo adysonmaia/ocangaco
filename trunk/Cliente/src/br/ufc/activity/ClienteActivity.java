@@ -3,8 +3,6 @@ package br.ufc.activity;
 
 import android.os.Bundle;
 import android.widget.Toast;
-import br.ufc.model.ClientGameState;
-import br.ufc.net.ServerFactory;
 import br.ufc.sensor.GameController;
 
 import com.google.android.maps.MapActivity;
