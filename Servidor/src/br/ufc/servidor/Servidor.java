@@ -25,23 +25,29 @@ public class Servidor {
 		/**
 		 * Inicia o serviço de Comunicação
 		 */
-		ServerService server = new ServerService(8080, 1024, false);
+		ServerService server = new ServerService(8888, 1024, false);
 		server.start();
 		System.out.println("Inicializando servidor do jogo");
 		
 		//Teste de exemplo
-		testeServer();
+		//testeServer();
 		
 	}
 
 	private static void testeServer() {
 		// Dados de exemplo
 		Player p = new Player("Zé",1);
-		gs.addPlayer(p);
-		p = new Player("Antoin",2);
-		gs.addPlayer(p);
-		System.out.println("Primeiro jogador: "+gs.listaJogadores().get(0).getNome());
-		System.out.println("Primeiro jogador do time 2: "+gs.listaJogadoresTipo(2).get(0).getNome());
+		gs.connectPlayer(p);
+		p = new Player("Zé",2);
+		if(gs.connectPlayer(p) == -1)
+			System.out.println("Já existe jogar com este nome");
+		try{
+			System.out.println("Primeiro jogador: "+gs.getPlayerList().get(0).getNome());
+			System.out.println("Primeiro jogador do time 2: "+gs.getPlayerListByType(2).get(0).getNome());
+		} catch (IndexOutOfBoundsException i){
+			
+		}
+		
 		
 	}
 
