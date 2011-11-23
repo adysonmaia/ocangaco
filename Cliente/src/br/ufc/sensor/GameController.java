@@ -41,8 +41,8 @@ public class GameController {
 		 */
 		{ // TODO : instanciar o player  apartir de uma conex�o com o server
 			if(ClientGameState.eu == null) 
-//				ClientGameState.eu = new Player("Fulano");
-				ClientGameState.eu = new Player("Sicrano");
+				ClientGameState.eu = new Player("Fulano");
+//				ClientGameState.eu = new Player("Sicrano");
 		}
 
 		gpsSensor = new GpsSensor(context);
@@ -112,9 +112,6 @@ public class GameController {
 		
 		// Posiciona o usuario em sua posição atual no mapa
 		lastUserGeoPoint = ClientGameState.eu.createLocationGeoPoint();
-		
-		mapController.animateTo(lastUserGeoPoint);
-		mapController.setZoom(mapView.getMaxZoomLevel() - 4);		
 	}
 	
 	private void updateMap() {		
