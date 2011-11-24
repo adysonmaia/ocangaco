@@ -1,4 +1,4 @@
-package br.ufc.location.geoengine;
+package geoengine;
 
 import java.util.Date;
 
@@ -16,6 +16,14 @@ public class GeoPosition implements IGeoPosition {
 		this.direction = direction;
 		this.latitude  = latitude;
 		this.longitude = longitude;
+	}
+	public GeoPosition(IGeoPosition position) {
+		super();
+		this.date      = position.getDate();
+		this.speed     = position.getSpeed();
+		this.direction = position.getDirection();
+		this.latitude  = position.getLatitude();
+		this.longitude = position.getLongitude();
 	}
 	
 	

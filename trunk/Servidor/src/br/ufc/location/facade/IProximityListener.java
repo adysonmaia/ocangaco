@@ -1,5 +1,15 @@
-package br.ufc.location.facade;
-
+package facade;
+/**
+ * Interface para definir a açao que deve ser tomada quando
+ * @author Danilo Reis
+ *
+ */
 public interface IProximityListener {
-
-}
+	/**
+	 * Metodo que é chamado para executar uma acao com dispositivos vizinhos
+	 * @param device1 dispositivo central
+	 * @param device2 dispositivo vizinho
+	 * @param distance distancia em metros entre os dois dispositivos
+	 */
+	void  action(IMobileDevice device1,IMobileDevice device2,double distance);
+};
