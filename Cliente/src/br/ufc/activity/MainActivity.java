@@ -27,6 +27,7 @@ public class MainActivity  extends Activity implements OnClickListener {
 		editTextName = (EditText)findViewById(R.id.editText1);
 		editTextTeam = (EditText)findViewById(R.id.editText2);
 		editTextIP = (EditText)findViewById(R.id.editText3);
+		editTextIP.setText(Properties.SERVER_IP);
 		
 		button = (Button)findViewById(R.id.button1);
 		button.setOnClickListener(this);
