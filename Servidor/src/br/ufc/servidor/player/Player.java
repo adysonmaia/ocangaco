@@ -1,4 +1,9 @@
-package br.ufc.servidor.player;
+package game;
+
+import facade.IMobileDevice;
+import facade.IProximityListener;
+import geoengine.DevicePath;
+import geoengine.IGeoPosition;
 
 /**
  * @author Andre Fonteles, Rafael de Lima e Benedito Neto
@@ -6,7 +11,7 @@ package br.ufc.servidor.player;
  * Class that defines a player
  * 
  */
-public class Player {
+public class Player implements IMobileDevice{
 	
 	private String nome;
 	private int tipo;
@@ -72,5 +77,101 @@ public class Player {
 	public String toString() {
 		return "Player [latitude=" + latitude + ", longitude=" + longitude
 				+ ", nome=" + nome + ", tipo=" + tipo + "]";
+	}
+
+	@Override
+	public Integer getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setGeoPosition(IGeoPosition position) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public IGeoPosition getGeoPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double getDistanceFrom(IMobileDevice device) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getLastDistance() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Integer getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setType(Integer type) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDistanceOn(float dist) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setGroup(Integer group) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer getGroup() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public float getDistanceOn() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setDevicePath(DevicePath path) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public DevicePath getDevicePath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setProximityListener(IProximityListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public IProximityListener getProximityListener() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String toXML() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

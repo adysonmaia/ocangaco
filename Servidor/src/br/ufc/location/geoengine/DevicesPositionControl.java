@@ -1,4 +1,4 @@
-package br.ufc.location.geoengine;
+package geoengine;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import br.ufc.location.facade.IMobileDevice;
+import facade.IMobileDevice;
 
 public class DevicesPositionControl {
 
@@ -43,7 +43,7 @@ public class DevicesPositionControl {
 	 * @param pos2 Interface das coordenadas geograficas do ponto 2
 	 * @return distancia em metros
 	 */
-	static public double calculateDistance(IGeoPosition pos1,IGeoPosition pos2){
+	static public synchronized double calculateDistance(IGeoPosition pos1,IGeoPosition pos2){
 		double dLat,dLon;
 		double     a,c,d;
 		double lat1,lat2;
@@ -63,27 +63,81 @@ public class DevicesPositionControl {
 		super();
 		map = new HashMap<Integer, IMobileDevice>();
 	}
-	
-	public boolean addDevice(IMobileDevice device){
+	/**
+	 * Adiciona um novo dispositivo movel a ser rastreado
+	 * @param device
+	 * @return
+	 */
+	public synchronized boolean  addDevice(IMobileDevice device){
+		DevicePath path;
+		// Cria um objeto path para o objeto
+		path = new DevicePath();
+		device.setDevicePath(path);		
 		// verifica se o dispositivo ja esta na tabela
 		map.put(device.getId(), device);
 		return true;
 	}
-	public List <IMobileDevice> getDevices(){
+	/**
+	 * Atualiza a posicao de um um dispositivo movel 
+	 * @param device
+	 * @return
+	 */
+	public synchronized boolean  updateDevicePosition(IMobileDevice device,IGeoPosition position){
+		GeoPosition pos;
+		
+		device = map.get(device.getId());
+		if ( device != null){
+			// Cria um objeto path para o objeto
+			pos = new GeoPosition(position);
+			device.getDevicePath().addPosition(pos);
+		}
+		return true;
+	}
+	/**
+	 * Retorna uma lista de dispositivos moveis registrados
+	 * @return
+	 */
+	public synchronized List <IMobileDevice> getDevices(){
 		ArrayList<IMobileDevice>  list;
 
 		list = new ArrayList<IMobileDevice>(map.values());
 		return list;		
 		
 	}
-	public float getDeviceDistance(){
-		return 0;
+	/**
+	 * Retorna uma lista de dispositivos moveis registrados e pertencentes a um grupo
+	 * @param groupId identificador do grupo
+	 * @return lista dos dispositivos de um grupo
+	 */
+	public synchronized List <IMobileDevice> getDevicesByGroup(int groupId){
+		List<IMobileDevice>          groupList;   
+		Iterator<IMobileDevice>       iterator;
+		IMobileDevice                      dev;
+		ArrayList<IMobileDevice>          list;
+
+		groupList = new ArrayList<IMobileDevice>();
+		list      = new ArrayList<IMobileDevice>(map.values());
+		iterator = list.iterator();
+		// calcula a distancia do dispositivo especificado
+		while(iterator.hasNext()){
+			dev = iterator.next();
+			// se pertence ao grupo a ser buscado adiciona na lista
+			if( dev.getGroup().intValue() == groupId){
+				groupList.add(dev);
+			}
+		}
+		return groupList;		
+		
 	}
+	/**
+	 * 
+	 * @param device
+	 * @return
+	 */
 	public List<IMobileDevice> getClosestDevices(IMobileDevice device){
 		List<IMobileDevice>       distanceList;   
 		Iterator<IMobileDevice>       iterator;
 		IMobileDevice                      dev;
-		
 		
 		distanceList  = getDevices();
 		iterator = distanceList.iterator();
@@ -114,7 +168,7 @@ public class DevicesPositionControl {
 	 */
 	public void getGoogleMapMap(String latitude,String longitude,String imageName,String zoom,String custonIconUrl,DevicePath path ) throws IOException{
 		String urlName;
-		urlName = "http://maps.google.com/maps/api/staticmap?center="+latitude+","+longitude+"&zoom="+zoom+"&size=100x100&format=jpg-baseline&sensor=true&maptype=roadmap&mobile=true";
+		urlName = "http://maps.google.com/maps/api/staticmap?center="+latitude+","+longitude+"&zoom="+zoom+"&size=400x400&format=jpg-baseline&sensor=true&maptype=roadmap&mobile=true";
 		if( (custonIconUrl==null)||(custonIconUrl.equals(""))){
 			urlName += "&markers=color:blue|label:S|"+latitude+","+longitude;
 		}
@@ -175,7 +229,7 @@ public class DevicesPositionControl {
     		pos = new GeoPosition(new Date(), 0, 0,(float)(40.755823),(float)(-73.986397));
     		path.addPosition(pos);
     		
-			control.getGoogleMapMap("40.755823","-73.986397","image2.jpg","14","http://tinyurl.com/d7pedea",path);
+			control.getGoogleMapMap("40.755823","-73.986397","image2.jpg","15","http://tinyurl.com/d7pedea",path);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
