@@ -174,6 +174,7 @@ public class DB {
     	} catch(ClassNotFoundException ce){
     		ce.printStackTrace();
     	} catch (SQLException e) {
+    		System.out.println("Erro -> "+e.getMessage());
     		if(e.getMessage().equals("column nome is not unique"))
     			returnValue = -1;
 		}
@@ -224,7 +225,7 @@ public class DB {
             conn = DriverManager.getConnection("jdbc:sqlite:gameserver.db");
             conn.setAutoCommit(false);
 
-            PreparedStatement prep = conn.prepareStatement("UPDATE player set player.tipo = ?, player.lat = ?, player.lon = ? where WHERE player.nome = ?");
+            PreparedStatement prep = conn.prepareStatement("UPDATE player set tipo = ?, lat = ?, lon = ? WHERE player.nome = ?");
             prep.setInt(1, p.getTipo());
             prep.setDouble(2, p.getLatitude());
             prep.setDouble(3, p.getLongitude());
@@ -244,6 +245,7 @@ public class DB {
     		ce.printStackTrace();
     	} catch (SQLException e) {
     			returnValue = -1;
+    			System.out.println(e.getMessage());
 		}
     	return returnValue;
     }
