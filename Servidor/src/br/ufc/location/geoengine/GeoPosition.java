@@ -2,14 +2,16 @@ package geoengine;
 
 import java.util.Date;
 
+import facade.IGeoPosition;
+
 public class GeoPosition implements IGeoPosition {
 	Date         date;
-	float       speed;
-	float   direction;
-	float    latitude;
-	float   longitude;
+	double       speed;
+	double   direction;
+	double    latitude;
+	double   longitude;
 
-	public GeoPosition(Date date, float speed, float direction, float latitude,float longitude) {
+	public GeoPosition(Date date, double speed, double direction, double latitude,double longitude) {
 		super();
 		this.date      = date;
 		this.speed     = speed;
@@ -27,44 +29,50 @@ public class GeoPosition implements IGeoPosition {
 	}
 	
 	
+	public GeoPosition(Date now, double latitude, double longitude) {
+		super();
+		this.date      = now;
+		this.latitude  = latitude;
+		this.longitude = longitude;
+	}
 	@Override
-	public void setLatitude(float latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 
 	}
 
 	@Override
-	public void setLongitude(float longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
 	@Override
-	public void setSpeed(float speed) {
+	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
 
 	@Override
-	public void setDirection(float angle) {
+	public void setDirection(double angle) {
 		this.direction = angle;
 	}
 
 	@Override
-	public float getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
 	@Override
-	public float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
 	@Override
-	public float getSpeed() {
+	public double getSpeed() {
 		return speed;
 	}
 
 	@Override
-	public float getDirection() {
+	public double getDirection() {
 		return direction;
 	}
 

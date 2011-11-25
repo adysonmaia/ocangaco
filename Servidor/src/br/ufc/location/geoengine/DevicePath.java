@@ -1,8 +1,10 @@
-package br.ufc.location.geoengine;
+package geoengine;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+
+import facade.IGeoPosition;
 
 public class DevicePath {
 

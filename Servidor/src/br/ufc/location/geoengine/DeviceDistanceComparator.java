@@ -1,8 +1,9 @@
-package br.ufc.location.geoengine;
+package geoengine;
 
 import java.util.Comparator;
 
-import br.ufc.location.facade.IMobileDevice;
+import facade.IMobileDevice;
+
 
 public class DeviceDistanceComparator  implements Comparator<Object>{
    

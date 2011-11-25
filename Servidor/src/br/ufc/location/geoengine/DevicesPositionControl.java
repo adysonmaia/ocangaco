@@ -12,8 +12,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import facade.IGeoPosition;
 import facade.IMobileDevice;
 
+/**
+ * Classe controladora do gerenciamento de posições
+ * @author Danilo Reis
+ *
+ */
 public class DevicesPositionControl {
 
 	private HashMap<Integer, IMobileDevice> map;
@@ -69,29 +75,95 @@ public class DevicesPositionControl {
 	 * @return
 	 */
 	public synchronized boolean  addDevice(IMobileDevice device){
-		DevicePath path;
-		// Cria um objeto path para o objeto
-		path = new DevicePath();
-		device.setDevicePath(path);		
 		// verifica se o dispositivo ja esta na tabela
 		map.put(device.getId(), device);
 		return true;
+	}
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public synchronized IMobileDevice searchMobileDeviceById(Integer id){
+		return map.get(id);
 	}
 	/**
 	 * Atualiza a posicao de um um dispositivo movel 
 	 * @param device
 	 * @return
 	 */
-	public synchronized boolean  updateDevicePosition(IMobileDevice device,IGeoPosition position){
-		GeoPosition pos;
+	public synchronized boolean  updateDevicePosition(Integer deviceId,IGeoPosition position){
+		GeoPosition      pos;
+		IMobileDevice device;
 		
-		device = map.get(device.getId());
+		device = map.get(deviceId);
 		if ( device != null){
-			// Cria um objeto path para o objeto
-			pos = new GeoPosition(position);
-			device.getDevicePath().addPosition(pos);
+			// coloca a atualiza a posicao corrente no dispositivo
+			device.setGeoPosition(position);
+			// executa os Listener de proximidade
+			performProximityListeners(device);
+			
 		}
 		return true;
+	}
+	/**
+	 * 
+	 * @param device
+	 */
+	public synchronized void performProximityListeners(IMobileDevice device){
+		Iterator<IMobileDevice>       iterator;
+		IMobileDevice                      dev;
+		ArrayList<IMobileDevice>          list;
+		double                        distance;
+
+		// cria uma lista com todos os dispositivos
+		list      = new ArrayList<IMobileDevice>(map.values());
+		iterator = list.iterator();
+		// percorre a lista de dispositivos registrados
+		while(iterator.hasNext()){
+			dev      = iterator.next();
+			// caso o dispositivo nao seja ele proprio
+			if( !(dev.getId().equals(device.getId())) ){
+				// calcula a distancia do dispositivo especificado
+				distance = calculateDistance(device.getGeoPosition(), dev.getGeoPosition());
+				// executa os listener dos objetos
+				if (dev.getProximityListener() != null){
+					dev.getProximityListener().action(dev, device, distance);
+				}
+				if (device.getProximityListener() != null){
+					device.getProximityListener().action(device, dev, distance);
+				}
+			}
+		}
+	}
+	/**
+	 * 
+	 * @param device
+	 * @return
+	 */
+	public  synchronized List<IMobileDevice> getVisibleDeviceList(IMobileDevice device,List<IMobileDevice> devices){
+		Iterator<IMobileDevice>       iterator;
+		IMobileDevice                      dev;
+		ArrayList<IMobileDevice>          list;
+		double                        distance;
+
+		// cria uma lista com todos os dispositivos
+		list      = new ArrayList<IMobileDevice>();
+		iterator = devices.iterator();
+		// percorre a lista de dispositivos registrados
+		while(iterator.hasNext()){
+			dev      = iterator.next();
+			// caso o dispositivo nao seja ele proprio
+			if( (dev != null) &&(!(dev.getId().equals(device.getId()))) ){
+				// calcula a distancia do dispositivo especificado
+				distance = calculateDistance(device.getGeoPosition(), dev.getGeoPosition());
+				// executa os listener dos objetos
+				if (dev.getVisibilityListener().isVisible(device, dev, distance)){
+					list.add(dev);
+				}
+			}
+		}
+		return list;
 	}
 	/**
 	 * Retorna uma lista de dispositivos moveis registrados
@@ -127,14 +199,13 @@ public class DevicesPositionControl {
 			}
 		}
 		return groupList;		
-		
 	}
 	/**
 	 * 
 	 * @param device
 	 * @return
 	 */
-	public List<IMobileDevice> getClosestDevices(IMobileDevice device){
+	public  synchronized List<IMobileDevice> getDevicesSortedByDistance(IMobileDevice device){
 		List<IMobileDevice>       distanceList;   
 		Iterator<IMobileDevice>       iterator;
 		IMobileDevice                      dev;
@@ -166,7 +237,7 @@ public class DevicesPositionControl {
 	 * @param path
 	 * @throws IOException 
 	 */
-	public void getGoogleMapMap(String latitude,String longitude,String imageName,String zoom,String custonIconUrl,DevicePath path ) throws IOException{
+	public  synchronized void getGoogleMapMap(String latitude,String longitude,String imageName,String zoom,String custonIconUrl,DevicePath path ) throws IOException{
 		String urlName;
 		urlName = "http://maps.google.com/maps/api/staticmap?center="+latitude+","+longitude+"&zoom="+zoom+"&size=400x400&format=jpg-baseline&sensor=true&maptype=roadmap&mobile=true";
 		if( (custonIconUrl==null)||(custonIconUrl.equals(""))){
@@ -187,7 +258,7 @@ public class DevicesPositionControl {
 	 * @param destinationFile
 	 * @throws IOException
 	 */
-	public void saveImageFromUrl(String imageUrl, String destinationFile) throws IOException {
+	public  synchronized void saveImageFromUrl(String imageUrl, String destinationFile) throws IOException {
 		URL         url;
 		InputStream  is;
 		OutputStream os;

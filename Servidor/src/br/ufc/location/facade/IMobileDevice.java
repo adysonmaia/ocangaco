@@ -1,7 +1,6 @@
-package br.ufc.location.facade;
+package facade;
 
-import br.ufc.location.geoengine.DevicePath;
-import br.ufc.location.geoengine.IGeoPosition;
+import geoengine.DevicePath;
 
 /**
  * Interface que define as informações de um dispositivo movel ( jogado, mina, munição etc.)
@@ -32,12 +31,12 @@ public interface IMobileDevice {
 	double                   getDistanceFrom(IMobileDevice device);
 	/**
 	 * Retorna o valor da ultima distancia calculada
-	 * @return
+	 * @return ultima distancia calculada em metros
 	 */
 	double                                 getLastDistance();
 	/**
 	 * Retorna o tipo do dispositivo
-	 * @return
+	 * @return tipo do dispositivo
 	 */
 	Integer                                        getType();
 	/**
@@ -49,22 +48,22 @@ public interface IMobileDevice {
 	 * Seta distancia na qual limite para um dispositivo ser considerado sobre
 	 * @param distancia em metros
 	 */
-	void                           setDistanceOn(float dist);
+	void                           setDistanceOn(double dist);
 	/**
 	 * Seta o grupo que o dispositivo pertence
-	 * @param group
+	 * @param group código do grupo
 	 */
 	void                             setGroup(Integer group);
 	/**
 	 * Retorna o grupo que o usário pertence
-	 * @return
+	 * @return código do grupo
 	 */
 	Integer                                       getGroup();
 	/**
 	 * Retorna a distancia limite para um dispositivo ser considerado sobre
-	 * @return
+	 * @return distancia em metros
 	 */
-	float                                   getDistanceOn();
+	double                                   getDistanceOn();
 	/**
 	 * Seta o objeto de controle da rota realizada  do dispositivo
 	 * @param path
@@ -87,6 +86,12 @@ public interface IMobileDevice {
 	 * @return
 	 */
 	IProximityListener               getProximityListener();
+	/**
+	 * Retorna o listener que é atuado quando o servidor de georeferenciamento
+	 * detectar situação de proximidade
+	 * @return
+	 */
+	IVisibilityListener               getVisibilityListener();
 	/**
 	 * Converte as informaçoes do dispositivo em parametros XML
 	 * @return

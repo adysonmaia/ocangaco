@@ -1,9 +1,14 @@
 package game;
 
+import proximitylistener.ProximityPlayerListener;
+import visibilitylistener.VisibilityPlayerListener;
+import facade.IGeoPosition;
 import facade.IMobileDevice;
 import facade.IProximityListener;
+import facade.IVisibilityListener;
 import geoengine.DevicePath;
-import geoengine.IGeoPosition;
+import geoengine.DevicesPositionControl;
+import geoengine.GeoPosition;
 
 /**
  * @author Andre Fonteles, Rafael de Lima e Benedito Neto
@@ -13,15 +18,38 @@ import geoengine.IGeoPosition;
  */
 public class Player implements IMobileDevice{
 	
-	private String nome;
-	private int tipo;
-	private double latitude;
-	private double longitude;
+	private String          nome;
+	private int             tipo;
+	private double      latitude;
+	private double     longitude;
+	
+	private Integer                          id;
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
+	private GeoPosition                position;
+	private double                     distance;
+	private double                   distanceOn;
+	private Integer                        type;
+	private Integer                     groupId;
+	private DevicePath                     path;
+	private ProximityPlayerListener   proximity;
+	private VisibilityPlayerListener visibility;
+
+
+	
 	public Player(String nome, int tipo) {
+		
 		super();
+
 		this.nome = nome;
 		this.tipo = tipo;
+		
+		proximity  = new ProximityPlayerListener();
+		visibility = new VisibilityPlayerListener();
+		path       = new DevicePath();
+		distanceOn = 10;
 	}
 
 	/**
@@ -29,6 +57,7 @@ public class Player implements IMobileDevice{
 	 * @param nome Nome do Jogador
 	 */
 	public Player(String nome) {
+		
 		super();
 		this.nome = nome;
 	}
@@ -81,74 +110,70 @@ public class Player implements IMobileDevice{
 
 	@Override
 	public Integer getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return id;
 	}
 
 	@Override
 	public void setGeoPosition(IGeoPosition position) {
-		// TODO Auto-generated method stub
+		GeoPosition pos;
 		
+		if(position != null){
+			this.position = (GeoPosition) position; 
+			pos = new GeoPosition(position);
+			this.path.addPosition(pos);
+		}
 	}
 
 	@Override
 	public IGeoPosition getGeoPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return (IGeoPosition)position;
 	}
 
 	@Override
 	public double getDistanceFrom(IMobileDevice device) {
-		// TODO Auto-generated method stub
-		return 0;
+		distance = DevicesPositionControl.calculateDistance(this.getGeoPosition(),device.getGeoPosition());
+		return distance;
 	}
 
 	@Override
 	public double getLastDistance() {
-		// TODO Auto-generated method stub
-		return 0;
+		return distance;
 	}
 
 	@Override
 	public Integer getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return type;
 	}
 
 	@Override
 	public void setType(Integer type) {
-		// TODO Auto-generated method stub
+		this.type = type;
 		
 	}
 
 	@Override
-	public void setDistanceOn(float dist) {
-		// TODO Auto-generated method stub
-		
+	public void setDistanceOn(double dist) {
+		this.distanceOn = dist;
 	}
 
 	@Override
 	public void setGroup(Integer group) {
-		// TODO Auto-generated method stub
-		
+		this.groupId = group;
 	}
 
 	@Override
 	public Integer getGroup() {
-		// TODO Auto-generated method stub
-		return null;
+		return groupId;
 	}
 
 	@Override
-	public float getDistanceOn() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double getDistanceOn() {
+		return distanceOn;
 	}
 
 	@Override
 	public void setDevicePath(DevicePath path) {
-		// TODO Auto-generated method stub
-		
+		this.path = path;
 	}
 
 	@Override
@@ -174,4 +199,10 @@ public class Player implements IMobileDevice{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public IVisibilityListener getVisibilityListener() {
+		return visibility;
+	}
+
 }
