@@ -1,7 +1,6 @@
-package br.ufc.location.facade;
+package facade;
 
-import br.ufc.location.geoengine.DevicePath;
-import br.ufc.location.geoengine.IGeoPosition;
+import geoengine.DevicePath;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package visibilitylistener;
 
 import facade.IMobileDevice;
-import geoengine.IVisibilityListener;
+import facade.IVisibilityListener;
 
-public class VisibilityPlayListener implements IVisibilityListener{
+public class VisibilityPlayerListener implements IVisibilityListener{
 
 	@Override
 	public boolean isVisible(IMobileDevice device1, IMobileDevice device2,double distance) {

@@ -1,7 +1,9 @@
-package br.ufc.location.geoengine;
+package geoengine;
 
 import java.util.Comparator;
 import java.util.Date;
+
+import facade.IGeoPosition;
 
 public class GeoPositionDateComparator  implements Comparator{
    
