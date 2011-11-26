@@ -16,7 +16,7 @@ public class CmdRegister extends CommandExecute {
 		String                    tipo;
 		double                latitude;
 		double               longitude;
-		int                          t;
+		int                    t,group;
 		Player                  player;
 		GeoPosition                pos;
 		Date                       now;
@@ -24,14 +24,21 @@ public class CmdRegister extends CommandExecute {
 		Integer                 freeId;
 		String                    resp;
 		
+		// Nome do jogador
 		nome      = param[0];
+		// tipo do jogador
 		t         = Integer.parseInt(param[1]);
-		latitude  = Double.parseDouble(param[2]);
-		longitude = Double.parseDouble(param[3]);		
+		// time do jogador
+		group     = Integer.parseInt(param[2]);
+		// latitude corrente do jogador
+		latitude  = Double.parseDouble(param[3]);
+		// longitude corrente do jogador
+		longitude = Double.parseDouble(param[4]);		
 		
 		control = DevicesPositionControl.getInstance();
 
-		player    = new Player(nome, t, latitude, longitude);
+		player    = new Player(nome, t,group, latitude, longitude);
+		
 		freeId = DevicesPositionControl.getNextFreeDeviceId();
 		
 		player.setId(freeId);

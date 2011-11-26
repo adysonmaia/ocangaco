@@ -51,10 +51,30 @@ public class CmdUpdatePosition extends CommandExecute {
 		addToListVisibleInimyDevices(device);
 		
 		// Retorna o identificador do gerenciador de geoposicionamento
-		resp = null;
+		resp =  getVisibleDevicesList();
 		
 		
 		return resp;
+	}
+
+	private String getVisibleDevicesList() {
+		Iterator<IMobileDevice>       iterator;
+		IMobileDevice                   device;
+		StringBuffer                      resp;
+
+		resp = new StringBuffer();
+		iterator = clientDevicesView.iterator();
+		// percorre a lista de dispositivos inimigos que estao visiveis
+		resp.append("<visibledevices>");
+		resp.append('\n');
+		while(iterator.hasNext()){
+			device  = iterator.next();
+			resp.append(device.toXML());
+			resp.append('\n');
+		}
+		resp.append("</visibledevices>");
+		resp.append('\n');
+		return resp.toString();
 	}
 
 	private void addToListVisibleInimyDevices(IMobileDevice device) {
