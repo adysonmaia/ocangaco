@@ -56,7 +56,6 @@ public class Player implements IMobileDevice{
 		proximity  = new ProximityPlayerListener();
 		visibility = new VisibilityPlayerListener();
 		path       = new DevicePath();
-		distanceOn = 10;
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -70,6 +69,10 @@ public class Player implements IMobileDevice{
 		
 		super();
 		this.nome = nome;
+		proximity  = new ProximityPlayerListener();
+		visibility = new VisibilityPlayerListener();
+		path       = new DevicePath();
+		
 	}
 
 	public Player(String nome, int tipo,int group, double latitude, double longitude) {
@@ -79,6 +82,9 @@ public class Player implements IMobileDevice{
 		this.groupId   = group;
 		this.latitude  = latitude;
 		this.longitude = longitude;
+		proximity  = new ProximityPlayerListener();
+		visibility = new VisibilityPlayerListener();
+		path       = new DevicePath();
 	}
 
 	public String getNome() {
@@ -189,19 +195,18 @@ public class Player implements IMobileDevice{
 
 	@Override
 	public DevicePath getDevicePath() {
-		// TODO Auto-generated method stub
-		return null;
+		return path;
 	}
 
 	@Override
-	public void setProximityListener(IProximityListener listener) {
-		// TODO Auto-generated method stub
+	public void setProximityListener(IProximityListener proximity) {
+		this.proximity = (ProximityPlayerListener) proximity;
 		
 	}
 
 	@Override
 	public IProximityListener getProximityListener() {
-		return null;
+		return proximity;
 	}
 
 	@Override

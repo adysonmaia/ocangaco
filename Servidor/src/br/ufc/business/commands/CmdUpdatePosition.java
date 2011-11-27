@@ -82,7 +82,6 @@ public class CmdUpdatePosition extends CommandExecute {
 		IMobileDevice                      dev;
 		List<IMobileDevice>     listTotal,list;
 		int                            inimyId;
-		double                        distance;
 
 		// Descobre o id do time inimigo
 		inimyId =( device.getGroup()==1)?2:1;
