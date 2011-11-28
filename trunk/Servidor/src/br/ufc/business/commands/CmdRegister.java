@@ -15,7 +15,6 @@ public class CmdRegister extends CommandExecute {
 	@Override
 	public String execute(String[] param) {
 		String                    nome;
-		String                    tipo;
 		double                latitude;
 		double               longitude;
 		int                    t,group;

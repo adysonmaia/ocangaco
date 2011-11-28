@@ -37,11 +37,11 @@ public class Player implements IMobileDevice{
 	public static final int SOLDIER  = 1;
 	public static final int DOCTOR   = 2;
 	public static final int ENGINEER = 3;
-	public static final int SPY      = 4;	
-	public static final int DEFAULT_GROUP = SOLDIER;
+	public static final int SPY      = 4;
 	
-	public static final int RED_TEAM  = 1;
-	public static final int BLUE_TEAM = 2;
+	public static final int BLUE_TEAM  = 1;
+	public static final int RED_TEAM = 2;
+	public static final int DEFAULT_GROUP = BLUE_TEAM;
 
 	public static final int VIEW_DISTANCE     = 100;
 	public static final int COLISION_DISTANCE = 10;
