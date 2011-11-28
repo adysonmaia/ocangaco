@@ -1,4 +1,4 @@
-package geoengine;
+package br.ufc.location.geoengine;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import facade.IGeoPosition;
-import facade.IMobileDevice;
+import br.ufc.location.facade.IGeoPosition;
+import br.ufc.location.facade.IMobileDevice;
 
 /**
  * Classe controladora do gerenciamento de posições

@@ -1,11 +1,9 @@
-package test;
-
-import game.CmdRegister;
-import geoengine.DevicesPositionControl;
-import geoengine.GeoPosition;
+package br.ufc.location.geoengine;
 
 import java.util.Date;
 import java.util.List;
+
+import br.ufc.business.commands.CmdRegister;
 
 public class GeoPositionControlTest {
 
@@ -32,6 +30,8 @@ public class GeoPositionControlTest {
         cmdReg = new CmdRegister();
         resp = cmdReg.execute(params);
         
+        System.out.println("Register test: " + resp);
+        
 		params[0] ="Fabio";
 		params[1] ="1";
 		params[2] ="1";
@@ -39,6 +39,8 @@ public class GeoPositionControlTest {
         params[4] ="38.540081";
 
         resp = cmdReg.execute(params);
+        
+        System.out.println("Register test: " + resp);
         
         latitude  = Double.parseDouble("-3.717381");
         longitude = Double.parseDouble("38.539986");
@@ -48,7 +50,6 @@ public class GeoPositionControlTest {
         control.updateDevicePosition(new Integer(1), position);
         
         List list = control.getDevicesByGroup(1);
-        
 	}
 
 }

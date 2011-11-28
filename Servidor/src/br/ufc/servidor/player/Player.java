@@ -1,14 +1,14 @@
-package game;
+package br.ufc.servidor.player;
 
-import proximitylistener.ProximityPlayerListener;
-import visibilitylistener.VisibilityPlayerListener;
-import facade.IGeoPosition;
-import facade.IMobileDevice;
-import facade.IProximityListener;
-import facade.IVisibilityListener;
-import geoengine.DevicePath;
-import geoengine.DevicesPositionControl;
-import geoengine.GeoPosition;
+import br.ufc.location.facade.IGeoPosition;
+import br.ufc.location.facade.IMobileDevice;
+import br.ufc.location.facade.IProximityListener;
+import br.ufc.location.facade.IVisibilityListener;
+import br.ufc.location.geoengine.DevicePath;
+import br.ufc.location.geoengine.DevicesPositionControl;
+import br.ufc.location.geoengine.GeoPosition;
+import br.ufc.location.listeners.ProximityPlayerListener;
+import br.ufc.location.listeners.VisibilityPlayerListener;
 
 /**
  * @author Andre Fonteles, Rafael de Lima e Benedito Neto
@@ -37,7 +37,8 @@ public class Player implements IMobileDevice{
 	public static final int SOLDIER  = 1;
 	public static final int DOCTOR   = 2;
 	public static final int ENGINEER = 3;
-	public static final int SPY      = 4;
+	public static final int SPY      = 4;	
+	public static final int DEFAULT_GROUP = SOLDIER;
 	
 	public static final int RED_TEAM  = 3;
 	public static final int BLUE_TEAM = 4;
@@ -75,7 +76,7 @@ public class Player implements IMobileDevice{
 		
 	}
 
-	public Player(String nome, int tipo,int group, double latitude, double longitude) {
+	public Player(String nome, int tipo, int group, double latitude, double longitude) {
 		super();
 		this.nome      = nome;
 		this.tipo      = tipo;
@@ -87,6 +88,18 @@ public class Player implements IMobileDevice{
 		path       = new DevicePath();
 	}
 
+	public Player(String nome, int tipo, double latitude, double longitude) {
+		super();
+		
+		this.nome = nome;
+		this.tipo = tipo;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.groupId   = DEFAULT_GROUP;
+		proximity  = new ProximityPlayerListener();
+		visibility = new VisibilityPlayerListener();
+		path       = new DevicePath();
+	}
 	public String getNome() {
 		return nome;
 	}

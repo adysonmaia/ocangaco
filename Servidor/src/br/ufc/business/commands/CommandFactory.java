@@ -18,5 +18,11 @@ public class CommandFactory {
 	 	
 	 	cmd = new CmdDisconnect();
 	 	CommandParser.addCommand("<disconnect>",1,cmd);	
+	 	
+	 	cmd = new CmdRegister();
+	 	CommandParser.addCommand("<regiser>",0,cmd);
+	 	
+	 	cmd = new CmdUpdatePosition();	 	
+	 	CommandParser.addCommand("<updateposition>",0,cmd);
 	}
 }

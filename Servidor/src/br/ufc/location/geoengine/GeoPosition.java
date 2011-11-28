@@ -1,8 +1,8 @@
-package geoengine;
+package br.ufc.location.geoengine;
 
 import java.util.Date;
 
-import facade.IGeoPosition;
+import br.ufc.location.facade.IGeoPosition;
 
 public class GeoPosition implements IGeoPosition {
 	Date         date;

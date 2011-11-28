@@ -1,6 +1,6 @@
-package facade;
+package br.ufc.location.facade;
 
-import geoengine.DevicePath;
+import br.ufc.location.geoengine.DevicePath;
 
 /**
  * Interface que define as informações de um dispositivo movel ( jogado, mina, munição etc.)

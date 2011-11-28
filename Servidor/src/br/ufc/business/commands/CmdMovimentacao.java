@@ -1,10 +1,8 @@
 package br.ufc.business.commands;
 
-import br.ufc.location.test.GameStateTest;
-import br.ufc.location.test.LocationServerTest;
+import myserver.kernel.CommandExecute;
 import br.ufc.servidor.Servidor;
 import br.ufc.servidor.player.Player;
-import myserver.kernel.CommandExecute;
 
 public class CmdMovimentacao extends CommandExecute {
 

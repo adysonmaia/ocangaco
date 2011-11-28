@@ -1,8 +1,8 @@
-package proximitylistener;
+package br.ufc.location.listeners;
 
-import facade.IMobileDevice;
-import facade.IProximityListener;
-import game.Player;
+import br.ufc.location.facade.IMobileDevice;
+import br.ufc.location.facade.IProximityListener;
+import br.ufc.servidor.player.Player;
 
 /**
  * Esta classe implementa a ação que o jogado executa quando se relaciona com outro
