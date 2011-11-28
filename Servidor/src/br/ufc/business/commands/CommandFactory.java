@@ -24,5 +24,8 @@ public class CommandFactory {
 	 	
 	 	cmd = new CmdUpdatePosition();	 	
 	 	CommandParser.addCommand("<updateposition>",0,cmd);
+	 	
+	 	cmd = new CmdGetDevicesList();	 	
+	 	CommandParser.addCommand("<deviceslist>",0,cmd);
 	}
 }

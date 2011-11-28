@@ -3,6 +3,7 @@ package br.ufc.location.test;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 import br.ufc.servidor.player.Player;
 import br.ufc.util.Conexao;
@@ -10,20 +11,50 @@ import br.ufc.util.EntityParser;
 
 public class LocationClientTest {
 	static String comando;
-	static String [] params;
+	static String [] params;	
 	
 	public static void main(String[] args) throws IOException {
 		//testSoma();		
 		//testMovimentacao();		
 		//testGameState();
 		//testDisconnect();
-		//testRegister();
-		testUpdatePosition();
+		testRegister();
+		//testUpdatePosition();
+		testDevicesList();
+	}
+
+	private static void testDevicesList() {
+		comando = makeCommand("deviceslist", params, 0);
+		System.out.println("List of devices: \n" + getServerResponse(comando));
 	}
 
 	private static void testUpdatePosition() {
-		// TODO Auto-generated method stub
+		params = new String [10];
 		
+		params[0] ="Danilo";
+		params[1] ="1";
+		params[2] ="1";
+		params[3] ="-3.717381";
+		params[4] ="38.539906";
+		
+		comando = makeCommand("register", params, 5);
+		int id = Integer.parseInt(getServerResponse(comando));
+		
+		params[0] ="Fabio";
+		params[1] ="1";
+		params[2] ="2";
+        params[3] ="-3.717123";
+        params[4] ="38.540081";
+        
+        comando = makeCommand("register", params, 5);
+        id = Integer.parseInt(getServerResponse(comando));
+        
+		params[0] = String.valueOf(id);
+		params[1] = String.valueOf(-3.717381 + 0.0001);
+		params[2] = "38.539906";
+		
+		comando = makeCommand("updateposition", params, 5);
+		System.out.println("List of devices: \n" + getServerResponse(comando));		
 	}
 
 	//Registro testado com sucesso com o servidor rodando!
@@ -37,7 +68,7 @@ public class LocationClientTest {
 		params[4] ="38.539906";
 		
 		comando = makeCommand("register", params, 5);
-		System.out.println("Register player 1 = " + getServerResponse(comando));
+		System.out.println("Player 1 id = " + getServerResponse(comando));
 		
 		params[0] ="Fabio";
 		params[1] ="1";
@@ -46,8 +77,9 @@ public class LocationClientTest {
         params[4] ="38.540081";
         
         comando = makeCommand("register", params, 5);
-        System.out.println("Register player 2 = " + getServerResponse(comando));
+        System.out.println("player 2 id = " + getServerResponse(comando));
 	}
+	
 	
 	private static String makeCommand(String name, String[] params, int nParams)
 	{
@@ -55,6 +87,9 @@ public class LocationClientTest {
 		for (int i = 0; i < nParams; i++) {
 			comando += params[i] + ",";
 		}	
+		if(nParams == 0){
+			comando += ",";
+		}
 		comando += "<" + name + ">";
 		
 		return comando;

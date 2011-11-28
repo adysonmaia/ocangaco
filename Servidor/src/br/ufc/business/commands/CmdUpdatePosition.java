@@ -52,9 +52,8 @@ public class CmdUpdatePosition extends CommandExecute {
 		// adiciona na lista os dispositivos do time oposto
 		addToListVisibleInimyDevices(device);
 		
-		// Retorna o identificador do gerenciador de geoposicionamento
+		// Retorna a lista dos dispositivos visíveis ao usuário
 		resp =  getVisibleDevicesList();
-		
 		
 		return resp;
 	}
