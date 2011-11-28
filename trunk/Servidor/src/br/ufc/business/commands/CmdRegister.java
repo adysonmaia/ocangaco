@@ -1,9 +1,11 @@
-package game;
-
-import geoengine.DevicesPositionControl;
-import geoengine.GeoPosition;
+package br.ufc.business.commands;
 
 import java.util.Date;
+
+import myserver.kernel.CommandExecute;
+import br.ufc.location.geoengine.DevicesPositionControl;
+import br.ufc.location.geoengine.GeoPosition;
+import br.ufc.servidor.player.Player;
 
 public class CmdRegister extends CommandExecute {
 

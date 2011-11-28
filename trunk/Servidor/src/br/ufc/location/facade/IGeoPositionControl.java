@@ -1,8 +1,8 @@
-package facade;
-
-import geoengine.DevicePath;
+package br.ufc.location.facade;
 
 import java.util.List;
+
+import br.ufc.location.geoengine.DevicePath;
 
 /**
  * Interface do controlador de georeferenciamento

@@ -13,7 +13,19 @@ public class LocationClientTest {
 		//testSoma();		
 		//testMovimentacao();		
 		//testGameState();
-		testDisconnect();
+		//testDisconnect();
+		//testRegister();
+		//testUpdatePosition();
+	}
+
+	private static void testUpdatePosition() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void testRegister() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private static void testGameState() {

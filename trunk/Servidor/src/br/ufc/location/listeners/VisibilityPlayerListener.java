@@ -1,8 +1,8 @@
-package visibilitylistener;
+package br.ufc.location.listeners;
 
-import facade.IMobileDevice;
-import facade.IVisibilityListener;
-import game.Player;
+import br.ufc.location.facade.IMobileDevice;
+import br.ufc.location.facade.IVisibilityListener;
+import br.ufc.servidor.player.Player;
 
 public class VisibilityPlayerListener implements IVisibilityListener{
 

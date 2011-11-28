@@ -1,4 +1,4 @@
-package facade;
+package br.ufc.location.facade;
 
 import java.util.Date;
 

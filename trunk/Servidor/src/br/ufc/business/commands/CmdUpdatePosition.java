@@ -1,13 +1,14 @@
-package game;
+package br.ufc.business.commands;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import facade.IMobileDevice;
-import geoengine.DevicesPositionControl;
-import geoengine.GeoPosition;
+import myserver.kernel.CommandExecute;
+import br.ufc.location.facade.IMobileDevice;
+import br.ufc.location.geoengine.DevicesPositionControl;
+import br.ufc.location.geoengine.GeoPosition;
 
 public class CmdUpdatePosition extends CommandExecute {
 	ArrayList<IMobileDevice> clientDevicesView;

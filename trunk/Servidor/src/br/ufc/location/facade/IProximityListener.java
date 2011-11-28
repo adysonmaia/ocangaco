@@ -1,4 +1,4 @@
-package facade;
+package br.ufc.location.facade;
 /**
  * Interface para definir a açao que deve ser tomada quando
  * @author Danilo Reis
