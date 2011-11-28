@@ -9,6 +9,7 @@ import myserver.kernel.CommandExecute;
 import br.ufc.location.facade.IMobileDevice;
 import br.ufc.location.geoengine.DevicesPositionControl;
 import br.ufc.location.geoengine.GeoPosition;
+import br.ufc.servidor.player.Player;
 
 public class CmdUpdatePosition extends CommandExecute {
 	ArrayList<IMobileDevice> clientDevicesView;
@@ -85,7 +86,7 @@ public class CmdUpdatePosition extends CommandExecute {
 		int                            inimyId;
 
 		// Descobre o id do time inimigo
-		inimyId =( device.getGroup()==1)?2:1;
+		inimyId =( device.getGroup()==Player.BLUE_TEAM)? Player.RED_TEAM : Player.BLUE_TEAM;
 
 		listTotal = control.getDevicesByGroup(inimyId);
 		list      = control.getVisibleDeviceList(device, listTotal);
