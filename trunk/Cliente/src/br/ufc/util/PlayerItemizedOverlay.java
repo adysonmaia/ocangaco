@@ -1,6 +1,9 @@
 package br.ufc.util;
 
+import android.app.AlertDialog;
 import android.graphics.drawable.Drawable;
+import br.ufc.activity.ClienteActivity;
+import br.ufc.activity.MainActivity;
 import br.ufc.model.ClientGameState;
 import br.ufc.model.Player;
 
@@ -25,12 +28,15 @@ public class PlayerItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	@Override
 	protected OverlayItem createItem(int i) {
 		GeoPoint geoPoint;
+		Player player = (Player)ClientGameState.playersCangaceiros.keySet().toArray()[i];
+		
 		if(type == Player.CANGACEIRO)
-			geoPoint = ClientGameState.playersCangaceiros.get(ClientGameState.playersCangaceiros.keySet().toArray()[i]).createLocationGeoPoint();
+			player = (Player)ClientGameState.playersCangaceiros.keySet().toArray()[i];			
 		else
-			geoPoint = ClientGameState.playersJaguncos.get(ClientGameState.playersJaguncos.keySet().toArray()[i]).createLocationGeoPoint();
+			player = (Player)ClientGameState.playersJaguncos.keySet().toArray()[i];			
 
-		return new OverlayItem(geoPoint, "", "");
+			geoPoint = ClientGameState.playersCangaceiros.get(player).createLocationGeoPoint();
+		return new OverlayItem(geoPoint, player.getNome(),  player.getNome()+" Snippet");
 	}
 
 	@Override
@@ -43,5 +49,28 @@ public class PlayerItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 	public void invokePopulate() {
 		populate();
+	}
+	
+	@Override
+	protected boolean onTap(int i) {
+		
+		
+		GeoPoint geoPoint;
+		Player player = (Player)ClientGameState.playersCangaceiros.keySet().toArray()[i];
+		
+		if(type == Player.CANGACEIRO)
+			player = (Player)ClientGameState.playersCangaceiros.keySet().toArray()[i];			
+		else
+			player = (Player)ClientGameState.playersJaguncos.keySet().toArray()[i];			
+
+		geoPoint = ClientGameState.playersCangaceiros.get(player).createLocationGeoPoint();
+		
+	  
+	  OverlayItem item = new OverlayItem(geoPoint, player.getNome(),  player.getNome()+" Snippet");
+	  AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.activity);
+	  dialog.setTitle(item.getTitle());
+	  dialog.setMessage(item.getSnippet());
+	  dialog.show();
+	  return true;
 	}
 }

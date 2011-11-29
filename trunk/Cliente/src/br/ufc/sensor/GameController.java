@@ -57,8 +57,10 @@ public class GameController {
 			@Override
 			public void run() {
 				while(running) {
-					 // Atualiza estado do jogo
-					ClientGameState.updateState();
+					 // Atualiza a lista de jogadores, vai no servidor e 
+					ClientGameState.updateState();					
+					
+					
 					cangaceirosItemizedOverlay.invokePopulate();
 					jaguncosItemizedOverlay.invokePopulate();
 					
@@ -77,7 +79,7 @@ public class GameController {
 		gameThread.start();
 	}
 
-	// Handler utilizado para atualizar o mapa sem gerar exceção de Threads
+	// Handler utilizado para atualizar o mapa sem gerar exceï¿½ï¿½o de Threads
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
         	mapView.invalidate();
@@ -94,7 +96,7 @@ public class GameController {
 		
 		//ClientGameState.eu.setLatitude(lastKnownLocation.getLatitude() + Constants.LOCATION_INCREMENT);
 		
-		//Atualiza posição do jogador no servidor. 
+		//Atualiza posiï¿½ï¿½o do jogador no servidor. 
 		ServerFactory.getServer().updatePlayerLocation(ClientGameState.eu);
 	}
 	

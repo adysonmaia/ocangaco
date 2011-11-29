@@ -1,6 +1,7 @@
 package br.ufc.activity;
 
 
+
 import android.os.Bundle;
 import android.widget.Toast;
 import br.ufc.sensor.GameController;

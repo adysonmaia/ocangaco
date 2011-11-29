@@ -22,11 +22,12 @@ public class MainActivity  extends Activity implements OnClickListener {
 	private Spinner spinnerTeam;
 	private Spinner spinnerRole;
 	private Button button;
+	public static MainActivity activity;	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+		activity = this;
 		editTextName = (EditText)findViewById(R.id.editText1);
 		editTextIP = (EditText)findViewById(R.id.editText3);
 		editTextIP.setText(Properties.SERVER_IP);
