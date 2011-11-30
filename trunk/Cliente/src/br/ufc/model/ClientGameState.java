@@ -13,7 +13,7 @@ public class ClientGameState {
 	/**
 	 * Variável que representa o Player do usuário do celular.
 	 */
-	public static Player eu = null;
+	public static Player myPlayerOnClient = null;
 
 	public static void updateState() {
 		// Recupera lista de jogadores no servidor
@@ -45,11 +45,23 @@ public class ClientGameState {
 	}
 	
 	/**
+	 * Recupera o jogador como o servidor o vê. Use esse método ao invez de acessar myPlayerOnClient,
+	 * ao menos que você saiba oq está fazendo.
+	 * @return
+	 */
+	public static Player getMyPlayerOnServer() {
+		if(myPlayerOnClient.getTipo() == Player.CANGACEIRO)
+			return playersCangaceiros.get(myPlayerOnClient.getNome());
+		else
+			return playersJaguncos.get(myPlayerOnClient.getNome());
+	}
+	
+	/**
 	 * Reiniciar o estado do ClientGameState
 	 */
 	public static void reset() {
 		playersCangaceiros = new HashMap<String, Player>();
 		playersJaguncos = new HashMap<String, Player>();
-		eu = null;
+		myPlayerOnClient = null;
 	}
 }

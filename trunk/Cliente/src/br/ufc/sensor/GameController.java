@@ -24,6 +24,8 @@ public class GameController {
 	
 	private boolean running;
 	
+	private final int UPDATE_RATE = 2000;
+	
 	public GameController(MapView mapa, Context context) {
 		initiateObjects(mapa, context.getResources());
 		
@@ -60,7 +62,6 @@ public class GameController {
 					 // Atualiza a lista de jogadores, vai no servidor e 
 					ClientGameState.updateState();					
 					
-					
 					cangaceirosItemizedOverlay.invokePopulate();
 					jaguncosItemizedOverlay.invokePopulate();
 					
@@ -68,7 +69,7 @@ public class GameController {
 					handler.sendMessage(handler.obtainMessage());
 					
 					try {
-						Thread.sleep(3000);				
+						Thread.sleep(UPDATE_RATE);				
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -79,10 +80,12 @@ public class GameController {
 		gameThread.start();
 	}
 
-	// Handler utilizado para atualizar o mapa sem gerar exceï¿½ï¿½o de Threads
+	// Handler utilizado para atualizar o mapa sem gerar excecício de Threads
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
         	mapView.invalidate();
+        	
+        	mapView.getController().setCenter(ClientGameState.getMyPlayerOnServer().createLocationGeoPoint());
         }
     };
 	
@@ -91,13 +94,11 @@ public class GameController {
 	}
 
 	public void setLastKnownLocation(Location lastKnownLocation) {
-		ClientGameState.eu.setLatitude(lastKnownLocation.getLatitude());				
-		ClientGameState.eu.setLongitude(lastKnownLocation.getLongitude());
+		ClientGameState.myPlayerOnClient.setLatitude(lastKnownLocation.getLatitude());				
+		ClientGameState.myPlayerOnClient.setLongitude(lastKnownLocation.getLongitude());
 		
-		//ClientGameState.eu.setLatitude(lastKnownLocation.getLatitude() + Constants.LOCATION_INCREMENT);
-		
-		//Atualiza posiï¿½ï¿½o do jogador no servidor. 
-		ServerFactory.getServer().updatePlayerLocation(ClientGameState.eu);
+		//Atualiza posição do jogador no servidor. 
+		ServerFactory.getServer().updatePlayerLocation(ClientGameState.myPlayerOnClient);
 	}
 	
 	public MapView getMapView() {
@@ -110,7 +111,7 @@ public class GameController {
 			running = false;
 			gameThread.join();
 
-			ServerFactory.getServer().closeConnection(ClientGameState.eu);
+			ServerFactory.getServer().closeConnection(ClientGameState.myPlayerOnClient);
 			ClientGameState.reset();
 			mapView.invalidate();
 			
