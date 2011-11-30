@@ -2,102 +2,99 @@ package br.ufc.servidor.gamestate;
 
 import java.util.ArrayList;
 
+import br.ufc.location.test.GameStateTest;
 import br.ufc.servidor.GameState;
 import br.ufc.servidor.db.DB;
 import br.ufc.servidor.player.Player;
 
 public class GameStateImp implements GameState {
 	
-	//variaveis para contar o numero de jogadores de cada time de forma a distribuir
-	//uniformemente os jogadores com preferencia para cangaceiros
-	private int cangaceiros = 0;
-	private int jaguncos = 0;
+	ArrayList<Player> players;
+	
+	private static GameStateImp instance = null;
+	
+	public GameStateImp(){
+		players = new ArrayList<Player>();
+	}
+
+	public static GameStateImp getInstance() {
+		if (instance == null)
+			instance = new GameStateImp();
+
+		return instance;
+	}
 
 	@Override
 	public int connectPlayer(Player player) {
 		int ret = 0;
-		System.out.println("Recebi mensagem de connectPlayer");
-		if(jaguncos >= cangaceiros)
-		{
-			player.setTipo(1);
-			cangaceiros++;
-			
-			// Se não conseguir incluir, deve desfazer a alteração no contador
-			ret = DB.addPlayer(player);
-			if(ret == -1){
-				cangaceiros--;
-			}
-		}
-		else
-		{
-			player.setTipo(2);
-			jaguncos++;
-			
-			// Se não conseguir incluir, deve desfazer a alteração no contador
-			ret = DB.addPlayer(player);
-			if(ret == -1){
-				jaguncos--;
+		if (players != null && players.size() > 0) {
+			for (Player p : players) {
+				if (player.getNome().equals(p.getNome())) {
+					ret = -1;				
+				}
 			}
 		}
 		
-		
+		if(ret != -1 ){
+			players.add(player);
+			ret = 1;
+		}
+			
 		return ret;
 			
 	}
 
 	@Override
-	public void alteraCoordenadas(Player player, double latitude,
-			double longitude) {
-		
-	}
-
-	@Override
-	public void iniciaBanco() {
-		try {
-			DB.startDB();
-			System.out.println("Banco iniciado com sucesso");
-		} catch (Exception e) {
-			e.printStackTrace();
+	public int update(Player player) {
+		if (players != null && players.size() > 0) {
+			for (Player p : players) {
+				if (player.getNome().equals(p.getNome())) {
+					p.setLatitude(player.getLatitude());
+					p.setLongitude(player.getLongitude());					
+					return 1;
+				}
+			}
 		}
-		
+		return -1;
 	}
 
 	@Override
 	public ArrayList<Player> getPlayerListByType(int tipo) {
-		ArrayList<Player> list = null;
-		try {
-			list = DB.getPlayersFromTeam(tipo);
-			/**
-			for(int size = 0; size < l.size(); size++){
-				System.out.println("Player: " + l.get(size).getNome());
+		ArrayList<Player> playersByTipo = new ArrayList<Player>();
+
+		if (players != null && players.size() > 0) {
+			for (Player player : players) {
+				if (player.getTipo() == tipo) {
+					playersByTipo.add(player);
+				}
 			}
-			*/
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		}
-		return list;
+
+		return playersByTipo;
 	}
 
 	@Override
 	public ArrayList<Player> getPlayerList() {
-		ArrayList<Player> list = null;
-		try {
-			list = DB.getPlayers();
-			/*
-			for(int size = 0; size < list.size(); size++){
-				System.out.println("Player: " + list.get(size).getNome());
-			}
-			*/
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		ArrayList<Player> list = new ArrayList<Player>();
+		for(Player p: players)
+			list.add(p);
 		return list;
 	}
 
 	@Override
 	public int disconnectPlayer(Player player) {
-		return DB.delPlayer(player.getNome());
+		if(players != null && players.size() > 0)
+		{
+			for (Player p : players) {
+				if(player.getNome().equals(p.getNome()))
+				{
+					players.remove(player);
+					return 1;
+				}				
+			}			
+		}
+		
+		return -1;
 		
 	}
 
@@ -106,39 +103,6 @@ public class GameStateImp implements GameState {
 		return DB.delPlayer(name);
 	}
 
-	@Override
-	public int updateOrConnectPlayer(Player player) {
-		int ret = 0;
-		System.out.println("Recebi mensagem de updateOrConnectPlayer");
-		// Se não é uma atualização, é uma inserção
-		if(DB.updatePlayer(player)!=1){
-			if(jaguncos >= cangaceiros)
-			{
-				player.setTipo(1);
-				cangaceiros++;
-				
-				// Se não conseguir incluir, deve desfazer a alteração no contador
-				ret = DB.addPlayer(player);
-				if(ret == -1){
-					cangaceiros--;
-				}
-			}
-			else
-			{
-				player.setTipo(2);
-				jaguncos++;
-				
-				// Se não conseguir incluir, deve desfazer a alteração no contador
-				ret = DB.addPlayer(player);
-				if(ret == -1){
-					jaguncos--;
-				}
-			}
-			
-		}
-		
-		return ret;
-	}
 
 	@Override
 	public ArrayList<Player> getPlayerListByType(Player player) {
