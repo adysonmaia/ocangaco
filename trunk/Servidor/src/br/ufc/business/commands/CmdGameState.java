@@ -2,10 +2,10 @@ package br.ufc.business.commands;
 
 import java.util.ArrayList;
 
-import myserver.kernel.CommandExecute;
-import br.ufc.servidor.Servidor;
 import br.ufc.servidor.player.Player;
 import br.ufc.util.EntityParser;
+import br.ufc.servidor.gamestate.GameStateImp;
+import myserver.kernel.CommandExecute;
 
 /**
  * @author Rafael
@@ -23,8 +23,13 @@ public class CmdGameState extends CommandExecute {
 	 */
 
 	public ArrayList<Player> getPlayerList(){			
-//		return GameStateTest.getInstance().getPlayerList();
-		return Servidor.gs.getPlayerList();
+		//return GameStateTest.getInstance().getPlayerList();
+		ArrayList<Player> list = GameStateImp.getInstance().getPlayerList();
+		if(list == null)
+			System.out.println("lista vazia");
+		
+		return list;
+	
 		
 		/**
 		 * Usar interface - chamar Servidor.gs.listaJogadores()

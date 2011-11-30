@@ -17,15 +17,21 @@ public class CmdMovimentacao extends CommandExecute {
 		double longitude = Double.parseDouble(param[3]);		
 		
 		Player player = new Player(name, tipo, latitude, longitude);		
-		//GameStateTest.getInstance().updateOrConnectPlayer(player);
+
 		String resposta;
+		//GameStateTest.getInstance().updateOrConnectPlayer(player);
+		//resposta = "Player " + player.getNome() + " updated.";
+		
 		if(GameStateImp.getInstance().update(player)==1){
 				resposta = "Player " + player.getNome() + " updated.";
+				System.out.println(resposta);
 		} else {
 			resposta = "Erro";
 			System.out.println("Erro em CmdMovimentacao");
 		}
+		
 		return resposta;
+		
 	}
 
 }

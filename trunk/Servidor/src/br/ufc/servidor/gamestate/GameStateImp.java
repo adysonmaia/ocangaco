@@ -1,15 +1,12 @@
 package br.ufc.servidor.gamestate;
 
 import java.util.ArrayList;
-
-import br.ufc.location.test.GameStateTest;
 import br.ufc.servidor.GameState;
-import br.ufc.servidor.db.DB;
 import br.ufc.servidor.player.Player;
 
 public class GameStateImp implements GameState {
 	
-	ArrayList<Player> players;
+	private ArrayList<Player> players = null;
 	
 	private static GameStateImp instance = null;
 	
@@ -55,7 +52,8 @@ public class GameStateImp implements GameState {
 				}
 			}
 		}
-		return -1;
+		players.add(player);
+		return 1;
 	}
 
 	@Override
@@ -100,43 +98,57 @@ public class GameStateImp implements GameState {
 
 	@Override
 	public int disconnectPlayer(String name) {
-		return DB.delPlayer(name);
+		if(players != null && players.size() > 0)
+		{
+			for (Player p : players) {
+				if(p.getNome().equals(name))
+				{
+					players.remove(p);
+					return 1;
+				}				
+			}			
+		}
+		
+		return -1;
 	}
 
 
 	@Override
 	public ArrayList<Player> getPlayerListByType(Player player) {
-		ArrayList<Player> list = null;
-		try {
-			list = DB.getPlayersFromTeam(player.getTipo());
-			/*
-			for(int size = 0; size < list.size(); size++){
-				System.out.println("Player: " + list.get(size).getNome());
+		ArrayList<Player> playersByTipo = new ArrayList<Player>();
+
+		if (players != null && players.size() > 0) {
+			for (Player p : players) {
+				if (player.getTipo() == player.getTipo()) {
+					playersByTipo.add(player);
+				}
 			}
-			*/
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		}
-		return list;
+
+		return playersByTipo;
 	}
 	
 	@Override
 	public ArrayList<Player> getPlayerListByType(String player) {
-		ArrayList<Player> list = null;
-		try {
-			Player p = DB.getDataFromPlayer(player);
-			list = DB.getPlayersFromTeam(p.getTipo());
-			/*
-			for(int size = 0; size < list.size(); size++){
-				System.out.println("Player: " + list.get(size).getNome());
+		ArrayList<Player> playersByTipo = new ArrayList<Player>();
+
+		Player p1 = null;
+		if (players != null && players.size() > 0) {
+			for (Player p: players){
+				if(p.getNome().equals(player))
+					p1=p;
 			}
-			*/
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		}
-		return list;
+		
+		if (players != null && players.size() > 0) {
+			for (Player p : players) {
+				if (p.getTipo() == p1.getTipo()) {
+					playersByTipo.add(p);
+				}
+			}
+		}
+
+		return playersByTipo;
 	}
 
 }
