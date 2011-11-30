@@ -3,9 +3,14 @@ package br.ufc.business.commands;
 import java.util.Date;
 
 import myserver.kernel.CommandExecute;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import br.ufc.location.geoengine.DevicesPositionControl;
 import br.ufc.location.geoengine.GeoPosition;
 import br.ufc.servidor.player.Player;
+import br.ufc.util.XMLParser;
 
 public class CmdRegister extends CommandExecute {
 
@@ -23,7 +28,6 @@ public class CmdRegister extends CommandExecute {
 		Date                       now;
 		DevicesPositionControl control;
 		Integer                 freeId;
-		String                    resp;
 		
 		// Nome do jogador
 		nome      = param[0];
@@ -51,11 +55,23 @@ public class CmdRegister extends CommandExecute {
 		
 		// adiciona o dispositivo para ser controlado
 		control.addDevice(player);
+				
+		String response = toXml(freeId); 
 		
-		// Retorna o identificador do gerenciador de geoposicionamento
-		resp = String.valueOf(freeId);
-		
-		return resp;
+		return response;
 	}
 
+	private String toXml(Integer freeId) {
+		Document doc = XMLParser.createXMLDocument();
+		if (doc != null) {
+			Element response = doc.createElement("response");
+			doc.appendChild(response);
+	 
+			Element id = doc.createElement("id");
+			id.appendChild(doc.createTextNode(String.valueOf(freeId)));
+			response.appendChild(id);
+		}
+		String response = XMLParser.getXMLString(doc); 
+		return response;
+	}
 }

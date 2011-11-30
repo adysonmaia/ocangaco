@@ -1,5 +1,9 @@
 package br.ufc.location.facade;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import br.ufc.location.geoengine.DevicePath;
 
 /**
@@ -95,6 +99,14 @@ public interface IMobileDevice {
 	/**
 	 * Converte as informaçoes do dispositivo em parametros XML
 	 * @return
+	 * @throws Exception 
 	 */
-	String toXML();
+	String toXML() throws Exception;
+	
+	/**
+	 * Converte as informaçoes do dispositivo em parametros XML
+	 * @return
+	 * @throws Exception 
+	 */	
+	void toXML(Element devices, Document doc);
 }

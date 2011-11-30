@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import myserver.kernel.CommandExecute;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import br.ufc.location.facade.IMobileDevice;
 import br.ufc.location.geoengine.DevicesPositionControl;
+import br.ufc.util.XMLParser;
 
 public class CmdGetDevicesList extends CommandExecute {
 	ArrayList<IMobileDevice> clientDevicesView;
@@ -28,20 +33,32 @@ public class CmdGetDevicesList extends CommandExecute {
 	private String getDevicesList() {
 		Iterator<IMobileDevice>       iterator;
 		IMobileDevice                   device;
-		StringBuffer                      resp;
-
-		resp = new StringBuffer();
-		iterator = control.getDevices().iterator();
-		// percorre a lista de dispositivos inimigos que estao visiveis
-		resp.append("<devices>");
-		resp.append('\n');
-		while(iterator.hasNext()){
-			device  = iterator.next();
-			resp.append(device.toXML());
-			resp.append('\n');
+		
+		iterator = control.getDevices().iterator();		
+		
+		Document doc = XMLParser.createXMLDocument();		
+		if (doc != null) {
+			Element response = doc.createElement("response");
+			doc.appendChild(response);
+	 
+			Element devices = doc.createElement("devices");
+			
+			// percorre a lista de dispositivos inimigos que estao visiveis			
+			while(iterator.hasNext()){
+				device  = iterator.next();
+				try {
+					device.toXML(devices, doc);					
+				} catch (Exception e) {				
+					e.printStackTrace();
+				}
+			}
+			
+			response.appendChild(devices);			
+			
+			String resp = XMLParser.getXMLString(doc); 
+			return resp;	
 		}
-		resp.append("</devices>");
-		resp.append('\n');
-		return resp.toString();
+		
+		return null;
 	}
 }

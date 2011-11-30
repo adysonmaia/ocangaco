@@ -1,5 +1,9 @@
 package br.ufc.servidor.player;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import br.ufc.location.facade.IGeoPosition;
 import br.ufc.location.facade.IMobileDevice;
 import br.ufc.location.facade.IProximityListener;
@@ -9,97 +13,100 @@ import br.ufc.location.geoengine.DevicesPositionControl;
 import br.ufc.location.geoengine.GeoPosition;
 import br.ufc.location.listeners.ProximityPlayerListener;
 import br.ufc.location.listeners.VisibilityPlayerListener;
+import br.ufc.util.XMLParser;
 
 /**
  * @author Andre Fonteles, Rafael de Lima e Benedito Neto
- *
- * Class that defines a player
+ * 
+ *         Class that defines a player
  * 
  */
-public class Player implements IMobileDevice{
-	
-	private String          nome;
-	private int             tipo;
-	private double      latitude;
-	private double     longitude;
-	
-	private Integer                          id;
-	private GeoPosition                position;
-	private double                     distance;
-	private double                   distanceOn;
-	private Integer                        type;
-	private Integer                     groupId;
-	private DevicePath                     path;
-	private ProximityPlayerListener   proximity;
+public class Player implements IMobileDevice {
+
+	private String nome;
+	private int tipo;
+	private double latitude;
+	private double longitude;
+
+	private Integer id;
+	private GeoPosition position;
+	private double distance;
+	private double distanceOn;
+	private Integer type;
+	private Integer groupId;
+	private DevicePath path;
+	private ProximityPlayerListener proximity;
 	private VisibilityPlayerListener visibility;
 
-
-	public static final int SOLDIER  = 1;
-	public static final int DOCTOR   = 2;
+	public static final int SOLDIER = 1;
+	public static final int DOCTOR = 2;
 	public static final int ENGINEER = 3;
-	public static final int SPY      = 4;
-	
-	public static final int BLUE_TEAM  = 1;
+	public static final int SPY = 4;
+
+	public static final int BLUE_TEAM = 1;
 	public static final int RED_TEAM = 2;
 	public static final int DEFAULT_GROUP = BLUE_TEAM;
 
-	public static final int VIEW_DISTANCE     = 100;
+	public static final int VIEW_DISTANCE = 100;
 	public static final int COLISION_DISTANCE = 10;
-	
-	
+
 	public Player(String nome, int tipo) {
-		
+
 		super();
 
 		this.nome = nome;
 		this.tipo = tipo;
-		
-		proximity  = new ProximityPlayerListener();
+
+		proximity = new ProximityPlayerListener();
 		visibility = new VisibilityPlayerListener();
-		path       = new DevicePath();
+		path = new DevicePath();
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
 	/**
 	 * 
-	 * @param nome Nome do Jogador
+	 * @param nome
+	 *            Nome do Jogador
 	 */
 	public Player(String nome) {
-		
+
 		super();
 		this.nome = nome;
-		proximity  = new ProximityPlayerListener();
+		proximity = new ProximityPlayerListener();
 		visibility = new VisibilityPlayerListener();
-		path       = new DevicePath();
-		
+		path = new DevicePath();
+
 	}
 
-	public Player(String nome, int tipo, int group, double latitude, double longitude) {
+	public Player(String nome, int tipo, int group, double latitude,
+			double longitude) {
 		super();
-		this.nome      = nome;
-		this.tipo      = tipo;
-		this.groupId   = group;
-		this.latitude  = latitude;
+		this.nome = nome;
+		this.tipo = tipo;
+		this.groupId = group;
+		this.latitude = latitude;
 		this.longitude = longitude;
-		proximity  = new ProximityPlayerListener();
+		proximity = new ProximityPlayerListener();
 		visibility = new VisibilityPlayerListener();
-		path       = new DevicePath();
+		path = new DevicePath();
 	}
 
 	public Player(String nome, int tipo, double latitude, double longitude) {
 		super();
-		
+
 		this.nome = nome;
 		this.tipo = tipo;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.groupId   = DEFAULT_GROUP;
-		proximity  = new ProximityPlayerListener();
+		this.groupId = DEFAULT_GROUP;
+		proximity = new ProximityPlayerListener();
 		visibility = new VisibilityPlayerListener();
-		path       = new DevicePath();
+		path = new DevicePath();
 	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -132,7 +139,8 @@ public class Player implements IMobileDevice{
 		this.longitude = longitude;
 	}
 
-	@Override //sobrecarga apenas para fins de visualização do estado do objeto
+	@Override
+	// sobrecarga apenas para fins de visualização do estado do objeto
 	public String toString() {
 		return "Player [latitude=" + latitude + ", longitude=" + longitude
 				+ ", nome=" + nome + ", tipo=" + tipo + "]";
@@ -146,9 +154,9 @@ public class Player implements IMobileDevice{
 	@Override
 	public void setGeoPosition(IGeoPosition position) {
 		GeoPosition pos;
-		
-		if(position != null){
-			this.position = (GeoPosition) position; 
+
+		if (position != null) {
+			this.position = (GeoPosition) position;
 			pos = new GeoPosition(position);
 			this.path.addPosition(pos);
 		}
@@ -156,12 +164,13 @@ public class Player implements IMobileDevice{
 
 	@Override
 	public IGeoPosition getGeoPosition() {
-		return (IGeoPosition)position;
+		return (IGeoPosition) position;
 	}
 
 	@Override
 	public double getDistanceFrom(IMobileDevice device) {
-		distance = DevicesPositionControl.calculateDistance(this.getGeoPosition(),device.getGeoPosition());
+		distance = DevicesPositionControl.calculateDistance(this
+				.getGeoPosition(), device.getGeoPosition());
 		return distance;
 	}
 
@@ -178,7 +187,7 @@ public class Player implements IMobileDevice{
 	@Override
 	public void setType(Integer type) {
 		this.type = type;
-		
+
 	}
 
 	@Override
@@ -214,7 +223,7 @@ public class Player implements IMobileDevice{
 	@Override
 	public void setProximityListener(IProximityListener proximity) {
 		this.proximity = (ProximityPlayerListener) proximity;
-		
+
 	}
 
 	@Override
@@ -223,30 +232,58 @@ public class Player implements IMobileDevice{
 	}
 
 	@Override
-	public String toXML() {
-		StringBuffer  resp;
-		
-		resp = new StringBuffer();
-		resp.append("<player>");
-		resp.append("  <id>");
-		resp.append(String.valueOf((this.getId()).intValue()));
-		resp.append("  </id>");
-		resp.append("  <type>");
-		resp.append(String.valueOf(this.getTipo()));
-		resp.append("  </type>");
-		resp.append("  <latitude>");
-		resp.append(String.valueOf(this.getLatitude()));
-		resp.append("  </latitude>");
-		resp.append("  <longitude>");
-		resp.append(String.valueOf(this.getLongitude()));
-		resp.append("  </longitude>");
-		resp.append("</player>/n");
-		return resp.toString();
+	public String toXML() throws Exception {
+		Document doc = XMLParser.createXMLDocument();
+		if (doc != null) {
+			toXML(null, doc);
+			return XMLParser.getXMLString(doc);
+		} else {
+			throw new Exception("XML parser error");
+		}
+	}
+
+	public void toXML(Element parent, Document doc) {
+		Element player = doc.createElement("player");
+		if (parent == null) {
+			doc.appendChild(player);
+		} else {
+			parent.appendChild(player);
+		}
+		// set attributes to player element
+		player.setAttribute("nome", String.valueOf(this.getNome()));
+		player.setAttribute("tipo", String.valueOf(this.getTipo()));
+		player.setAttribute("grupo", String.valueOf(this.getGroup()));
+		player.setAttribute("latitude", String.valueOf(this.getLatitude()));
+		player.setAttribute("longitude", String.valueOf(this.getLongitude()));
+	}
+
+	public void fromXML(String xmlString) throws Exception {
+		Document doc = XMLParser.createXMLDocument(xmlString);
+
+		if (doc != null) {
+			NodeList nodes = doc.getElementsByTagName("player");
+			Element p = (Element) nodes.item(0);
+
+			if (p != null) {
+				fromXML(p);
+			}
+		} else {
+			throw new Exception("XML parser error");
+		}
+	}
+	
+	public void fromXML(Element element){
+		this.setNome(element.getAttribute("nome"));
+		this.setTipo(Integer.parseInt(element.getAttribute("tipo")));
+		this.setGroup(Integer.parseInt(element.getAttribute("grupo")));
+		this.setLatitude(Double.parseDouble(element
+						.getAttribute("latitude")));
+		this.setLongitude(Double.parseDouble(element
+				.getAttribute("longitude")));
 	}
 
 	@Override
 	public IVisibilityListener getVisibilityListener() {
 		return visibility;
 	}
-
 }
