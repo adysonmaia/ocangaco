@@ -3,13 +3,19 @@ package br.ufc.business.commands;
 import myserver.kernel.CommandExecute;
 import myserver.kernel.CommandParser;
 
+/**
+ * @author iaufc37.lima Classe utilitária relacionada ao gerenciamento dos
+ *         commandos 
+ */
 public class CommandFactory {
 	static CommandExecute cmd;
 	
+	/**
+	 * Método para registrar os comandos no parser de forma desacoplada da
+	 * camada de comandos no pacote myserver.kernel . Todos os comandos
+	 * utilizados no jogo devem ser registrados aqui.
+	 */
 	public static void Create(){
-		cmd = new CmdSoma();      	
-	 	CommandParser.addCommand("<soma>",0,cmd);
-	 	
 	 	cmd = new CmdMovimentacao();
 	 	CommandParser.addCommand("<movimentacao>",3,cmd);		
 	 	

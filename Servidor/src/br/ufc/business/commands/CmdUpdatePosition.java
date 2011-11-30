@@ -6,10 +6,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import myserver.kernel.CommandExecute;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import br.ufc.location.facade.IMobileDevice;
 import br.ufc.location.geoengine.DevicesPositionControl;
 import br.ufc.location.geoengine.GeoPosition;
 import br.ufc.servidor.player.Player;
+import br.ufc.util.XMLParser;
 
 public class CmdUpdatePosition extends CommandExecute {
 	ArrayList<IMobileDevice> clientDevicesView;
@@ -25,8 +30,7 @@ public class CmdUpdatePosition extends CommandExecute {
 		double                latitude;
 		double               longitude;
 		GeoPosition                pos;
-		Date                       now;
-		String                    resp;
+		Date                       now;		
 		IMobileDevice           device;
 		
 		id        = param[0];
@@ -46,36 +50,48 @@ public class CmdUpdatePosition extends CommandExecute {
 		
 		// atualiza a posicao do objeto no controlador
 		control.updateDevicePosition(deviceId, pos);
-
+		
 		// adiciona na lista os dispositivos do mesmo time
 		addToListFriendDevices(device);
+		
 		// adiciona na lista os dispositivos do time oposto
 		addToListVisibleInimyDevices(device);
 		
 		// Retorna a lista dos dispositivos visíveis ao usuário
-		resp =  getVisibleDevicesList();
+		String response = getVisibleDevicesList();		
 		
-		return resp;
+		return response;
 	}
 
 	private String getVisibleDevicesList() {
 		Iterator<IMobileDevice>       iterator;
-		IMobileDevice                   device;
-		StringBuffer                      resp;
-
-		resp = new StringBuffer();
+		IMobileDevice                   device;		
+		
 		iterator = clientDevicesView.iterator();
+		
+		Document doc = XMLParser.createXMLDocument();
 		// percorre a lista de dispositivos inimigos que estao visiveis
-		resp.append("<visibledevices>");
-		resp.append('\n');
-		while(iterator.hasNext()){
-			device  = iterator.next();
-			resp.append(device.toXML());
-			resp.append('\n');
-		}
-		resp.append("</visibledevices>");
-		resp.append('\n');
-		return resp.toString();
+		if (doc != null) {
+			Element response = doc.createElement("response");
+			doc.appendChild(response);
+	 
+			Element visibleDevices = doc.createElement("visibledevices");
+			while(iterator.hasNext()){
+				device  = iterator.next();
+				try {
+					device.toXML(visibleDevices, doc);						
+				} catch (Exception e) {				
+					e.printStackTrace();
+				}
+			}
+			
+			response.appendChild(visibleDevices);			
+			
+			String resp = XMLParser.getXMLString(doc); 
+			return resp;	
+		}	
+		
+		return null;
 	}
 
 	private void addToListVisibleInimyDevices(IMobileDevice device) {

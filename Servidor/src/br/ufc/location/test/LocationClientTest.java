@@ -3,29 +3,51 @@ package br.ufc.location.test;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.List;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import br.ufc.servidor.player.Player;
 import br.ufc.util.Conexao;
 import br.ufc.util.EntityParser;
+import br.ufc.util.XMLParser;
 
 public class LocationClientTest {
 	static String comando;
-	static String [] params;	
+	static String [] params;
+	static Document doc;
+	static NodeList nodes;
+	static String response;
 	
 	public static void main(String[] args) throws IOException {
-		//testSoma();		
 		//testMovimentacao();		
 		//testGameState();
+		
+		//testRegister();
+		testUpdatePosition();
+		//testDevicesList();
 		//testDisconnect();
-		testRegister();
-		//testUpdatePosition();
-		testDevicesList();
 	}
 
 	private static void testDevicesList() {
 		comando = makeCommand("deviceslist", params, 0);
-		System.out.println("List of devices: \n" + getServerResponse(comando));
+		
+		response = getServerResponse(comando);
+        System.out.println("List of devices: \n" + response);
+        
+        
+        doc = XMLParser.createXMLDocument(response);
+        nodes = doc.getElementsByTagName("player");
+        for (int i = 0; i < nodes.getLength(); i++) {
+        	Player player = new Player("teste");
+        	try {
+				player.fromXML((Element)nodes.item(i));
+				System.out.println(player);
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private static void testUpdatePosition() {
@@ -38,23 +60,54 @@ public class LocationClientTest {
 		params[4] ="38.539906";
 		
 		comando = makeCommand("register", params, 5);
-		int id = Integer.parseInt(getServerResponse(comando));
+		
+		Document doc = XMLParser.createXMLDocument(getServerResponse(comando));
+        NodeList nodes = doc.getElementsByTagName("id");
+        Element node = (Element)nodes.item(0);
+        
+        if (node != null) {
+			System.out.println("id 1: " + node.getTextContent());
+        }
 		
 		params[0] ="Fabio";
 		params[1] ="1";
-		params[2] ="2";
+		params[2] ="1";
         params[3] ="-3.717123";
         params[4] ="38.540081";
         
         comando = makeCommand("register", params, 5);
-        id = Integer.parseInt(getServerResponse(comando));
         
-		params[0] = String.valueOf(id);
+        String response = getServerResponse(comando);
+        
+        doc = XMLParser.createXMLDocument(response);
+        nodes = doc.getElementsByTagName("id");
+        node = (Element)nodes.item(0);
+        
+        if (node != null) {
+			System.out.println("id 2: " + node.getTextContent());
+        }
+        
+		params[0] = node.getTextContent();
 		params[1] = String.valueOf(-3.717381 + 0.0001);
 		params[2] = "38.539906";
 		
 		comando = makeCommand("updateposition", params, 5);
-		System.out.println("List of devices: \n" + getServerResponse(comando));		
+		
+		response = getServerResponse(comando);
+        System.out.println("List of devices: \n" + response);
+        
+        
+        doc = XMLParser.createXMLDocument(response);
+        nodes = doc.getElementsByTagName("player");
+        for (int i = 0; i < nodes.getLength(); i++) {
+        	Player player = new Player("teste");
+        	try {
+				player.fromXML((Element)nodes.item(i));
+				System.out.println(player);
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+		}		
 	}
 
 	//Registro testado com sucesso com o servidor rodando!
@@ -68,8 +121,18 @@ public class LocationClientTest {
 		params[4] ="38.539906";
 		
 		comando = makeCommand("register", params, 5);
-		System.out.println("Player 1 id = " + getServerResponse(comando));
+
+		String response = getServerResponse(comando);
+	    System.out.println("player 1 id = " + response);
 		
+		Document doc = XMLParser.createXMLDocument(response);
+        NodeList nodes = doc.getElementsByTagName("id");
+        Element id = (Element)nodes.item(0);
+        
+        if (id != null) {
+			System.out.println("id 1: " + id.getTextContent());
+        }
+        
 		params[0] ="Fabio";
 		params[1] ="1";
 		params[2] ="1";
@@ -77,7 +140,17 @@ public class LocationClientTest {
         params[4] ="38.540081";
         
         comando = makeCommand("register", params, 5);
-        System.out.println("player 2 id = " + getServerResponse(comando));
+        
+        response = getServerResponse(comando);
+        System.out.println("player 2 id = " + response);
+        
+        doc = XMLParser.createXMLDocument(response);
+        nodes = doc.getElementsByTagName("id");
+        id = (Element)nodes.item(0);
+        
+        if (id != null) {
+			System.out.println("id 2: " + id.getTextContent());
+        }
 	}
 	
 	
@@ -113,12 +186,7 @@ public class LocationClientTest {
 	private static void testDisconnect() {		
 		comando = "<disconnect>," +	"Joao" + ",<disconnect>";
 		System.out.println("Disconnected: " + getServerResponse(comando));
-	}
-
-	private static void testSoma() {
-		comando = "<soma>," + "a1234e" + ",<soma>";
-		System.out.println("Soma de strings = " + getServerResponse(comando));		
-	}
+	}	
 
 	private static String getServerResponse(String comando) {
 		int porta = 8080;
