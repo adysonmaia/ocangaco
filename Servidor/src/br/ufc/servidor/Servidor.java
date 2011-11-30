@@ -18,11 +18,6 @@ public class Servidor {
 		gs = new GameStateImp();
 		
 		/**
-		 * Inicia o banco de dados do jogo
-		 */
-		gs.iniciaBanco();
-		
-		/**
 		 * Inicia o serviço de Comunicação
 		 */
 		ServerService server = new ServerService(8080, 1024, false);

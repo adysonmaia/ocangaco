@@ -1,7 +1,7 @@
 package br.ufc.business.commands;
 
 import myserver.kernel.CommandExecute;
-import br.ufc.servidor.Servidor;
+import br.ufc.servidor.gamestate.GameStateImp;
 import br.ufc.servidor.player.Player;
 
 public class CmdMovimentacao extends CommandExecute {
@@ -19,7 +19,7 @@ public class CmdMovimentacao extends CommandExecute {
 		Player player = new Player(name, tipo, latitude, longitude);		
 		//GameStateTest.getInstance().updateOrConnectPlayer(player);
 		String resposta;
-		if(Servidor.gs.updateOrConnectPlayer(player)==1){
+		if(GameStateImp.getInstance().update(player)==1){
 				resposta = "Player " + player.getNome() + " updated.";
 		} else {
 			resposta = "Erro";

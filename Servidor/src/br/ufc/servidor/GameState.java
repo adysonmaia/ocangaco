@@ -12,13 +12,6 @@ import br.ufc.servidor.player.Player;
  */
 public interface GameState {
 	
-	
-	/**
-	 * Inicia o banco de dados do servidor
-	 * Deve ser chamada ao iniciar o processo servidor
-	 */
-	public void iniciaBanco();
-	
 	/**
 	 * Adiciona um jogador ao jogo
 	 * 
@@ -44,21 +37,12 @@ public interface GameState {
 	public int disconnectPlayer(String name);
 	
 	/**
-	 * Adiciona ou atualiza coordenadas do jogador<br>
-	 * Essa semântica foi criada pelo Rafael
-	 * 
-	 * @param player Jogador a ser incluído ou atualizado
-	 * @return 1 caso atualização ou adição tenha ocorrido com sucesso e -1 em caso de falha
-	 */
-	public int updateOrConnectPlayer(Player player);
-	
-	/**
 	 * Altera coordenadas de um jogador <br>
 	 * @param player Jogador
 	 * @param latitude nova Latitude
 	 * @param longitude nova longitude
 	 */
-	public void alteraCoordenadas(Player player, double latitude, double longitude);
+	public int update(Player player);
 	
 	/**
 	 * Retorma uma lista com todos os jogadores do jogo
