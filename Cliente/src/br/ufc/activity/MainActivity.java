@@ -52,7 +52,7 @@ public class MainActivity  extends Activity implements OnClickListener {
 		int role = spinnerRole.getSelectedItemPosition() +1;
 		int team = spinnerTeam.getSelectedItemPosition() +1;
 
-		ClientGameState.eu = new Player(
+		ClientGameState.myPlayerOnClient = new Player(
 				editTextName.getText().toString(), 
 				team, role);
 		

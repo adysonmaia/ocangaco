@@ -2,7 +2,6 @@ package br.ufc.util;
 
 import android.app.AlertDialog;
 import android.graphics.drawable.Drawable;
-import br.ufc.activity.ClienteActivity;
 import br.ufc.activity.MainActivity;
 import br.ufc.model.ClientGameState;
 import br.ufc.model.Player;
@@ -27,16 +26,14 @@ public class PlayerItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	
 	@Override
 	protected OverlayItem createItem(int i) {
-		GeoPoint geoPoint;
-		Player player = (Player)ClientGameState.playersCangaceiros.keySet().toArray()[i];
+		Player player;
 		
 		if(type == Player.CANGACEIRO)
-			player = (Player)ClientGameState.playersCangaceiros.keySet().toArray()[i];			
+			player = ClientGameState.playersCangaceiros.get(ClientGameState.playersCangaceiros.keySet().toArray()[i]);
 		else
-			player = (Player)ClientGameState.playersJaguncos.keySet().toArray()[i];			
+			player = ClientGameState.playersJaguncos.get(ClientGameState.playersJaguncos.keySet().toArray()[i]);
 
-			geoPoint = ClientGameState.playersCangaceiros.get(player).createLocationGeoPoint();
-		return new OverlayItem(geoPoint, player.getNome(),  player.getNome()+" Snippet");
+		return new OverlayItem(player.createLocationGeoPoint(), player.getNome(),  player.getNome()+" Snippet");
 	}
 
 	@Override
