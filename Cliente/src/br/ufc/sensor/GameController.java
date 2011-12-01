@@ -145,19 +145,23 @@ public class GameController {
 	}
 	
 	public void addBarrier() {
-		// @TODO tem que adicionar no servidor
-		int id =  ClientGameState.barriers.size() + 1;
+		Barrier barrier = new Barrier(ClientGameState.myPlayerOnClient.getTipo(),
+				ClientGameState.myPlayerOnClient.getLatitude(), ClientGameState.myPlayerOnClient.getLongitude());
+		
+		int id = ServerFactory.getServer().createBarrier(barrier);
 		ClientGameState.barriers.put(id, new Barrier(id, ClientGameState.myPlayerOnClient.getTipo(),
 				ClientGameState.myPlayerOnClient.getLatitude(), ClientGameState.myPlayerOnClient.getLongitude()));
 		barrierItemizedOverlay.invokePopulate();
 	}
 	
-	public void addMine() {
-		// @TODO tem que adicionar no servidor
-		int id =  ClientGameState.mines.size() + 1;
-		ClientGameState.mines.put(id, new Mine(id, ClientGameState.myPlayerOnClient.getTipo(), 100,
-				ClientGameState.myPlayerOnClient.getLatitude(), ClientGameState.myPlayerOnClient.getLongitude()));
+	public void addMine() {		
+		Mine mine = new Mine(ClientGameState.myPlayerOnClient.getTipo(), 100,
+				ClientGameState.myPlayerOnClient.getLatitude(), ClientGameState.myPlayerOnClient.getLongitude());
+		
+		int id = ServerFactory.getServer().createMine(mine);		 
+		ClientGameState.mines.put(id, mine);
 		mineItemizedOverlay.invokePopulate();
+				
 //		System.out.println("Colocando mina em:" + ClientGameState.myPlayerOnClient.getLatitude() + " " + ClientGameState.myPlayerOnClient.getLongitude());		
 	}
 		
