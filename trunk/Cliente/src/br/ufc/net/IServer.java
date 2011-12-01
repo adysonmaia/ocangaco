@@ -3,6 +3,7 @@ package br.ufc.net;
 import java.util.ArrayList;
 
 import br.ufc.model.Barrier;
+import br.ufc.model.MapObject;
 import br.ufc.model.Mine;
 import br.ufc.model.Player;
 
@@ -35,7 +36,7 @@ public interface IServer {
 	/**
 	 * Método que retorna uma lista com todos os objetos do mapa.
 	 */
-	public ArrayList<Player> getGameState(Player player);	
+	public ArrayList<MapObject> getGameState(Player player);	
 	
 	/**
 	 * Método utilizado para informar se o jogador já está connectado ao servidor

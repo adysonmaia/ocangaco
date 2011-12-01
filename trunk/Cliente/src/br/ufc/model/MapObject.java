@@ -1,5 +1,6 @@
 package br.ufc.model;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.google.android.maps.GeoPoint;
@@ -63,8 +64,10 @@ public abstract class MapObject {
 		
 	}
 	
-	public MapObject clone(){
-		return null;
-	}
+	public abstract MapObject clone();
 
+	public void toXML(Element parent, Document doc) {
+		// TODO Auto-generated method stub
+		
+	}
 }
