@@ -18,6 +18,10 @@ public class Mine extends MapObject {
 		this.damage = damage;
 	}
 
+	public Mine() {
+		this(0, 0 , 0, 0, 0);
+	}
+
 	public int getId() {
 		return id;
 	}

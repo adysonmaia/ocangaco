@@ -26,7 +26,7 @@ public class ClientGameState {
 	
 	public static void updateState() {
 		// Recupera lista de jogadores no servidor
-		List<Player> playersOnServer = ServerFactory.getServer().getGameState();
+		List<Player> playersOnServer = ServerFactory.getServer().getGameState(myPlayerOnClient);
 		
 		Map<String, Player> playersAux;
 		Player playerAux;

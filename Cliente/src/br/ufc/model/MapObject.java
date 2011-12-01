@@ -1,5 +1,7 @@
 package br.ufc.model;
 
+import org.w3c.dom.Element;
+
 import com.google.android.maps.GeoPoint;
 
 
@@ -55,6 +57,14 @@ public abstract class MapObject {
 	 */
 	public GeoPoint createLocationGeoPoint() {
 		return new GeoPoint((int)(latitude * 1E6), (int) (longitude * 1E6));
+	}
+	
+	public void fromXML(Element element){
+		
+	}
+	
+	public MapObject clone(){
+		return null;
 	}
 
 }

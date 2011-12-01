@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-
 public class Conexao {
 
 	public static String executaComando(String comando, String ip, int porta)
@@ -29,7 +28,18 @@ public class Conexao {
 
 		writer.writeBytes(comando);
 		writer.write('\n');
-		resposta = reader.readLine();
+
+		StringBuilder buffer = new StringBuilder();
+		String line = reader.readLine();
+		System.out.println(line);
+		if (line.equals("<response>")) {
+			while (!(line = reader.readLine()).equals("</response>")) {
+				buffer.append(line);
+				buffer.append('\n');
+			}
+		}		
+		
+		resposta = buffer.toString();		
 		return resposta;
 	}
 }

@@ -10,7 +10,6 @@ import org.w3c.dom.Element;
 import br.ufc.location.geoengine.DevicesPositionControl;
 import br.ufc.location.geoengine.GeoPosition;
 import br.ufc.servidor.artefatos.Mina;
-import br.ufc.servidor.player.Player;
 import br.ufc.util.XMLParser;
 
 public class CmdCriarMina extends CommandExecute {

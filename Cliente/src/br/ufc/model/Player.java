@@ -1,5 +1,11 @@
 package br.ufc.model;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import br.ufc.util.XMLParser;
+
 
 
 /**
@@ -21,6 +27,7 @@ public class Player extends MapObject {
 	private String nome;
 	private int tipo;
 	private int papel;
+	private Integer id;
 
 	public Player(String nome, int tipo) {
 		super();
@@ -53,6 +60,10 @@ public class Player extends MapObject {
 		this.papel = papel;
 	}
 
+	public Player() {
+		this("null");
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -75,5 +86,54 @@ public class Player extends MapObject {
 
 	public void setPapel(int papel) {
 		this.papel = papel;
+	}
+
+	public void toXML(Element parent, Document doc) {
+		Element player = doc.createElement("player");
+		if (parent == null) {
+			doc.appendChild(player);
+		} else {
+			parent.appendChild(player);
+		}
+		// set attributes to player element
+		player.setAttribute("nome", String.valueOf(this.getNome()));
+		player.setAttribute("tipo", String.valueOf(this.getPapel()));
+		player.setAttribute("grupo", String.valueOf(this.getTipo()));
+		player.setAttribute("latitude", String.valueOf(this.getLatitude()));
+		player.setAttribute("longitude", String.valueOf(this.getLongitude()));
+	}
+
+	public void fromXML(String xmlString) throws Exception {
+		Document doc = XMLParser.createXMLDocument(xmlString);
+
+		if (doc != null) {
+			NodeList nodes = doc.getElementsByTagName("player");
+			Element p = (Element) nodes.item(0);
+
+			if (p != null) {
+				fromXML(p);
+			}
+		} else {
+			throw new Exception("XML parser error");
+		}
+	}
+	
+	public void fromXML(Element element){
+		this.setNome(element.getAttribute("nome"));
+		this.setPapel(Integer.parseInt(element.getAttribute("tipo")));
+		this.setTipo(Integer.parseInt(element.getAttribute("grupo")));
+		this.setLatitude(Double.parseDouble(element
+						.getAttribute("latitude")));
+		this.setLongitude(Double.parseDouble(element
+				.getAttribute("longitude")));
+	}
+
+	public void setId(Integer id) {
+		this.id = id;		
+	}
+	
+	public Integer getId()
+	{
+		return id;
 	}
 }

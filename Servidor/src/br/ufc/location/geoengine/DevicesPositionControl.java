@@ -82,6 +82,17 @@ public class DevicesPositionControl {
 		return true;
 	}
 	/**
+	 * Remove um dispositivo movel a ser rastreado
+	 * @param device
+	 * @return
+	 */
+	public synchronized boolean  removeDevice(IMobileDevice device){
+		// verifica se o dispositivo ja esta na tabela
+		map.remove(device.getId());
+		return true;
+	}
+	
+	/**
 	 * 
 	 * @param id
 	 * @return
