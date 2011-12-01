@@ -39,5 +39,8 @@ public class CommandFactory {
 	 	
 	 	cmd = new CmdCriarBarricada();	 	
 	 	CommandParser.addCommand("<criarbarricada>",0,cmd);
+	 	
+	 	cmd = new CmdVisibleDevices();	 	
+	 	CommandParser.addCommand("<visibledevices>",0,cmd);
 	}
 }

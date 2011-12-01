@@ -1,6 +1,5 @@
 package br.ufc.servidor.artefatos;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import br.ufc.location.facade.IGeoPosition;

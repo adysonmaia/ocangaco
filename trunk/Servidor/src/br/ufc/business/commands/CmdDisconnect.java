@@ -1,9 +1,9 @@
 package br.ufc.business.commands;
 
 
-import br.ufc.servidor.gamestate.GameStateImp;
 import myserver.kernel.CommandExecute;
-import br.ufc.servidor.Servidor;
+import br.ufc.location.facade.IMobileDevice;
+import br.ufc.location.geoengine.DevicesPositionControl;
 
 public class CmdDisconnect extends CommandExecute {
 
@@ -12,13 +12,15 @@ public class CmdDisconnect extends CommandExecute {
 
 	@Override
 	public String execute(String[] param) {
-		String name = param[0];
-		//String resposta = GameStateTest.getInstance().disconnectPlayer(name);
+		Integer id = Integer.getInteger(param[0]);
+		
 		String resposta;
-		if(GameStateImp.getInstance().disconnectPlayer(name)==1){
-			resposta = "Player: " + name + " disconnected.";
-		} else 
-			resposta = "Erro";
+		DevicesPositionControl control = DevicesPositionControl.getInstance();
+		
+		// Busca o dispositivo
+		IMobileDevice device = control.searchMobileDeviceById(id);
+		resposta = String.valueOf(control.removeDevice(device));
+		
 		return resposta;
 	}
 

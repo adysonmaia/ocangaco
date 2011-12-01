@@ -33,7 +33,7 @@ public interface IServer {
 	/**
 	 * Método que retorna uma lista com todos os objetos do mapa.
 	 */
-	public ArrayList<Player> getGameState();	
+	public ArrayList<Player> getGameState(Player player);	
 	
 	/**
 	 * Método utilizado para informar se o jogador já está connectado ao servidor

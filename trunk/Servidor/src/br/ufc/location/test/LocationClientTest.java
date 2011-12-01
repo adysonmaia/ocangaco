@@ -28,12 +28,12 @@ public class LocationClientTest {
 		//testGameState();
 		
 		testRegister();
-		testUpdatePosition();
+		//testUpdatePosition();
 		//testDevicesList();
 		//testDisconnect();
-		testCriarMina();
-		testCriarBarricada();
-		testDevicesList();
+		//testCriarMina();
+		//testCriarBarricada();
+		//testDevicesList();
 	}
 
 	private static void testCriarBarricada() {
@@ -145,11 +145,11 @@ public class LocationClientTest {
 	private static void testRegister() {
 		params = new String [10];
 		
-		params[0] ="Rafael";
-		params[1] ="2";
-		params[2] ="2";
-		params[3] ="-3.717081";
-		params[4] ="38.539906";
+		params[0] ="Fulano";
+		params[1] ="1";
+		params[2] ="1";
+		params[3] ="0.000281";
+		params[4] ="0";
 		
 		comando = CommandUtil.makeCommand("register", params, 5);
 
@@ -164,7 +164,7 @@ public class LocationClientTest {
 			System.out.println("id 1: " + id.getTextContent());
         }
         
-		params[0] ="Andre";
+		params[0] ="Beltrano";
 		params[1] ="2";
 		params[2] ="2";
         params[3] ="-3.717823";

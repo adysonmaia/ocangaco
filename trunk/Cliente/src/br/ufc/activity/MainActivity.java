@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import br.ufc.model.ClientGameState;
 import br.ufc.model.Player;
+import br.ufc.net.ServerFactory;
 import br.ufc.util.Properties;
 
 
@@ -55,6 +56,8 @@ public class MainActivity  extends Activity implements OnClickListener {
 		ClientGameState.myPlayerOnClient = new Player(
 				editTextName.getText().toString(), 
 				team, role);
+		
+		ServerFactory.getServer().connect(ClientGameState.myPlayerOnClient);
 		
 		Intent i = new Intent(this, ClienteActivity.class);
 		startActivity(i);
