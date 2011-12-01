@@ -32,7 +32,7 @@ public class GeoPositionControlTest {
 		
         cmdReg = new CmdRegister();
         resp = cmdReg.execute(params);
-        Integer myId = Integer.parseInt(resp);
+        Integer myId = new Integer(1);
         
         System.out.println("Register test: " + resp);
         
@@ -55,7 +55,7 @@ public class GeoPositionControlTest {
         resp = cmdReg.execute(params);
         
         System.out.println("Register test: " + resp);
-        Integer inimyId = Integer.parseInt(resp);
+        Integer inimyId = new Integer(3);
         
         latitude  = Double.parseDouble("-3.733415");
         longitude = Double.parseDouble("-38.497810");
@@ -78,7 +78,7 @@ public class GeoPositionControlTest {
 		params[0] ="1";
 		params[1] ="-3.733137";
 		params[2] ="-38.497939";
-        resp = cmdReg.execute(params);
+        resp = cmdUpdate.execute(params);
 
 	}
 
