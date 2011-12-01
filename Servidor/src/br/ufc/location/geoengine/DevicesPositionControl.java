@@ -55,9 +55,11 @@ public class DevicesPositionControl {
 		double lat1,lat2;
 		
 		dLat = (pos2.getLatitude()-pos1.getLatitude());
+		dLat = (dLat /90.00)* Math.PI/2 ;
 		dLon = (pos2.getLongitude()-pos1.getLongitude());
-		lat1 = pos1.getLatitude();
-		lat2 = pos2.getLatitude();
+		dLon = (dLon / 180.0) * Math.PI;
+		lat1 = (pos1.getLatitude()/ 90.00)* Math.PI/2 ;
+		lat2 = (pos2.getLatitude()/ 90.00)* Math.PI/2;
 
 		a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
 		c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
