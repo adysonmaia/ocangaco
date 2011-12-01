@@ -9,6 +9,7 @@ import br.ufc.activity.R;
 import br.ufc.model.ClientGameState;
 import br.ufc.model.Player;
 import br.ufc.net.ServerFactory;
+import br.ufc.util.MineItemizedOverlay;
 import br.ufc.util.PlayerItemizedOverlay;
 
 import com.google.android.maps.MapView;
@@ -21,6 +22,7 @@ public class GameController {
 
 	private PlayerItemizedOverlay cangaceirosItemizedOverlay;
 	private PlayerItemizedOverlay jaguncosItemizedOverlay;
+	private MineItemizedOverlay mineItemizedOverlay;
 	
 	private boolean running;
 	
@@ -42,9 +44,11 @@ public class GameController {
 
 		cangaceirosItemizedOverlay = new PlayerItemizedOverlay(getResources().getDrawable(R.drawable.icon_cangaceiro), Player.CANGACEIRO);
 		jaguncosItemizedOverlay = new PlayerItemizedOverlay(getResources().getDrawable(R.drawable.icon_jagunco), Player.JAGUNCO);
-
+		mineItemizedOverlay = new MineItemizedOverlay(getResources().getDrawable(R.drawable.mine));
+				
 		getMapView().getOverlays().add(cangaceirosItemizedOverlay);
 		getMapView().getOverlays().add(jaguncosItemizedOverlay);
+		getMapView().getOverlays().add(mineItemizedOverlay);
 	}
 
 	private void setMapConfigurations(boolean sattelite, boolean streetView) {
@@ -64,6 +68,7 @@ public class GameController {
 					
 					cangaceirosItemizedOverlay.invokePopulate();
 					jaguncosItemizedOverlay.invokePopulate();
+					mineItemizedOverlay.invokePopulate();
 					
 					// Atualiza o mapa
 					handler.sendMessage(handler.obtainMessage());
@@ -84,8 +89,9 @@ public class GameController {
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
         	mapView.invalidate();
-        	
-        	mapView.getController().setCenter(ClientGameState.getMyPlayerOnServer().createLocationGeoPoint());
+            
+        	if(ClientGameState.getMyPlayerOnServer() != null)
+        		mapView.getController().setCenter(ClientGameState.getMyPlayerOnServer().createLocationGeoPoint());
         }
     };
 	
