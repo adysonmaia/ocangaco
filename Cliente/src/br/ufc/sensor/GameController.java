@@ -73,9 +73,9 @@ public class GameController {
 					 // Atualiza a lista de jogadores, vai no servidor e 
 					ClientGameState.updateState();					
 					
+					mineItemizedOverlay.invokePopulate();
 					cangaceirosItemizedOverlay.invokePopulate();
 					jaguncosItemizedOverlay.invokePopulate();
-					mineItemizedOverlay.invokePopulate();
 					
 					// Atualiza o mapa
 					handler.sendMessage(handler.obtainMessage());
@@ -117,11 +117,12 @@ public class GameController {
 	
 	public void addMine() {
 		// @TODO tem que adicionar no servidor
-//		int id =  (new Random()).nextInt(1000);
-//		ClientGameState.mines.put(id, new Mine(id, ClientGameState.myPlayerOnClient.getTipo(), 100, 
-//				ClientGameState.myPlayerOnClient.getLatitude(), 
-//				ClientGameState.myPlayerOnClient.getLongitude()));
-//		System.out.println("Colocando mina em:" + ClientGameState.myPlayerOnClient.getLatitude() + " " + ClientGameState.myPlayerOnClient.getLongitude());
+		int id =  (new Random()).nextInt(1000);
+		ClientGameState.mines.put(id, new Mine(id, ClientGameState.myPlayerOnClient.getTipo(), 100, 
+				ClientGameState.myPlayerOnClient.getLatitude(), 
+				ClientGameState.myPlayerOnClient.getLongitude()));
+		mineItemizedOverlay.invokePopulate();
+		System.out.println("Colocando mina em:" + ClientGameState.myPlayerOnClient.getLatitude() + " " + ClientGameState.myPlayerOnClient.getLongitude());
 		
 	}
 	
