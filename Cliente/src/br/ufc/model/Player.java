@@ -96,6 +96,7 @@ public class Player extends MapObject {
 			parent.appendChild(player);
 		}
 		// set attributes to player element
+		player.setAttribute("id", String.valueOf(this.getId()));
 		player.setAttribute("nome", String.valueOf(this.getNome()));
 		player.setAttribute("tipo", String.valueOf(this.getPapel()));
 		player.setAttribute("grupo", String.valueOf(this.getTipo()));
@@ -119,6 +120,7 @@ public class Player extends MapObject {
 	}
 	
 	public void fromXML(Element element){
+		this.setId(Integer.parseInt(element.getAttribute("id")));
 		this.setNome(element.getAttribute("nome"));
 		this.setPapel(Integer.parseInt(element.getAttribute("tipo")));
 		this.setTipo(Integer.parseInt(element.getAttribute("grupo")));
@@ -136,4 +138,18 @@ public class Player extends MapObject {
 	{
 		return id;
 	}
+
+	@Override
+	public String toString() {
+		return "Player [id=" + id + ", nome=" + nome + ", papel=" + papel
+				+ ", tipo=" + tipo + ", getLatitude()=" + getLatitude()
+				+ ", getLongitude()=" + getLongitude() + "]";
+	}
+
+	@Override
+	public MapObject clone() {
+		return new Player();
+	}
+	
+	
 }

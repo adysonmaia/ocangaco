@@ -10,6 +10,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import br.ufc.model.Barrier;
+import br.ufc.model.MapObject;
 import br.ufc.model.Mine;
 import br.ufc.model.Player;
 import br.ufc.util.CommandUtil;
@@ -43,7 +44,8 @@ public class ServerImpl implements IServer{
 		comando = CommandUtil.makeCommand("register", params, 5);
 
 		response = getServerResponse(comando);
-	    System.out.println("player " + player.getNome() + "registered." + "Id = " + response);
+	    System.out.println("player " + player.getNome() + " registered." + 
+	    		" Response content = " + response);
 		
 		Document doc = XMLParser.createXMLDocument(response);
         NodeList nodes = doc.getElementsByTagName("id");
@@ -60,7 +62,7 @@ public class ServerImpl implements IServer{
 
 	@Override
 	public void closeConnection(Player player) {
-		String comando = "<disconnect>," +	player.getNome() + ",<disconnect>";	
+		String comando = "<disconnect>," +	player.getId() + ",<disconnect>";	
 		
 		try {
 			System.out.println(Conexao.executaComando(comando, Properties.SERVER_IP, PORT));		   
@@ -79,59 +81,28 @@ public class ServerImpl implements IServer{
 		comando = CommandUtil.makeCommand("updateposition", params, 3);
 		
 		response = getServerResponse(comando);
-        System.out.println("Response: " + response);
+        System.out.println("Response content: " + response);
 	}
 	
 	@Override
-	public ArrayList<Player> getGameState(Player player) {
+	public ArrayList<MapObject> getGameState(Player player) {
 		params[0] = String.valueOf(player.getId());
 		
 		comando = CommandUtil.makeCommand("visibledevices", params, 3);
 		
 		response = getServerResponse(comando);
-        System.out.println("List of devices: \n" + response);
+        System.out.println("List of devices content: \n" + response);
         
-        return getPlayers(response);
-	}
-	
-	public ArrayList<Player> getPlayers(String response)
-	{
-		ArrayList<Player> players = new ArrayList<Player>();
-		Document doc = XMLParser.createXMLDocument(response);
-        NodeList nodes = doc.getElementsByTagName("player");
-        for (int i = 0; i < nodes.getLength(); i++) {        	
-        	try {
-        		Player player = new Player();
-        		player.fromXML((Element)nodes.item(i));
-        		players.add(player);        		
-				System.out.println(player);
-			} catch (Exception e) {				
-				e.printStackTrace();
-			}
-		}
+        ArrayList<MapObject> devices = new ArrayList<MapObject>();
         
-        return players;
+        devices.addAll(XMLParser.getDevices("player", response, new Player()));
+        devices.addAll(XMLParser.getDevices("mina", response, new Mine()));
+        devices.addAll(XMLParser.getDevices("barricada", response, new Barrier()));
+        
+        return devices;
 	}
 	
 	
-	public ArrayList<Mine> getMinas(String response)
-	{
-		ArrayList<Mine> minas = new ArrayList<Mine>();
-		Document doc = XMLParser.createXMLDocument(response);
-        NodeList nodes = doc.getElementsByTagName("mina");
-        for (int i = 0; i < nodes.getLength(); i++) {        	
-        	try {
-        		Mine mina = new Mine();
-        		mina.fromXML((Element)nodes.item(i));
-        		minas.add(mina);        		
-				System.out.println(mina);
-			} catch (Exception e) {				
-				e.printStackTrace();
-			}
-		}
-        
-        return minas;
-	}
 	
 	@Override
 	public int createMine(Mine mine) {
