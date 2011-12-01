@@ -39,16 +39,23 @@
                     android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10px"
-                    android:text="Vida" />
-
+                    android:background="@drawable/back"
+                    android:text="Vida"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:typeface="monospace" android:paddingLeft="2px" android:paddingRight="2px"/>
+
                 <ProgressBar
                     android:id="@+id/pbLife"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:indeterminate="false"
+                    android:max="100"
                     android:minWidth="200px"
-                    android:paddingLeft="10px" />
+                    android:paddingLeft="2px"
+                    android:paddingRight="2px" />
+
             </LinearLayout>
 
             <Button
