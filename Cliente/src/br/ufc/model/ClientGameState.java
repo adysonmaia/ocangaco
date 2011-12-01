@@ -19,11 +19,6 @@ public class ClientGameState {
 	 */
 	public static Player myPlayerOnClient = null;
 
-	// Bloco criado apenas para fins de teste
-	static {
-		mines.put(1, new Mine(1, 1, 100, 10, 10));
-	}
-
 	public static void updateState() {
 		// Recupera lista de objetos no servidor
 		List<MapObject> devicesOnServer = ServerFactory.getServer()
