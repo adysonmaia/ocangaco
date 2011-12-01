@@ -33,5 +33,8 @@ public class CommandFactory {
 	 	
 	 	cmd = new CmdGetDevicesList();	 	
 	 	CommandParser.addCommand("<deviceslist>",0,cmd);
+	 	
+	 	cmd = new CmdCriarMina();	 	
+	 	CommandParser.addCommand("<criarmina>",0,cmd);
 	}
 }

@@ -42,6 +42,7 @@ public class Player implements IMobileDevice {
 	public static final int DOCTOR = 2;
 	public static final int ENGINEER = 3;
 	public static final int SPY = 4;
+	public static final int DEFAULT_TIPO = SOLDIER;
 
 	public static final int BLUE_TEAM = 1;
 	public static final int RED_TEAM = 2;
@@ -65,20 +66,13 @@ public class Player implements IMobileDevice {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	/**
-	 * 
-	 * @param nome
-	 *            Nome do Jogador
-	 */
+	
 	public Player(String nome) {
-
-		super();
-		this.nome = nome;
-		proximity = new ProximityPlayerListener();
-		visibility = new VisibilityPlayerListener();
-		path = new DevicePath();
-
+		this(nome, DEFAULT_TIPO);
+	}
+	
+	public Player(String nome, int tipo, double latitude, double longitude) {
+		this(nome, tipo, DEFAULT_GROUP, latitude, longitude);
 	}
 
 	public Player(String nome, int tipo, int group, double latitude,
@@ -89,19 +83,6 @@ public class Player implements IMobileDevice {
 		this.groupId = group;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		proximity = new ProximityPlayerListener();
-		visibility = new VisibilityPlayerListener();
-		path = new DevicePath();
-	}
-
-	public Player(String nome, int tipo, double latitude, double longitude) {
-		super();
-
-		this.nome = nome;
-		this.tipo = tipo;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.groupId = DEFAULT_GROUP;
 		proximity = new ProximityPlayerListener();
 		visibility = new VisibilityPlayerListener();
 		path = new DevicePath();

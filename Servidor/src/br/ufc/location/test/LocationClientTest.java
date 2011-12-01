@@ -8,6 +8,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import br.ufc.servidor.artefatos.Mina;
 import br.ufc.servidor.player.Player;
 import br.ufc.util.Conexao;
 import br.ufc.util.EntityParser;
@@ -28,6 +29,30 @@ public class LocationClientTest {
 		testUpdatePosition();
 		//testDevicesList();
 		//testDisconnect();
+		testCriarMina();
+		testDevicesList();
+	}
+
+	private static void testCriarMina() {
+		params = new String [10];
+		
+		params[0] ="1";		
+		params[1] ="-3.717581";
+		params[2] ="38.539706";
+		params[3] = "20";
+		
+		comando = makeCommand("criarmina", params, 4);
+
+		String response = getServerResponse(comando);
+	    System.out.println("mina 1 id = " + response);
+		
+		Document doc = XMLParser.createXMLDocument(response);
+        NodeList nodes = doc.getElementsByTagName("id");
+        Element id = (Element)nodes.item(0);
+        
+        if (id != null) {
+			System.out.println("id mina: " + id.getTextContent());
+        }
 	}
 
 	private static void testDevicesList() {
@@ -44,6 +69,17 @@ public class LocationClientTest {
         	try {
 				player.fromXML((Element)nodes.item(i));
 				System.out.println(player);
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+		}
+        
+        nodes = doc.getElementsByTagName("mina");
+        for (int i = 0; i < nodes.getLength(); i++) {
+        	Mina mina = new Mina();
+        	try {
+        		mina.fromXML((Element)nodes.item(i));
+				System.out.println(mina);
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}
