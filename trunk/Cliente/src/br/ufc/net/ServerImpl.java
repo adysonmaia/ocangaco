@@ -18,8 +18,6 @@ import br.ufc.util.Properties;
 import br.ufc.util.XMLParser;
 
 public class ServerImpl implements IServer{
-
-	public static final int PORT = 8080;
 	String[] params;
 	String comando;
 	String response;
@@ -65,7 +63,7 @@ public class ServerImpl implements IServer{
 		String comando = "<disconnect>," +	player.getId() + ",<disconnect>";	
 		
 		try {
-			System.out.println(Conexao.executaComando(comando, Properties.SERVER_IP, PORT));		   
+			System.out.println(Conexao.executaComando(comando, Properties.SERVER_IP, Properties.SERVER_PORT));		   
 		} catch (Exception e) {
 			System.out.println("Error disconnecting player from server. " + e.getMessage());
 			e.printStackTrace();
@@ -168,7 +166,7 @@ public class ServerImpl implements IServer{
 	
 	private static String getServerResponse(String comando) {
 		try {
-			return Conexao.executaComando(comando, Properties.SERVER_IP, PORT);
+			return Conexao.executaComando(comando, Properties.SERVER_IP, Properties.SERVER_PORT);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

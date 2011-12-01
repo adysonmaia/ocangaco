@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import br.ufc.model.Player;
@@ -14,6 +13,7 @@ public class TimesActivity extends Activity {
 
 	private String nome;
 	private String ip;
+	private String port;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -24,6 +24,7 @@ public class TimesActivity extends Activity {
 		Bundle bundle = this.getIntent().getExtras();
 		nome = bundle.getString("nome");
 		ip = bundle.getString("ip");
+		port = bundle.getString("port");
 
 		TextView t = (TextView) findViewById(R.id.textViewTimes);
 		t.setText("Escolha seu time " + nome);
@@ -50,6 +51,7 @@ public class TimesActivity extends Activity {
 		i.putExtra("nome", nome);
 		i.putExtra("time", time);
 		i.putExtra("ip", ip);
+		i.putExtra("port", port);
 		startActivity(i);
 	}
 

@@ -17,6 +17,7 @@ public class FuncaoActivity extends Activity {
 	private String nome;
 	private int time;
 	private String ip;
+	private String port;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -27,6 +28,7 @@ public class FuncaoActivity extends Activity {
 		Bundle bundle = this.getIntent().getExtras();
 		nome = bundle.getString("nome");
 		ip = bundle.getString("ip");
+		port = bundle.getString("port");
 		time = bundle.getInt("time");
 
 		TextView t = (TextView) findViewById(R.id.textViewFuncao);
@@ -67,6 +69,7 @@ public class FuncaoActivity extends Activity {
 
 	public void enviarIntent(int funcao) {
 		Properties.SERVER_IP = ip;
+		Properties.SERVER_PORT = Integer.parseInt(port);
 
 		ClientGameState.myPlayerOnClient = new Player(nome, time, funcao);
 
