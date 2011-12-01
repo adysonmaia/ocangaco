@@ -4,6 +4,7 @@ package br.ufc.activity;
 
 import android.os.Bundle;
 import android.widget.Toast;
+import android.widget.ZoomControls;
 import br.ufc.sensor.GameController;
 
 import com.google.android.maps.MapActivity;
@@ -22,8 +23,8 @@ public class ClienteActivity  extends MapActivity {
 		
 		mapView = (MapView)findViewById(R.id.mapa);
 		mapView.setBuiltInZoomControls(true);
+		mapView.getController().setZoom(18);
 		mapView.getOverlays().clear();
-		
 		gameController = new GameController(mapView, this);
 		gameController.start();
 	}

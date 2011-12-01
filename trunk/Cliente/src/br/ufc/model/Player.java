@@ -1,6 +1,5 @@
 package br.ufc.model;
 
-import com.google.android.maps.GeoPoint;
 
 
 /**
@@ -9,7 +8,7 @@ import com.google.android.maps.GeoPoint;
  * Class that defines a player
  * 
  */
-public class Player {
+public class Player extends MapObject {
 	
 	public static final int CANGACEIRO = 1;
 	public static final int JAGUNCO = 2;
@@ -22,8 +21,6 @@ public class Player {
 	private String nome;
 	private int tipo;
 	private int papel;
-	private double latitude;
-	private double longitude;
 
 	public Player(String nome, int tipo) {
 		super();
@@ -44,20 +41,16 @@ public class Player {
 	}
 
 	public Player(String nome, int tipo, double latitude, double longitude) {
-		super();
+		super(latitude, longitude);
 		this.nome = nome;
 		this.tipo = tipo;
-		this.latitude = latitude;
-		this.longitude = longitude;
 	}
 	
 	public Player(String nome, int tipo, int papel, double latitude, double longitude) {
-		super();
+		super(latitude, longitude);
 		this.nome = nome;
 		this.tipo = tipo;
 		this.papel = papel;
-		this.latitude = latitude;
-		this.longitude = longitude;
 	}
 
 	public String getNome() {
@@ -74,26 +67,6 @@ public class Player {
 
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
-	}
-
-	public double getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
-	public GeoPoint createLocationGeoPoint() {
-		return new GeoPoint((int)(latitude * 1E6), (int) (longitude * 1E6));
 	}
 
 	public int getPapel() {
