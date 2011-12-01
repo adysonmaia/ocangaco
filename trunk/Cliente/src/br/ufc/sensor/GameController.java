@@ -1,5 +1,7 @@
 package br.ufc.sensor;
 
+import java.security.acl.LastOwnerException;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.location.Location;
@@ -12,6 +14,8 @@ import br.ufc.net.ServerFactory;
 import br.ufc.util.MineItemizedOverlay;
 import br.ufc.util.PlayerItemizedOverlay;
 
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
 public class GameController {
@@ -53,7 +57,10 @@ public class GameController {
 
 	private void setMapConfigurations(boolean sattelite, boolean streetView) {
 		mapView.setSatellite(true);
-		mapView.setStreetView(false);		
+		mapView.setStreetView(false);
+		MapController mc = mapView.getController();
+		mc.setZoom(18);
+		mc.animateTo(ClientGameState.myPlayerOnClient.createLocationGeoPoint());
 	}
 	
 	public void start() {
@@ -105,6 +112,7 @@ public class GameController {
 		
 		//Atualiza posição do jogador no servidor. 
 		ServerFactory.getServer().updatePlayerLocation(ClientGameState.myPlayerOnClient);
+		mapView.getController().animateTo(ClientGameState.myPlayerOnClient.createLocationGeoPoint());
 	}
 	
 	public MapView getMapView() {
