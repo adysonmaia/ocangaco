@@ -1,7 +1,6 @@
 package br.ufc.location.listeners;
 
 import br.ufc.location.facade.IMobileDevice;
-import br.ufc.location.facade.IVisibilityListener;
 import br.ufc.servidor.artefatos.Mina;
 
 /**
@@ -10,7 +9,7 @@ import br.ufc.servidor.artefatos.Mina;
  * @author Rafael
  *
  */
-public class VisibilityBarricadaListener implements IVisibilityListener{
+public class VisibilityBarricadaListener extends VisibilityListener{
 
 	@Override
 	public boolean isVisible(IMobileDevice device1, IMobileDevice device2,double distance) {

@@ -62,7 +62,7 @@ public class GameStateImp implements GameState {
 
 		if (players != null && players.size() > 0) {
 			for (Player player : players) {
-				if (player.getTipo() == tipo) {
+				if (player.getType() == tipo) {
 					playersByTipo.add(player);
 				}
 			}
@@ -119,7 +119,7 @@ public class GameStateImp implements GameState {
 
 		if (players != null && players.size() > 0) {
 			for (Player p : players) {
-				if (player.getTipo() == player.getTipo()) {
+				if (player.getType() == p.getType()) {
 					playersByTipo.add(player);
 				}
 			}
@@ -142,7 +142,7 @@ public class GameStateImp implements GameState {
 		
 		if (players != null && players.size() > 0) {
 			for (Player p : players) {
-				if (p.getTipo() == p1.getTipo()) {
+				if (p.getType() == p1.getType()) {
 					playersByTipo.add(p);
 				}
 			}

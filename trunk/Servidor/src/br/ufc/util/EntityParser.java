@@ -27,7 +27,7 @@ public class EntityParser {
 
 	public static String parseMessageToPlayer(Player player) {
 		
-		String message = player.getNome() + FIELD_SEPARATOR + player.getTipo()
+		String message = player.getNome() + FIELD_SEPARATOR + player.getType()
 				+ FIELD_SEPARATOR + player.getLatitude() + FIELD_SEPARATOR
 				+ player.getLongitude();
 		System.out.println("Parsed player to message: " + message);
@@ -74,8 +74,8 @@ public class EntityParser {
 		player = parsePlayerToMessage(p2);
 		player2 = parsePlayerToMessage(p1);
 
-		System.out.println(player.getNome() + " " + player.getTipo() + "\n"
-				+ player2.getNome() + " " + player2.getTipo());
+		System.out.println(player.getNome() + " " + player.getType() + "\n"
+				+ player2.getNome() + " " + player2.getType());
 
 		ArrayList<Player> playerList = new ArrayList<Player>();
 		playerList.add(player);
@@ -89,7 +89,7 @@ public class EntityParser {
 		playerList = parseMessageToPlayerList(list);
 
 		for (Player p : playerList) {
-			System.out.println(p.getNome() + " " + p.getTipo());
+			System.out.println(p.getNome() + " " + p.getType());
 		}
 	}
 }

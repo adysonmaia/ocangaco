@@ -2,9 +2,9 @@ package br.ufc.business.commands;
 
 import java.util.ArrayList;
 
-import br.ufc.servidor.player.Player;
 import br.ufc.util.EntityParser;
 import br.ufc.servidor.gamestate.GameStateImp;
+import br.ufc.servidor.player.Player;
 import myserver.kernel.CommandExecute;
 
 /**
