@@ -10,6 +10,8 @@ import org.w3c.dom.Element;
 import br.ufc.location.geoengine.DevicesPositionControl;
 import br.ufc.location.geoengine.GeoPosition;
 import br.ufc.servidor.artefatos.Mina;
+import br.ufc.servidor.gamestory.GameStoryControl;
+import br.ufc.servidor.gamestory.Message;
 import br.ufc.util.XMLParser;
 
 public class CmdCriarMina extends CommandExecute {
@@ -53,6 +55,10 @@ public class CmdCriarMina extends CommandExecute {
 
 		// adiciona o dispositivo para ser controlado
 		control.addDevice(mina);
+		
+		GameStoryControl storyControl = GameStoryControl.getInstance();
+		Message message = new Message("Uma mina foi criada", mina);
+		storyControl.addMessage(message);
 
 		String response = toXml(freeId);
 

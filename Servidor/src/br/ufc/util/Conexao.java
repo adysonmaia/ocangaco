@@ -31,14 +31,14 @@ public class Conexao {
 
 		StringBuilder buffer = new StringBuilder();
 		String line = reader.readLine();
-		System.out.println(line);
+		System.out.println("read begin: " + line);
 		if (line.equals("<response>")) {
 			while (!(line = reader.readLine()).equals("</response>")) {
 				buffer.append(line);
 				buffer.append('\n');
 			}
 		}		
-		
+		System.out.println("read end: " + line);
 		resposta = buffer.toString();		
 		return resposta;
 	}

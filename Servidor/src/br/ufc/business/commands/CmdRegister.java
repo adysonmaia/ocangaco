@@ -9,6 +9,8 @@ import org.w3c.dom.Element;
 
 import br.ufc.location.geoengine.DevicesPositionControl;
 import br.ufc.location.geoengine.GeoPosition;
+import br.ufc.servidor.gamestory.GameStoryControl;
+import br.ufc.servidor.gamestory.Message;
 import br.ufc.servidor.player.Player;
 import br.ufc.util.XMLParser;
 
@@ -27,7 +29,7 @@ public class CmdRegister extends CommandExecute {
 		GeoPosition                pos;
 		Date                       now;
 		DevicesPositionControl control;
-		Integer                 freeId;
+		Integer                 freeId;		
 		
 		// Nome do jogador
 		nome      = param[0];
@@ -41,7 +43,7 @@ public class CmdRegister extends CommandExecute {
 		longitude = Double.parseDouble(param[4]);		
 		
 		control = DevicesPositionControl.getInstance();
-
+		
 		player    = new Player(nome, t,group, latitude, longitude);
 		
 		freeId = DevicesPositionControl.getNextFreeDeviceId();
@@ -52,6 +54,10 @@ public class CmdRegister extends CommandExecute {
 		pos = new GeoPosition(now,latitude,longitude);
 		// seta a posiçao corrente;
 		player.setGeoPosition(pos);
+		
+		GameStoryControl storyControl = GameStoryControl.getInstance();
+		Message message = new Message("Soldado " + player.getNome() + " entrou no jogo", player);
+		storyControl.addMessage(message);
 		
 		// adiciona o dispositivo para ser controlado
 		control.addDevice(player);

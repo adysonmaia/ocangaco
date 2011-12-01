@@ -14,18 +14,19 @@ import java.util.List;
 
 import br.ufc.location.facade.IGeoPosition;
 import br.ufc.location.facade.IMobileDevice;
+import br.ufc.servidor.gamestory.GameStoryControl;
+import br.ufc.servidor.gamestory.Message;
 
 /**
  * Classe controladora do gerenciamento de posições
  * @author Danilo Reis
  *
  */
-public class DevicesPositionControl {
-
-	private HashMap<Integer, IMobileDevice> map;
+public class DevicesPositionControl {	
+	private HashMap<Integer, IMobileDevice> map;	
 	static int               freeDeviceId;
 	static DevicesPositionControl manager;
-	
+
 	// Constantes
 	public static final double EARTHRATIO = 6371000; // Raio da terra em metros
 
@@ -113,6 +114,11 @@ public class DevicesPositionControl {
 		if ( device != null){
 			// coloca a atualiza a posicao corrente no dispositivo
 			device.setGeoPosition(position);
+			
+			GameStoryControl storyControl = GameStoryControl.getInstance();
+			Message message = new Message("Soldado atualizou a posição", device);
+			storyControl.addMessage(message);
+			
 			// executa os Listener de proximidade
 			performProximityListeners(device);
 			

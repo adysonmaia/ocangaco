@@ -11,11 +11,12 @@ import br.ufc.servidor.player.Player;
  * @author Danilo Reis
  *
  */
-public class ProximityPlayerListener extends ProximityListener{
-
+public class ProximityPlayerListener extends ProximityListener{	
+	
 	@Override
 	public void action(IMobileDevice device1, IMobileDevice device2,double distance) {
-		 
+		 this.device1 = device1;
+		 this.device2 = device2;
 		 // Verifica se o dispositivo é do time adversário
 		 if(device1.getGroup() != device2.getGroup()){
 			 if ((distance > Player.COLISION_DISTANCE)&&(distance < Player.VIEW_DISTANCE)){
@@ -32,49 +33,67 @@ public class ProximityPlayerListener extends ProximityListener{
 	 * 
 	 * @param device
 	 */
-	private void actionVisibleArea(IMobileDevice device){
-		 // Dar o tratamento para cada tipo de objeto do time inimigo
-		System.out.println("visão: " + device.getType());
+	private void actionVisibleArea(IMobileDevice device){		
+		 // Dar o tratamento para cada tipo de objeto do time inimigo		
 		 switch(device.getType()){
 		    // Outro Jogador
 		 case Player.SOLDIER:
-			 System.out.printf("To avistando um jagunço inimigo\n");
+			 msg = "Soldado tá avistando um jagunço inimigo\n";
 			 break;
 		 case Player.DOCTOR:
-			 System.out.printf("To avistando  um curandeiro inimigo\n");
+			 msg = "Soldado tá avistando um curandeiro inimigo\n";
 			 break;
 		 case Player.ENGINEER:
-			 System.out.printf("To avistando  um pedreiro inimigo\n");
+			 msg = "Soldado tá avistando um pedreiro inimigo\n";
 			 break;
 		 case Player.SPY:
-			 System.out.printf("To avistando  um dedo duro inimigo\n");			 
+			 msg = "Soldado tá avistando um dedo duro inimigo\n";			 
 			 break;
-		 default: break;
+		 case Mina.MINA:
+			 msg = "Soldado tá avistando uma mina inimiga\n";			 
+			 break;
+		 case Barricada.BARRICADA:
+			 msg = "Soldado tá avistando uma barricada inimiga\n";			 
+			 break;			 
+		 default: 
+			 msg = "Soldado tá avistando um objeto não identificado inimigo\n";
+			 break;
 		 }
+		 //Adiciona a mensagem ao gameStory
+		 logMessage(msg);
 	}
 	/**
 	 * 
 	 * @param device
 	 */
-	private void actionCollisionArea(IMobileDevice device){
+	private void actionCollisionArea(IMobileDevice device){		 
 		 // Dar o tratamento para cada tipo de objeto do time inimigo
 		 switch(device.getType()){
 		 // Outro Jogador
 		 case Player.SOLDIER:
-			 System.out.printf("To em riba de um jagunço inimigo\n");
+			 msg = "Soldado tá em riba de um jagunço inimigo\n";
 			 break;
 		 case Player.DOCTOR:
-			 System.out.printf("To em riba de um curandeiro inimigo\n");
+			 msg = "Soldado tá em riba de um curandeiro inimigo\n";
 			 break;
 		 case Player.ENGINEER:
-			 System.out.printf("To em riba de um pedreiro inimigo\n");
+			 msg = "Soldado tá em riba de um pedreiro inimigo\n";
 			 break;
 		 case Player.SPY:
-			 System.out.printf("To em riba de um dedo duro inimigo\n");
+			 msg = "Soldado tá em riba de um dedo duro inimigo\n";
 			 break;			 
+		 case Mina.MINA:
+			 msg = "Soldado tá em riba de uma mina inimiga. Explodiu!\n";			 
+			 break;
+		 case Barricada.BARRICADA:
+			 msg = "Soldado tá em riba de uma barricada inimiga. Tá escondidim!\n";			 
+			 break; 
 		 default: 
-			 System.out.printf("Colisao com player: Device sem tipo\n");
+			 msg = "Soldado tá em riba de um objeto não identificado\n";
 			 break;
 		 }
+		 
+		//Adiciona a mensagem ao gameStory
+		 logMessage(msg);
 	}
 }
