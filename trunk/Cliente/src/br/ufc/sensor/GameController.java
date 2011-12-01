@@ -1,6 +1,6 @@
 package br.ufc.sensor;
 
-import java.security.acl.LastOwnerException;
+import java.util.Random;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -9,12 +9,12 @@ import android.os.Handler;
 import android.os.Message;
 import br.ufc.activity.R;
 import br.ufc.model.ClientGameState;
+import br.ufc.model.Mine;
 import br.ufc.model.Player;
 import br.ufc.net.ServerFactory;
 import br.ufc.util.MineItemizedOverlay;
 import br.ufc.util.PlayerItemizedOverlay;
 
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
@@ -113,6 +113,16 @@ public class GameController {
 		//Atualiza posição do jogador no servidor. 
 		ServerFactory.getServer().updatePlayerLocation(ClientGameState.myPlayerOnClient);
 		mapView.getController().animateTo(ClientGameState.myPlayerOnClient.createLocationGeoPoint());
+	}
+	
+	public void addMine() {
+		// @TODO tem que adicionar no servidor
+//		int id =  (new Random()).nextInt(1000);
+//		ClientGameState.mines.put(id, new Mine(id, ClientGameState.myPlayerOnClient.getTipo(), 100, 
+//				ClientGameState.myPlayerOnClient.getLatitude(), 
+//				ClientGameState.myPlayerOnClient.getLongitude()));
+//		System.out.println("Colocando mina em:" + ClientGameState.myPlayerOnClient.getLatitude() + " " + ClientGameState.myPlayerOnClient.getLongitude());
+		
 	}
 	
 	public MapView getMapView() {
