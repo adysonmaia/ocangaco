@@ -27,24 +27,24 @@ public class MainActivity  extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-		activity = this;
-		editTextName = (EditText)findViewById(R.id.editText1);
-		editTextIP = (EditText)findViewById(R.id.editText3);
-		editTextIP.setText(Properties.SERVER_IP);
-		
-		spinnerRole = (Spinner)findViewById(R.id.spinnerRole);
-		ArrayAdapter<CharSequence> adapterRole = ArrayAdapter.createFromResource(this, R.array.roles_array, android.R.layout.simple_spinner_item);
-		adapterRole.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerRole.setAdapter(adapterRole);
-		
-		spinnerTeam = (Spinner)findViewById(R.id.spinnerTeam);
-		ArrayAdapter<CharSequence> adapterTeam = ArrayAdapter.createFromResource(this, R.array.team_array, android.R.layout.simple_spinner_item);
-		adapterTeam.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerTeam.setAdapter(adapterTeam);
-		
-		button = (Button)findViewById(R.id.button1);
-		button.setOnClickListener(this);
+//		setContentView(R.layout.main);
+//		activity = this;
+//		editTextName = (EditText)findViewById(R.id.editText1);
+//		editTextIP = (EditText)findViewById(R.id.editText3);
+//		editTextIP.setText(Properties.SERVER_IP);
+//		
+//		spinnerRole = (Spinner)findViewById(R.id.spinnerRole);
+//		ArrayAdapter<CharSequence> adapterRole = ArrayAdapter.createFromResource(this, R.array.roles_array, android.R.layout.simple_spinner_item);
+//		adapterRole.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//		spinnerRole.setAdapter(adapterRole);
+//		
+//		spinnerTeam = (Spinner)findViewById(R.id.spinnerTeam);
+//		ArrayAdapter<CharSequence> adapterTeam = ArrayAdapter.createFromResource(this, R.array.team_array, android.R.layout.simple_spinner_item);
+//		adapterTeam.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//		spinnerTeam.setAdapter(adapterTeam);
+//		
+//		button = (Button)findViewById(R.id.button1);
+//		button.setOnClickListener(this);
 	}
 
 	@Override

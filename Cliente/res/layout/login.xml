@@ -5,31 +5,42 @@
     android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Para iniciar é preciso configurar o ip e a porta " />
+        android:text="Nome:" />
 
+    <EditText
+        android:id="@+id/editTextNome"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <requestFocus />
+    </EditText>
+
     <Button
-        android:id="@+id/buttonConfig"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonOKLogin"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
-        android:text="Configurar" />
+        android:text="OK" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="3.05" >
+        android:layout_weight="1.38" >
+
+        
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/button1"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="52dp"
+            android:layout_marginTop="41dp"
             android:src="@drawable/icangaco" />
 
     </RelativeLayout>
