@@ -57,6 +57,7 @@ public class Player implements IMobileDevice {
 
 		this.nome = nome;
 		this.tipo = tipo;
+		this.type = tipo;
 
 		proximity = new ProximityPlayerListener();
 		visibility = new VisibilityPlayerListener();
@@ -80,6 +81,7 @@ public class Player implements IMobileDevice {
 		super();
 		this.nome = nome;
 		this.tipo = tipo;
+		this.type = tipo;
 		this.groupId = group;
 		this.latitude = latitude;
 		this.longitude = longitude;
