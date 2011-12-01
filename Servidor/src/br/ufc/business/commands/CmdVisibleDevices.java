@@ -38,17 +38,24 @@ public class CmdVisibleDevices extends CommandExecute {
 		device            = control.searchMobileDeviceById(deviceId);
 		clientDevicesView = new ArrayList<IMobileDevice>();
 		
-		// adiciona o próprio player
-		clientDevicesView.add(device);
+		String response = "";
+		if(device != null){
+			// adiciona o próprio player
+			clientDevicesView.add(device);
+			
+			// adiciona na lista os dispositivos do mesmo time
+			addToListFriendDevices(device);
+			
+			// adiciona na lista os dispositivos do time oposto
+			addToListVisibleInimyDevices(device);		
 		
-		// adiciona na lista os dispositivos do mesmo time
-		addToListFriendDevices(device);
-		
-		// adiciona na lista os dispositivos do time oposto
-		addToListVisibleInimyDevices(device);
-		
-		// Retorna a lista dos dispositivos visíveis ao usuário
-		String response = getVisibleDevicesList();		
+			// Retorna a lista dos dispositivos visíveis ao usuário
+			response = getVisibleDevicesList();
+		}		
+		else
+		{
+			response = "<response>Player removed</response>";
+		}
 		
 		return response;
 	}
