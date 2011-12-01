@@ -59,7 +59,8 @@ public class Mina extends MobileDevice{
 		} else {
 			parent.appendChild(element);
 		}
-		// set attributes to mina element		
+		// set attributes to mina element
+		element.setAttribute("id", String.valueOf(this.getId()));
 		element.setAttribute("grupo", String.valueOf(this.getGroup()));
 		element.setAttribute("latitude", String.valueOf(this.getLatitude()));
 		element.setAttribute("longitude", String.valueOf(this.getLongitude()));
@@ -82,6 +83,7 @@ public class Mina extends MobileDevice{
 	}
 	
 	public void fromXML(Element element){
+		this.setId(Integer.parseInt(element.getAttribute("id")));
 		this.setGroup(Integer.parseInt(element.getAttribute("grupo")));
 		this.setLatitude(Double.parseDouble(element
 						.getAttribute("latitude")));
