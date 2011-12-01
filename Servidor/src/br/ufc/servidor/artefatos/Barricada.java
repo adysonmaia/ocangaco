@@ -10,11 +10,14 @@ import br.ufc.location.listeners.ProximityBarricadaListener;
 import br.ufc.location.listeners.VisibilityBarricadaListener;
 import br.ufc.util.XMLParser;
 
-public class Barricada extends MobileDevice{	
+public class Barricada extends MobileDevice{
+	public static final int DEFAULT_TYPE = BARRICADA;
+	
 	public static final int VIEW_DISTANCE = 100;
 	public static final int COLISION_DISTANCE = 10;
 	
 	public Barricada(int group, double latitude, double longitude) {
+		this.type = DEFAULT_TYPE;
 		this.groupId = group;
 		this.latitude = latitude;
 		this.longitude = longitude;

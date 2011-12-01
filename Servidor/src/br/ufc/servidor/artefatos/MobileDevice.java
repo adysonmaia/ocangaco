@@ -24,7 +24,15 @@ public abstract class MobileDevice implements IMobileDevice{
 	protected Integer groupId;
 	protected DevicePath path;
 	protected ProximityListener proximity;
-	protected VisibilityListener visibility;	
+	protected VisibilityListener visibility;
+	
+	public static final int SOLDIER = 1;
+	public static final int DOCTOR = 2;
+	public static final int ENGINEER = 3;
+	public static final int SPY = 4;
+	
+	public static final int MINA = 5;
+	public static final int BARRICADA = 6;
 	
 	public static final int BLUE_TEAM = 1;
 	public static final int RED_TEAM = 2;
@@ -144,16 +152,12 @@ public abstract class MobileDevice implements IMobileDevice{
 	}
 
 	@Override
-	public String toXML() throws Exception {
-		return "No implemented XML parser to abstract class";
-	}
+	public abstract String toXML() throws Exception;
 	
 	@Override
 	public void fromXML(Element element) {
 		
 	}
 	
-	public IMobileDevice clone(){
-		return null; 
-	}
+	public abstract IMobileDevice clone();
 }

@@ -1,6 +1,8 @@
 package br.ufc.location.listeners;
 
 import br.ufc.location.facade.IMobileDevice;
+import br.ufc.servidor.artefatos.Barricada;
+import br.ufc.servidor.artefatos.Mina;
 import br.ufc.servidor.player.Player;
 
 /**
@@ -32,6 +34,7 @@ public class ProximityPlayerListener extends ProximityListener{
 	 */
 	private void actionVisibleArea(IMobileDevice device){
 		 // Dar o tratamento para cada tipo de objeto do time inimigo
+		System.out.println("visão: " + device.getType());
 		 switch(device.getType()){
 		    // Outro Jogador
 		 case Player.SOLDIER:
@@ -44,8 +47,9 @@ public class ProximityPlayerListener extends ProximityListener{
 			 System.out.printf("To avistando  um pedreiro inimigo\n");
 			 break;
 		 case Player.SPY:
-			 System.out.printf("To avistando  um dedo duro inimigo\n");
+			 System.out.printf("To avistando  um dedo duro inimigo\n");			 
 			 break;
+		 default: break;
 		 }
 	}
 	/**
@@ -67,6 +71,9 @@ public class ProximityPlayerListener extends ProximityListener{
 			 break;
 		 case Player.SPY:
 			 System.out.printf("To em riba de um dedo duro inimigo\n");
+			 break;			 
+		 default: 
+			 System.out.printf("Colisao com player: Device sem tipo\n");
 			 break;
 		 }
 	}
