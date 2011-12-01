@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.ufc.business.commands.CmdRegister;
+import br.ufc.business.commands.CmdUpdatePosition;
 import br.ufc.location.facade.IMobileDevice;
 
 public class GeoPositionControlTest {
@@ -14,6 +15,7 @@ public class GeoPositionControlTest {
 	public static void main(String[] args) {
 		String []               params;
 		CmdRegister             cmdReg;
+		CmdUpdatePosition    cmdUpdate;
 		String                    resp;
 		DevicesPositionControl control;
 		GeoPosition           position;
@@ -70,6 +72,14 @@ public class GeoPositionControlTest {
         IMobileDevice device= control.searchMobileDeviceById(myId);
         // volta a lista dos inimigos visiveis
         list = control.getVisibleDeviceList(device, inimys);
+        
+        
+		cmdUpdate = new CmdUpdatePosition ();
+		params[0] ="1";
+		params[1] ="-3.733137";
+		params[2] ="-38.497939";
+        resp = cmdReg.execute(params);
+
 	}
 
 }
