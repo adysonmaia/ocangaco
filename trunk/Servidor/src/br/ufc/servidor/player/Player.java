@@ -100,6 +100,7 @@ public class Player extends MobileDevice {
 			parent.appendChild(player);
 		}
 		// set attributes to player element
+		player.setAttribute("id", String.valueOf(this.getId()));
 		player.setAttribute("nome", String.valueOf(this.getNome()));
 		player.setAttribute("tipo", String.valueOf(this.getType()));
 		player.setAttribute("grupo", String.valueOf(this.getGroup()));
@@ -123,6 +124,7 @@ public class Player extends MobileDevice {
 	}
 	
 	public void fromXML(Element element){
+		this.setId(Integer.parseInt(element.getAttribute("id")));
 		this.setNome(element.getAttribute("nome"));
 		this.setType(Integer.parseInt(element.getAttribute("tipo")));
 		this.setGroup(Integer.parseInt(element.getAttribute("grupo")));

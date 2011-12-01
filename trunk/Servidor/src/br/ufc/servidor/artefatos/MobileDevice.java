@@ -62,8 +62,10 @@ public abstract class MobileDevice implements IMobileDevice{
 
 		if (position != null) {
 			this.position = (GeoPosition) position;
-			pos = new GeoPosition(position);
+			pos = new GeoPosition(position);			
 			this.path.addPosition(pos);
+			this.latitude = position.getLatitude();
+			this.longitude = position.getLongitude();
 		}
 	}
 

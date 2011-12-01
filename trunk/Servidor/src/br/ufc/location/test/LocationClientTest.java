@@ -28,7 +28,7 @@ public class LocationClientTest {
 		//testGameState();
 		
 		//testRegister();
-		//testUpdatePosition();
+		testUpdatePosition();
 		//testDevicesList();
 		//testDisconnect();
 		//testCriarMina();
@@ -93,7 +93,7 @@ public class LocationClientTest {
 	private static void testUpdatePosition() {
 		params = new String [10];
 		
-		params[0] ="Danilo";
+		/*params[0] ="Danilo";
 		params[1] ="1";
 		params[2] ="1";
 		params[3] ="-3.717381";
@@ -125,20 +125,20 @@ public class LocationClientTest {
         
         if (node != null) {
 			System.out.println("id 2: " + node.getTextContent());
-        }
+        }*/
         
-		params[0] = node.getTextContent();
-		params[1] = String.valueOf(-3.717381 + 0.0001);
-		params[2] = "38.539906";
+		params[0] = "1";//node.getTextContent();
+		params[1] = String.valueOf(0 + 0.0003);
+		params[2] = "0";//"38.539906";
 		
 		comando = CommandUtil.makeCommand("updateposition", params, 5);
 		
 		response = getServerResponse(comando);
         System.out.println("List of devices: \n" + response);
         
-        CommandUtil.setDevices("player", response, new Player());
+       /* CommandUtil.setDevices("player", response, new Player());
         CommandUtil.setDevices("mina", response, new Mina());
-        CommandUtil.setDevices("barricada", response, new Barricada()); 		
+        CommandUtil.setDevices("barricada", response, new Barricada()); 	*/	
 	}
 
 	//Registro testado com sucesso com o servidor rodando!

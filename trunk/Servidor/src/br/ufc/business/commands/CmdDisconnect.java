@@ -12,7 +12,7 @@ public class CmdDisconnect extends CommandExecute {
 
 	@Override
 	public String execute(String[] param) {
-		Integer id = Integer.getInteger(param[0]);
+		Integer id = Integer.parseInt(param[0]);
 		
 		String resposta;
 		DevicesPositionControl control = DevicesPositionControl.getInstance();
