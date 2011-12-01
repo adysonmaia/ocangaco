@@ -31,7 +31,7 @@ public interface IServer {
 	public void updatePlayerLocation(Player player);
 	
 	/**
-	 * Método que retorna uma lista com todos os jogadores conectados no servidor.
+	 * Método que retorna uma lista com todos os objetos do mapa.
 	 */
 	public ArrayList<Player> getGameState();	
 	
