@@ -4,12 +4,65 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <com.google.android.maps.MapView
-        android:id="@+id/mapa"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:clickable="true"
-        android:apiKey="0_ekUaO5tUoOh2RV1iLqS7E_4HRUNZQ8pT50JDw" />
-    
+        android:layout_height="fill_parent" >
+
+        <com.google.android.maps.MapView
+            android:id="@+id/mapa"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:apiKey="073Mbv_YQ_HqPMoerD7vc3Icu4FGhU6qxTvQX4A"
+            android:clickable="true"
+            android:enabled="true" />
+
+        <!-- 0_ekUaO5tUoOh2RV1iLqS7E_4HRUNZQ8pT50JDw -->
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" >
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10px"
+                    android:text="Vida" />
+
+                <ProgressBar
+                    android:id="@+id/pbLife"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="200px"
+                    android:paddingLeft="10px" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btMina"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mina" />
+
+            <Button
+                android:id="@+id/btBarricada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Barricada" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
