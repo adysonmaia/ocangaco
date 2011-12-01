@@ -18,7 +18,7 @@ public class ClientGameState {
 
 	// Bloco criado apenas para fins de teste
 	static {
-		mines.put(1, new Mine(1, 1, 100, -3.746334, -38.578006));
+		mines.put(1, new Mine(1, 1, 100, 10, 10));
 	}
 	
 	public static void updateState() {
