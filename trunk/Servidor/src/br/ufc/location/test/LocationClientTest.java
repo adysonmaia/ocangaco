@@ -33,7 +33,7 @@ public class LocationClientTest {
 		//testDisconnect();
 		//testCriarMina();
 		//testCriarBarricada();
-		//testDevicesList();
+		testDevicesList();
 	}
 
 	private static void testCriarBarricada() {
@@ -61,8 +61,8 @@ public class LocationClientTest {
 		params = new String [10];
 		
 		params[0] ="1";		
-		params[1] ="-3.717581";
-		params[2] ="38.539706";
+		params[1] ="0";
+		params[2] ="0";
 		params[3] = "20";
 		
 		comando = CommandUtil.makeCommand("criarmina", params, 4);
@@ -128,7 +128,7 @@ public class LocationClientTest {
         }*/
         
 		params[0] = "1";//node.getTextContent();
-		params[1] = String.valueOf(0 + 0.0003);
+		params[1] = "0";
 		params[2] = "0";//"38.539906";
 		
 		comando = CommandUtil.makeCommand("updateposition", params, 5);
@@ -167,8 +167,8 @@ public class LocationClientTest {
 		params[0] ="Beltrano";
 		params[1] ="2";
 		params[2] ="2";
-        params[3] ="-3.717823";
-        params[4] ="38.540081";
+        params[3] ="0";
+        params[4] ="0";
         
         comando = CommandUtil.makeCommand("register", params, 5);
         
@@ -182,10 +182,7 @@ public class LocationClientTest {
         if (id != null) {
 			System.out.println("id 2: " + id.getTextContent());
         }
-	}
-	
-	
-	
+	}	
 
 	private static void testGameState() {
 		comando = "<gamestate>, " +	"" + ",<gamestate>";		

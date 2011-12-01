@@ -18,12 +18,7 @@ import br.ufc.util.XMLParser;
  * 
  */
 public class Player extends MobileDevice {
-	private String nome;
-
-	public static final int SOLDIER = 1;
-	public static final int DOCTOR = 2;
-	public static final int ENGINEER = 3;
-	public static final int SPY = 4;
+	private String nome;	
 	public static final int DEFAULT_TIPO = SOLDIER;
 	
 	public static final int VIEW_DISTANCE = 100;

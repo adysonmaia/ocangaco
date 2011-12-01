@@ -1,6 +1,7 @@
 package br.ufc.location.listeners;
 
 import br.ufc.location.facade.IMobileDevice;
+import br.ufc.servidor.artefatos.Barricada;
 import br.ufc.servidor.artefatos.Mina;
 import br.ufc.servidor.player.Player;
 
@@ -41,6 +42,15 @@ public class ProximityMinaListener extends ProximityListener{
 		 case Player.SPY:
 			 System.out.printf("To avistando uma mina inimiga\n");
 			 break;
+		 case Mina.MINA:
+			 System.out.printf("mina colocada bem pertim da outra\n");
+			 break;
+		 case Barricada.BARRICADA:
+			 System.out.printf("barricada colocada bem pertim da outra\n");
+			 break;
+		 default: 
+			 System.out.printf("visible: device sem tipo\n");
+			 break;
 		 }
 	}
 	/**
@@ -62,6 +72,12 @@ public class ProximityMinaListener extends ProximityListener{
 			 break;
 		 case Player.SPY:
 			 System.out.printf("dedo duro inimigo atingido por uma mina\n");
+			 break;
+		 case Mina.MINA:
+			 System.out.printf("mina colocada em riba da outra\n");
+			 break;
+		 case Barricada.BARRICADA:
+			 System.out.printf("barricada colocada em riba da mina\n");
 			 break;
 		 }
 	}

@@ -11,12 +11,15 @@ import br.ufc.location.listeners.VisibilityMinaListener;
 import br.ufc.util.XMLParser;
 
 public class Mina extends MobileDevice{
-	private int damage;	
+	private int damage;
+	public static final int DEFAULT_TYPE = MINA;
+	
 	public static final int VIEW_DISTANCE = 100;
 	public static final int COLISION_DISTANCE = 10;
 
 	public Mina(int group, double latitude, double longitude, int damage) {
-		this.groupId = group;
+		this.type = DEFAULT_TYPE;
+		this.groupId = group;		
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.damage = damage;
