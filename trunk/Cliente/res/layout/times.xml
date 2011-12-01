@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ImageButton
+            android:id="@+id/imageButtonTime1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="34dp"
+            android:layout_marginTop="106dp"
+            android:src="@drawable/time1" />
+
+        <ImageButton
+            android:id="@+id/imageButtonTime2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/imageButtonTime1"
+            android:layout_marginRight="32dp"
+            android:src="@drawable/time2" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageButtonTime1"
+            android:layout_below="@+id/imageButtonTime1"
+            android:layout_marginLeft="21dp"
+            android:text="Time1" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView1"
+            android:layout_alignBottom="@+id/textView1"
+            android:layout_alignRight="@+id/imageButtonTime2"
+            android:layout_marginRight="14dp"
+            android:text="Time2" />
+
+        <TextView
+            android:id="@+id/textViewTimes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/imageButtonTime2"
+            android:layout_marginBottom="17dp"
+            android:layout_toRightOf="@+id/textView1"
+            android:text="Escolha seu time" />
+
+    </RelativeLayout>
+
+</LinearLayout>
