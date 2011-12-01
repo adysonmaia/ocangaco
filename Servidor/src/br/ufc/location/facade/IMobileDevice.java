@@ -109,4 +109,7 @@ public interface IMobileDevice {
 	 * @throws Exception 
 	 */	
 	void toXML(Element devices, Document doc);
+	
+	void fromXML(Element item);
+	IMobileDevice clone();
 }

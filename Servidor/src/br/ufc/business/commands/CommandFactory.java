@@ -36,5 +36,8 @@ public class CommandFactory {
 	 	
 	 	cmd = new CmdCriarMina();	 	
 	 	CommandParser.addCommand("<criarmina>",0,cmd);
+	 	
+	 	cmd = new CmdCriarBarricada();	 	
+	 	CommandParser.addCommand("<criarbarricada>",0,cmd);
 	}
 }

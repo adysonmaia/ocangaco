@@ -8,8 +8,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import br.ufc.servidor.artefatos.Barricada;
 import br.ufc.servidor.artefatos.Mina;
 import br.ufc.servidor.player.Player;
+import br.ufc.util.CommandUtil;
 import br.ufc.util.Conexao;
 import br.ufc.util.EntityParser;
 import br.ufc.util.XMLParser;
@@ -25,12 +27,34 @@ public class LocationClientTest {
 		//testMovimentacao();		
 		//testGameState();
 		
-		//testRegister();
+		testRegister();
 		testUpdatePosition();
 		//testDevicesList();
 		//testDisconnect();
 		testCriarMina();
+		testCriarBarricada();
 		testDevicesList();
+	}
+
+	private static void testCriarBarricada() {
+		params = new String [10];
+		
+		params[0] ="1";		
+		params[1] ="-3.717581";
+		params[2] ="38.539206";
+		
+		comando = CommandUtil.makeCommand("criarbarricada", params, 3);
+
+		String response = getServerResponse(comando);
+	    System.out.println("barricada 1 id = " + response);
+		
+		Document doc = XMLParser.createXMLDocument(response);
+        NodeList nodes = doc.getElementsByTagName("id");
+        Element id = (Element)nodes.item(0);
+        
+        if (id != null) {
+			System.out.println("id barricada: " + id.getTextContent());
+        }
 	}
 
 	private static void testCriarMina() {
@@ -41,7 +65,7 @@ public class LocationClientTest {
 		params[2] ="38.539706";
 		params[3] = "20";
 		
-		comando = makeCommand("criarmina", params, 4);
+		comando = CommandUtil.makeCommand("criarmina", params, 4);
 
 		String response = getServerResponse(comando);
 	    System.out.println("mina 1 id = " + response);
@@ -56,34 +80,14 @@ public class LocationClientTest {
 	}
 
 	private static void testDevicesList() {
-		comando = makeCommand("deviceslist", params, 0);
+		comando = CommandUtil.makeCommand("deviceslist", params, 0);
 		
 		response = getServerResponse(comando);
         System.out.println("List of devices: \n" + response);
         
-        
-        doc = XMLParser.createXMLDocument(response);
-        nodes = doc.getElementsByTagName("player");
-        for (int i = 0; i < nodes.getLength(); i++) {
-        	Player player = new Player("teste");
-        	try {
-				player.fromXML((Element)nodes.item(i));
-				System.out.println(player);
-			} catch (Exception e) {				
-				e.printStackTrace();
-			}
-		}
-        
-        nodes = doc.getElementsByTagName("mina");
-        for (int i = 0; i < nodes.getLength(); i++) {
-        	Mina mina = new Mina();
-        	try {
-        		mina.fromXML((Element)nodes.item(i));
-				System.out.println(mina);
-			} catch (Exception e) {				
-				e.printStackTrace();
-			}
-		}
+        CommandUtil.setDevices("player",response,  new Player());
+        CommandUtil.setDevices("mina", response, new Mina());
+        CommandUtil.setDevices("barricada",response,  new Barricada());   
 	}
 
 	private static void testUpdatePosition() {
@@ -95,10 +99,10 @@ public class LocationClientTest {
 		params[3] ="-3.717381";
 		params[4] ="38.539906";
 		
-		comando = makeCommand("register", params, 5);
+		comando = CommandUtil.makeCommand("register", params, 5);
 		
-		Document doc = XMLParser.createXMLDocument(getServerResponse(comando));
-        NodeList nodes = doc.getElementsByTagName("id");
+		doc = XMLParser.createXMLDocument(getServerResponse(comando));
+        nodes = doc.getElementsByTagName("id");
         Element node = (Element)nodes.item(0);
         
         if (node != null) {
@@ -111,9 +115,9 @@ public class LocationClientTest {
         params[3] ="-3.717123";
         params[4] ="38.540081";
         
-        comando = makeCommand("register", params, 5);
+        comando = CommandUtil.makeCommand("register", params, 5);
         
-        String response = getServerResponse(comando);
+        response = getServerResponse(comando);
         
         doc = XMLParser.createXMLDocument(response);
         nodes = doc.getElementsByTagName("id");
@@ -127,36 +131,27 @@ public class LocationClientTest {
 		params[1] = String.valueOf(-3.717381 + 0.0001);
 		params[2] = "38.539906";
 		
-		comando = makeCommand("updateposition", params, 5);
+		comando = CommandUtil.makeCommand("updateposition", params, 5);
 		
 		response = getServerResponse(comando);
         System.out.println("List of devices: \n" + response);
         
-        
-        doc = XMLParser.createXMLDocument(response);
-        nodes = doc.getElementsByTagName("player");
-        for (int i = 0; i < nodes.getLength(); i++) {
-        	Player player = new Player("teste");
-        	try {
-				player.fromXML((Element)nodes.item(i));
-				System.out.println(player);
-			} catch (Exception e) {				
-				e.printStackTrace();
-			}
-		}		
+        CommandUtil.setDevices("player", response, new Player());
+        CommandUtil.setDevices("mina", response, new Mina());
+        CommandUtil.setDevices("barricada", response, new Barricada()); 		
 	}
 
 	//Registro testado com sucesso com o servidor rodando!
 	private static void testRegister() {
 		params = new String [10];
 		
-		params[0] ="Danilo";
-		params[1] ="1";
-		params[2] ="1";
-		params[3] ="-3.717381";
+		params[0] ="Rafael";
+		params[1] ="2";
+		params[2] ="2";
+		params[3] ="-3.717081";
 		params[4] ="38.539906";
 		
-		comando = makeCommand("register", params, 5);
+		comando = CommandUtil.makeCommand("register", params, 5);
 
 		String response = getServerResponse(comando);
 	    System.out.println("player 1 id = " + response);
@@ -169,13 +164,13 @@ public class LocationClientTest {
 			System.out.println("id 1: " + id.getTextContent());
         }
         
-		params[0] ="Fabio";
-		params[1] ="1";
-		params[2] ="1";
-        params[3] ="-3.717123";
+		params[0] ="Andre";
+		params[1] ="2";
+		params[2] ="2";
+        params[3] ="-3.717823";
         params[4] ="38.540081";
         
-        comando = makeCommand("register", params, 5);
+        comando = CommandUtil.makeCommand("register", params, 5);
         
         response = getServerResponse(comando);
         System.out.println("player 2 id = " + response);
@@ -190,19 +185,7 @@ public class LocationClientTest {
 	}
 	
 	
-	private static String makeCommand(String name, String[] params, int nParams)
-	{
-		comando = "<" + name + ">,";
-		for (int i = 0; i < nParams; i++) {
-			comando += params[i] + ",";
-		}	
-		if(nParams == 0){
-			comando += ",";
-		}
-		comando += "<" + name + ">";
-		
-		return comando;
-	}
+	
 
 	private static void testGameState() {
 		comando = "<gamestate>, " +	"" + ",<gamestate>";		

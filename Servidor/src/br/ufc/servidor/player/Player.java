@@ -62,6 +62,10 @@ public class Player extends MobileDevice {
 		path = new DevicePath();
 	}
 
+	public Player() {
+		this("null");
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -131,5 +135,9 @@ public class Player extends MobileDevice {
 	@Override
 	public void setProximityListener(IProximityListener proximity) {
 		this.proximity = (ProximityPlayerListener) proximity;
+	}
+	
+	public Player clone(){
+		return new Player();
 	}
 }

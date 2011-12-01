@@ -1,5 +1,8 @@
 package br.ufc.servidor.artefatos;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import br.ufc.location.facade.IGeoPosition;
 import br.ufc.location.facade.IMobileDevice;
 import br.ufc.location.facade.IProximityListener;
@@ -142,5 +145,14 @@ public abstract class MobileDevice implements IMobileDevice{
 	@Override
 	public String toXML() throws Exception {
 		return "No implemented XML parser to abstract class";
+	}
+	
+	@Override
+	public void fromXML(Element element) {
+		
+	}
+	
+	public IMobileDevice clone(){
+		return null; 
 	}
 }

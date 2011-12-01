@@ -94,9 +94,12 @@ public class Mina extends MobileDevice{
 		this.damage = damage;
 	}
 
-
 	public int getDamage() {
 		return damage;
+	}
+	
+	public Mina clone(){
+		return new Mina();
 	}
 
 }
