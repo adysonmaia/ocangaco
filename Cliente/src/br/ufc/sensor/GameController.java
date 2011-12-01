@@ -1,17 +1,18 @@
 package br.ufc.sensor;
 
-import java.util.Random;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.ProgressBar;
 import br.ufc.activity.R;
+import br.ufc.model.Barrier;
 import br.ufc.model.ClientGameState;
 import br.ufc.model.Mine;
 import br.ufc.model.Player;
 import br.ufc.net.ServerFactory;
+import br.ufc.util.BarrierItemizedOverlay;
 import br.ufc.util.MineItemizedOverlay;
 import br.ufc.util.PlayerItemizedOverlay;
 
@@ -20,6 +21,7 @@ import com.google.android.maps.MapView;
 
 public class GameController {
 	private MapView mapView;
+	private ProgressBar vida;
 	private GpsSensor gpsSensor;	
 	private Thread gameThread;
 	private Resources resources; //Usado para capturar as imagens locais
@@ -27,12 +29,15 @@ public class GameController {
 	private PlayerItemizedOverlay cangaceirosItemizedOverlay;
 	private PlayerItemizedOverlay jaguncosItemizedOverlay;
 	private MineItemizedOverlay mineItemizedOverlay;
+	private BarrierItemizedOverlay barrierItemizedOverlay;
 	
 	private boolean running;
 	
 	private final int UPDATE_RATE = 2000;
 	
-	public GameController(MapView mapa, Context context) {
+	public GameController(MapView mapa, ProgressBar life, Context context) {
+		vida = life;
+		
 		initiateObjects(mapa, context.getResources());
 		
 		gpsSensor = new GpsSensor(context);
@@ -49,10 +54,12 @@ public class GameController {
 		cangaceirosItemizedOverlay = new PlayerItemizedOverlay(getResources().getDrawable(R.drawable.icon_cangaceiro), Player.CANGACEIRO);
 		jaguncosItemizedOverlay = new PlayerItemizedOverlay(getResources().getDrawable(R.drawable.icon_jagunco), Player.JAGUNCO);
 		mineItemizedOverlay = new MineItemizedOverlay(getResources().getDrawable(R.drawable.mine));
+		barrierItemizedOverlay = new BarrierItemizedOverlay(getResources().getDrawable(R.drawable.barrier));
 				
 		getMapView().getOverlays().add(cangaceirosItemizedOverlay);
 		getMapView().getOverlays().add(jaguncosItemizedOverlay);
 		getMapView().getOverlays().add(mineItemizedOverlay);
+		getMapView().getOverlays().add(barrierItemizedOverlay);
 	}
 
 	private void setMapConfigurations(boolean sattelite, boolean streetView) {
@@ -76,6 +83,9 @@ public class GameController {
 					mineItemizedOverlay.invokePopulate();
 					cangaceirosItemizedOverlay.invokePopulate();
 					jaguncosItemizedOverlay.invokePopulate();
+					barrierItemizedOverlay.invokePopulate();
+					
+					vida.setProgress(100);
 					
 					// Atualiza o mapa
 					handler.sendMessage(handler.obtainMessage());
@@ -115,17 +125,6 @@ public class GameController {
 		mapView.getController().animateTo(ClientGameState.myPlayerOnClient.createLocationGeoPoint());
 	}
 	
-	public void addMine() {
-		// @TODO tem que adicionar no servidor
-		int id =  (new Random()).nextInt(1000);
-		ClientGameState.mines.put(id, new Mine(id, ClientGameState.myPlayerOnClient.getTipo(), 100, 
-				ClientGameState.myPlayerOnClient.getLatitude(), 
-				ClientGameState.myPlayerOnClient.getLongitude()));
-		mineItemizedOverlay.invokePopulate();
-		System.out.println("Colocando mina em:" + ClientGameState.myPlayerOnClient.getLatitude() + " " + ClientGameState.myPlayerOnClient.getLongitude());
-		
-	}
-	
 	public MapView getMapView() {
 		return mapView;
 	}
@@ -144,4 +143,22 @@ public class GameController {
 			e.printStackTrace();
 		}
 	}
+	
+	public void addBarrier() {
+		// @TODO tem que adicionar no servidor
+		int id =  ClientGameState.barriers.size() + 1;
+		ClientGameState.barriers.put(id, new Barrier(id, ClientGameState.myPlayerOnClient.getTipo(),
+				ClientGameState.myPlayerOnClient.getLatitude(), ClientGameState.myPlayerOnClient.getLongitude()));
+		barrierItemizedOverlay.invokePopulate();
+	}
+	
+	public void addMine() {
+		// @TODO tem que adicionar no servidor
+		int id =  ClientGameState.mines.size() + 1;
+		ClientGameState.mines.put(id, new Mine(id, ClientGameState.myPlayerOnClient.getTipo(), 100,
+				ClientGameState.myPlayerOnClient.getLatitude(), ClientGameState.myPlayerOnClient.getLongitude()));
+		mineItemizedOverlay.invokePopulate();
+//		System.out.println("Colocando mina em:" + ClientGameState.myPlayerOnClient.getLatitude() + " " + ClientGameState.myPlayerOnClient.getLongitude());		
+	}
+		
 }

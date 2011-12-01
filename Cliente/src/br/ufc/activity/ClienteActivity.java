@@ -1,16 +1,11 @@
 package br.ufc.activity;
 
-
-
-import java.util.Random;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-import br.ufc.model.ClientGameState;
-import br.ufc.model.Mine;
 import br.ufc.sensor.GameController;
 
 import com.google.android.maps.MapActivity;
@@ -20,6 +15,8 @@ import com.google.android.maps.MapView;
 public class ClienteActivity  extends MapActivity implements OnClickListener {
 	
 	private MapView mapView;
+	private ProgressBar life;
+	private Button btBarricada;
 	private GameController gameController;
 	private Button btMina;
 	
@@ -31,11 +28,17 @@ public class ClienteActivity  extends MapActivity implements OnClickListener {
 		btMina = (Button)findViewById(R.id.btMina);
 		btMina.setOnClickListener(this);
 		
+		btBarricada = (Button) findViewById(R.id.btBarricada);
+		btBarricada.setOnClickListener(this);
+		
 		mapView = (MapView)findViewById(R.id.mapa);
 		mapView.setBuiltInZoomControls(true);
 		mapView.getController().setZoom(18);
 		mapView.getOverlays().clear();
-		gameController = new GameController(mapView, this);
+		
+		life = (ProgressBar) findViewById(R.id.pbLife);
+		
+		gameController = new GameController(mapView, life, this);
 		gameController.start();
 	}
 	
@@ -57,6 +60,8 @@ public class ClienteActivity  extends MapActivity implements OnClickListener {
 	public void onClick(View v) {
 		if (v == btMina) {
 			gameController.addMine();
+		} else if (v == btBarricada) {
+			gameController.addBarrier();	
 		}
 	}
 }

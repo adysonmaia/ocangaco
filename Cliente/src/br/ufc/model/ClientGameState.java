@@ -12,6 +12,7 @@ public class ClientGameState {
 	public static Map<String, Player> playersCangaceiros = new ConcurrentHashMap<String, Player>();
 	public static Map<String, Player> playersJaguncos = new ConcurrentHashMap<String, Player>();
 	public static Map<Integer, Mine> mines =  new ConcurrentHashMap<Integer, Mine>();
+	public static HashMap<Integer, Barrier> barriers =  new HashMap<Integer, Barrier>();
 	
 	/**
 	 * Variável que representa o Player do usuário do celular.
@@ -71,6 +72,7 @@ public class ClientGameState {
 		playersCangaceiros = new ConcurrentHashMap<String, Player>();
 		playersJaguncos = new ConcurrentHashMap<String, Player>();
 		mines =  new ConcurrentHashMap<Integer, Mine>();
+		barriers =  new HashMap<Integer, Barrier>();
 		myPlayerOnClient = null;
 	}
 }
