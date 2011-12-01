@@ -4,13 +4,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import br.ufc.location.facade.IGeoPosition;
-import br.ufc.location.facade.IMobileDevice;
 import br.ufc.location.facade.IProximityListener;
-import br.ufc.location.facade.IVisibilityListener;
 import br.ufc.location.geoengine.DevicePath;
-import br.ufc.location.geoengine.DevicesPositionControl;
-import br.ufc.location.geoengine.GeoPosition;
 import br.ufc.location.listeners.ProximityBarricadaListener;
 import br.ufc.location.listeners.VisibilityBarricadaListener;
 import br.ufc.util.XMLParser;
@@ -58,7 +53,7 @@ public class Barricada extends MobileDevice{
 
 	@Override
 	public void toXML(Element parent, Document doc) {
-		Element element = doc.createElement("mina");
+		Element element = doc.createElement("barricada");
 		if (parent == null) {
 			doc.appendChild(element);
 		} else {
@@ -92,5 +87,9 @@ public class Barricada extends MobileDevice{
 						.getAttribute("latitude")));
 		this.setLongitude(Double.parseDouble(element
 				.getAttribute("longitude")));
+	}
+	
+	public Barricada clone(){
+		return new Barricada();
 	}
 }
