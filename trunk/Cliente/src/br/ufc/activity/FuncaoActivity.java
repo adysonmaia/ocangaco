@@ -1,9 +1,5 @@
 package br.ufc.activity;
 
-import br.ufc.model.ClientGameState;
-import br.ufc.model.Player;
-import br.ufc.net.ServerFactory;
-import br.ufc.util.Properties;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +7,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import br.ufc.model.ClientGameState;
 import br.ufc.model.Player;
+import br.ufc.net.ServerFactory;
+import br.ufc.util.Properties;
 
 public class FuncaoActivity extends Activity {
 

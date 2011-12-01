@@ -35,8 +35,6 @@ public class LoginActivity extends Activity {
 				}
 			}
 		});
-	
-	    // TODO Auto-generated method stub
 	}
 
 }

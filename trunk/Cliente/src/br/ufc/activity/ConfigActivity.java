@@ -1,5 +1,6 @@
 package br.ufc.activity;
 
+import br.ufc.util.Properties;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ public class ConfigActivity extends Activity {
 		setContentView(R.layout.config);
 
 		Button okConfig = (Button) findViewById(R.id.buttonOKConfig);
+		EditText ip = (EditText) findViewById(R.id.editTextIP);
+		ip.setText(Properties.SERVER_IP.toString());
 
 		okConfig.setOnClickListener(new OnClickListener() {
 
