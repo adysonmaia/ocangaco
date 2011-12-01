@@ -10,6 +10,8 @@ import org.w3c.dom.Element;
 import br.ufc.location.geoengine.DevicesPositionControl;
 import br.ufc.location.geoengine.GeoPosition;
 import br.ufc.servidor.artefatos.Barricada;
+import br.ufc.servidor.gamestory.GameStoryControl;
+import br.ufc.servidor.gamestory.Message;
 import br.ufc.util.XMLParser;
 
 public class CmdCriarBarricada extends CommandExecute {
@@ -51,6 +53,10 @@ public class CmdCriarBarricada extends CommandExecute {
 
 		// adiciona o dispositivo para ser controlado
 		control.addDevice(barricada);
+		
+		GameStoryControl storyControl = GameStoryControl.getInstance();
+		Message message = new Message("Uma barricada foi criada", barricada);
+		storyControl.addMessage(message);
 
 		String response = toXml(freeId);
 

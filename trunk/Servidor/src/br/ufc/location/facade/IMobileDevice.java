@@ -112,4 +112,6 @@ public interface IMobileDevice {
 	
 	void fromXML(Element item);
 	IMobileDevice clone();
+	
+	void setId(Integer id);
 }

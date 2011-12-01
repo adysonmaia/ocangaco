@@ -27,12 +27,12 @@ public class LocationClientTest {
 		//testMovimentacao();		
 		//testGameState();
 		
-		//testRegister();
+		testRegister();
 		testUpdatePosition();
 		//testDevicesList();
 		//testDisconnect();
-		//testCriarMina();
-		//testCriarBarricada();
+		testCriarMina();
+		testCriarBarricada();
 		testDevicesList();
 	}
 
@@ -40,8 +40,8 @@ public class LocationClientTest {
 		params = new String [10];
 		
 		params[0] ="1";		
-		params[1] ="-3.717581";
-		params[2] ="38.539206";
+		params[1] ="0.0000";
+		params[2] ="0.0000";
 		
 		comando = CommandUtil.makeCommand("criarbarricada", params, 3);
 
@@ -60,7 +60,7 @@ public class LocationClientTest {
 	private static void testCriarMina() {
 		params = new String [10];
 		
-		params[0] ="1";		
+		params[0] ="2";		
 		params[1] ="0";
 		params[2] ="0";
 		params[3] = "20";

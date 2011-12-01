@@ -4,6 +4,8 @@ package br.ufc.business.commands;
 import myserver.kernel.CommandExecute;
 import br.ufc.location.facade.IMobileDevice;
 import br.ufc.location.geoengine.DevicesPositionControl;
+import br.ufc.servidor.gamestory.GameStoryControl;
+import br.ufc.servidor.gamestory.Message;
 
 public class CmdDisconnect extends CommandExecute {
 
@@ -20,6 +22,10 @@ public class CmdDisconnect extends CommandExecute {
 		// Busca o dispositivo
 		IMobileDevice device = control.searchMobileDeviceById(id);
 		resposta = String.valueOf(control.removeDevice(device));
+		
+		GameStoryControl storyControl = GameStoryControl.getInstance();
+		Message message = new Message("Soldado saiu do jogo", device);
+		storyControl.addMessage(message);
 		
 		return resposta;
 	}
