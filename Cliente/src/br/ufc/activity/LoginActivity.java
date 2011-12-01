@@ -11,6 +11,7 @@ import android.widget.EditText;
 public class LoginActivity extends Activity {
 	
 	private String ip = "";
+	private String port = "";
 
 	/** Called when the activity is first created. */
 	@Override
@@ -20,6 +21,7 @@ public class LoginActivity extends Activity {
 	    
 	    Bundle b = this.getIntent().getExtras();
 	    ip = b.getString("ip");
+	    port = b.getString("port");
 	    
 	    Button okLogin = (Button)findViewById(R.id.buttonOKLogin);
 	    okLogin.setOnClickListener(new OnClickListener() {
@@ -31,6 +33,7 @@ public class LoginActivity extends Activity {
 					Intent i = new Intent("times.activity");
 					i.putExtra("nome", nome.getText().toString());
 					i.putExtra("ip", ip);
+					i.putExtra("port", port);
 					startActivity(i);
 				}
 			}
