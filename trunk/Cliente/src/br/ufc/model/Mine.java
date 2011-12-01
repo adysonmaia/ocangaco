@@ -22,6 +22,10 @@ public class Mine extends MapObject {
 		this(0, 0 , 0, 0, 0);
 	}
 
+	public Mine(int tipo, int damage, double latitude, double longitude) {
+		this(0, tipo, damage, latitude, longitude);
+	}
+
 	public int getId() {
 		return id;
 	}

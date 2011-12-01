@@ -9,6 +9,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import br.ufc.model.Barrier;
 import br.ufc.model.Mine;
 import br.ufc.model.Player;
 import br.ufc.util.CommandUtil;
@@ -131,6 +132,62 @@ public class ServerImpl implements IServer{
         
         return minas;
 	}
+	
+	@Override
+	public int createMine(Mine mine) {
+		params = new String [10];
+		
+		params[0] = String.valueOf(mine.getTipo());		
+		params[1] = String.valueOf(mine.getLatitude());
+		params[2] = String.valueOf(mine.getLongitude());
+		params[3] = String.valueOf(mine.getDamage());
+		
+		comando = CommandUtil.makeCommand("criarmina", params, 4);
+
+		String response = getServerResponse(comando);
+	    System.out.println("mina id = " + response);
+		
+		Document doc = XMLParser.createXMLDocument(response);
+        NodeList nodes = doc.getElementsByTagName("id");
+        Node id = (Element)nodes.item(0);
+        
+        Integer mineId = Integer.parseInt(id.getFirstChild().getNodeValue());
+        
+        if (id != null) {
+			System.out.println("id mina: " + mineId);
+        }
+        
+        mine.setId(mineId);
+        
+        return mineId;
+	}
+	
+	@Override
+	public int createBarrier(Barrier barrier) {
+		params = new String [10];
+		
+		params[0] = String.valueOf(barrier.getTipo());		
+		params[1] = String.valueOf(barrier.getLatitude());
+		params[2] = String.valueOf(barrier.getLongitude());
+		
+		comando = CommandUtil.makeCommand("criarbarricada", params, 3);
+
+		String response = getServerResponse(comando);
+	    System.out.println("barricada id = " + response);
+		
+		Document doc = XMLParser.createXMLDocument(response);
+        NodeList nodes = doc.getElementsByTagName("id");
+        Node id = (Element)nodes.item(0);
+        
+        Integer barrierId = Integer.parseInt(id.getFirstChild().getNodeValue());
+        
+        if (id != null) {
+			System.out.println("id barricada: " + barrierId);
+        }
+        barrier.setId(barrierId);
+        
+        return barrierId;
+	}
 
 	@Override
 	public boolean isConnected() {
@@ -150,5 +207,4 @@ public class ServerImpl implements IServer{
 		}
 		return "error connecting server";
 	}
-
 }

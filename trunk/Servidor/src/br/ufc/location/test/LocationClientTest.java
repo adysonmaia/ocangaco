@@ -27,7 +27,7 @@ public class LocationClientTest {
 		//testMovimentacao();		
 		//testGameState();
 		
-		testRegister();
+		//testRegister();
 		//testUpdatePosition();
 		//testDevicesList();
 		//testDisconnect();

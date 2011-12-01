@@ -14,6 +14,10 @@ public class Barrier extends MapObject {
 		this.tipo = tipo;
 	}
 
+	public Barrier(int tipo2, double latitude, double longitude) {
+		this(0, tipo2, latitude, longitude);
+	}
+
 	public int getId() {
 		return id;
 	}

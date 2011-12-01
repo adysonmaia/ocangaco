@@ -2,6 +2,8 @@ package br.ufc.net;
 
 import java.util.ArrayList;
 
+import br.ufc.model.Barrier;
+import br.ufc.model.Mine;
 import br.ufc.model.Player;
 
 /**
@@ -40,4 +42,10 @@ public interface IServer {
 	 * @return
 	 */
 	public boolean isConnected();
+
+
+	public int createMine(Mine mine);
+
+
+	public int createBarrier(Barrier barrier);
 }
