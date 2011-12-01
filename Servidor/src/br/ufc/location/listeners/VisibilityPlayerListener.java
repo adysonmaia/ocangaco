@@ -1,10 +1,9 @@
 package br.ufc.location.listeners;
 
 import br.ufc.location.facade.IMobileDevice;
-import br.ufc.location.facade.IVisibilityListener;
 import br.ufc.servidor.player.Player;
 
-public class VisibilityPlayerListener implements IVisibilityListener{
+public class VisibilityPlayerListener extends VisibilityListener{
 
 	@Override
 	public boolean isVisible(IMobileDevice device1, IMobileDevice device2,double distance) {

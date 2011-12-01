@@ -69,12 +69,12 @@ public class GameStateTest {
 		if (!updated) {
 			if(jaguncosContador >= cangaceirosContador)
 			{
-				player.setTipo(1);
+				player.setType(1);
 				cangaceirosContador++;
 			}
 			else
 			{
-				player.setTipo(2);
+				player.setType(2);
 				jaguncosContador++;
 			}
 			
@@ -91,7 +91,7 @@ public class GameStateTest {
 
 		if (players != null && players.size() > 0) {
 			for (Player player : players) {
-				if (player.getTipo() == tipo) {
+				if (player.getType() == tipo) {
 					playersByTipo.add(player);
 				}
 			}

@@ -1,7 +1,6 @@
 package br.ufc.location.listeners;
 
 import br.ufc.location.facade.IMobileDevice;
-import br.ufc.location.facade.IProximityListener;
 import br.ufc.servidor.player.Player;
 
 /**
@@ -10,7 +9,7 @@ import br.ufc.servidor.player.Player;
  * @author Danilo Reis
  *
  */
-public class ProximityPlayerListener implements IProximityListener{
+public class ProximityPlayerListener extends ProximityListener{
 
 	@Override
 	public void action(IMobileDevice device1, IMobileDevice device2,double distance) {

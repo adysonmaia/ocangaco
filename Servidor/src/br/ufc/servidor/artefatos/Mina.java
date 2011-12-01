@@ -4,31 +4,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import br.ufc.location.facade.IGeoPosition;
-import br.ufc.location.facade.IMobileDevice;
 import br.ufc.location.facade.IProximityListener;
-import br.ufc.location.facade.IVisibilityListener;
 import br.ufc.location.geoengine.DevicePath;
-import br.ufc.location.geoengine.DevicesPositionControl;
-import br.ufc.location.geoengine.GeoPosition;
 import br.ufc.location.listeners.ProximityMinaListener;
 import br.ufc.location.listeners.VisibilityMinaListener;
 import br.ufc.util.XMLParser;
 
-public class Mina implements IMobileDevice{
-	private double latitude, longitude;
-	private int damage;
-	
-	private Integer id;
-	private GeoPosition position;
-	private double distance;
-	private double distanceOn;
-	private Integer type;
-	private Integer groupId;
-	private DevicePath path;
-	private ProximityMinaListener proximity;
-	private VisibilityMinaListener visibility;
-	
+public class Mina extends MobileDevice{
+	private int damage;	
 	public static final int VIEW_DISTANCE = 100;
 	public static final int COLISION_DISTANCE = 10;
 
@@ -41,16 +24,10 @@ public class Mina implements IMobileDevice{
 		proximity = new ProximityMinaListener();
 		visibility = new VisibilityMinaListener();
 		path = new DevicePath();
-	}
-	
+	}	
 
 	public Mina() {
 		this(1, 0, 0, 0);
-	}
-
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	@Override
@@ -58,118 +35,12 @@ public class Mina implements IMobileDevice{
 		return "Mina [damage=" + damage + ", groupId=" + groupId
 				+ ", latitude=" + latitude + ", longitude=" + longitude + "]";
 	}
-
-
-	/**
-	 * @return the latitude
-	 */
-	public double getLatitude() {
-		return latitude;
-	}
-
-	/**
-	 * @param latitude the latitude to set
-	 */
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	/**
-	 * @return the logintude
-	 */	
-	public double getLogintude() {
-		return longitude;
-	}
-
-	/**
-	 * @param logintude the logintude to set
-	 */
-	public void setLogintude(double logintude) {
-		this.longitude = logintude;
-	}
-
-	@Override
-	public DevicePath getDevicePath() {
-		return path;
-	}
-
-	@Override
-	public double getDistanceFrom(IMobileDevice device) {
-		distance = DevicesPositionControl.calculateDistance(this
-				.getGeoPosition(), device.getGeoPosition());
-		return distance;
-	}
-
-	@Override
-	public double getDistanceOn() {
-		return distanceOn;
-	}
-
-	@Override
-	public IGeoPosition getGeoPosition() {
-		return position;
-	}
-
-	@Override
-	public Integer getGroup() {
-		return groupId;
-	}
-
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public double getLastDistance() {
-		return distance;
-	}
-
-	@Override
-	public IProximityListener getProximityListener() {
-		return proximity;
-	}
-
-	@Override
-	public Integer getType() {
-		return type;
-	}
-
-	@Override
-	public IVisibilityListener getVisibilityListener() {
-		return visibility;
-	}
-
-	@Override
-	public void setDevicePath(DevicePath path) {
-		this.path = path;
-	}
-
-	@Override
-	public void setDistanceOn(double dist) {
-		this.distanceOn = dist;
-	}
-
-	@Override
-	public void setGeoPosition(IGeoPosition position) {
-		this.position = (GeoPosition)position;		
-	}
-
-	@Override
-	public void setGroup(Integer group) {
-		this.groupId = group;
-	}
-
+	
 	@Override
 	public void setProximityListener(IProximityListener listener) {
 		this.proximity = (ProximityMinaListener) proximity;
 	}
-
-	@Override
-	public void setType(Integer type) {
-		this.type = type;
-	}
-
+	
 	@Override
 	public String toXML() throws Exception {
 		Document doc = XMLParser.createXMLDocument();
@@ -191,7 +62,7 @@ public class Mina implements IMobileDevice{
 		// set attributes to mina element		
 		element.setAttribute("grupo", String.valueOf(this.getGroup()));
 		element.setAttribute("latitude", String.valueOf(this.getLatitude()));
-		element.setAttribute("longitude", String.valueOf(this.getLogintude()));
+		element.setAttribute("longitude", String.valueOf(this.getLongitude()));
 		element.setAttribute("damage", String.valueOf(this.getDamage()));
 	}
 
@@ -214,7 +85,7 @@ public class Mina implements IMobileDevice{
 		this.setGroup(Integer.parseInt(element.getAttribute("grupo")));
 		this.setLatitude(Double.parseDouble(element
 						.getAttribute("latitude")));
-		this.setLogintude(Double.parseDouble(element
+		this.setLongitude(Double.parseDouble(element
 				.getAttribute("longitude")));
 		this.setDamage(Integer.parseInt(element.getAttribute("damage")));
 	}
