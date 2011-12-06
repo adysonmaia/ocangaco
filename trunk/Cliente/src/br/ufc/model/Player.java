@@ -18,46 +18,49 @@ public class Player extends MapObject {
 	
 	public static final int CANGACEIRO = 1;
 	public static final int JAGUNCO = 2;
+	public static final int DEFAULT_TIPO = CANGACEIRO;	
 	
 	public static final int MUNICIADOR = 1;
 	public static final int MEDICO     = 2;
 	public static final int ENGENHEIRO = 3;
 	public static final int ESPIAO     = 4;
+	public static final int DEFAULT_PAPEL = MUNICIADOR;
+	
+	public static final int VIDA = 100;
 	
 	private String nome;
 	private int tipo;
 	private int papel;
+	private int vida;
 	private Integer id;
+	
 
 	public Player(String nome, int tipo) {
-		super();
-		this.nome = nome;
-		this.tipo = tipo;
+		this(nome, tipo, DEFAULT_PAPEL);
 	}
 	
 	public Player(String nome, int tipo, int papel) {
-		super();
-		this.nome  = nome;
-		this.tipo  = tipo;
-		this.papel = papel;
+		this(nome, tipo, papel, 0, 0);
 	}
 
 	public Player(String nome) {
-		super();
-		this.nome = nome;
+		this(nome, DEFAULT_TIPO);
 	}
 
 	public Player(String nome, int tipo, double latitude, double longitude) {
-		super(latitude, longitude);
-		this.nome = nome;
-		this.tipo = tipo;
+		this(nome, tipo, DEFAULT_PAPEL, latitude, longitude);
 	}
 	
 	public Player(String nome, int tipo, int papel, double latitude, double longitude) {
+		this(nome, tipo, papel, latitude, longitude, VIDA);
+	}
+	
+	public Player(String nome, int tipo, int papel, double latitude, double longitude, int vida) {
 		super(latitude, longitude);
 		this.nome = nome;
 		this.tipo = tipo;
 		this.papel = papel;
+		this.vida = vida;
 	}
 
 	public Player() {
@@ -102,6 +105,7 @@ public class Player extends MapObject {
 		player.setAttribute("grupo", String.valueOf(this.getTipo()));
 		player.setAttribute("latitude", String.valueOf(this.getLatitude()));
 		player.setAttribute("longitude", String.valueOf(this.getLongitude()));
+		player.setAttribute("vida", String.valueOf(this.getVida()));
 	}
 
 	public void fromXML(String xmlString) throws Exception {
@@ -128,6 +132,7 @@ public class Player extends MapObject {
 						.getAttribute("latitude")));
 		this.setLongitude(Double.parseDouble(element
 				.getAttribute("longitude")));
+		this.setVida(Integer.parseInt(element.getAttribute("vida")));
 	}
 
 	public void setId(Integer id) {
@@ -149,6 +154,14 @@ public class Player extends MapObject {
 	@Override
 	public MapObject clone() {
 		return new Player();
+	}
+
+	public void setVida(int vida) {
+		this.vida = vida;
+	}
+
+	public int getVida() {
+		return vida;
 	}
 	
 	
