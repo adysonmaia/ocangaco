@@ -34,7 +34,7 @@
             android:layout_alignLeft="@+id/imageButtonTime1"
             android:layout_below="@+id/imageButtonTime1"
             android:layout_marginLeft="21dp"
-            android:text="Time1" />
+            android:text="Verde" />
 
         <TextView
             android:id="@+id/textView3"
@@ -44,7 +44,7 @@
             android:layout_alignBottom="@+id/textView1"
             android:layout_alignRight="@+id/imageButtonTime2"
             android:layout_marginRight="14dp"
-            android:text="Time2" />
+            android:text="Vermelho" />
 
         <TextView
             android:id="@+id/textViewTimes"
