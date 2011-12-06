@@ -48,7 +48,7 @@ public class FuncaoActivity extends Activity {
 		f2.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				enviarIntent(Player.MEDICO);
+				enviarIntent(Player.ESPIAO);
 			}
 		});
 		f3.setOnClickListener(new OnClickListener() {
@@ -62,7 +62,7 @@ public class FuncaoActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				enviarIntent(Player.ESPIAO);
+				enviarIntent(Player.MEDICO);
 			}
 		});
 	}

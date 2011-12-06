@@ -10,7 +10,6 @@ import br.ufc.activity.R;
 import br.ufc.model.Barrier;
 import br.ufc.model.ClientGameState;
 import br.ufc.model.Mine;
-import br.ufc.model.Player;
 import br.ufc.net.ServerFactory;
 import br.ufc.util.BarrierItemizedOverlay;
 import br.ufc.util.MineItemizedOverlay;
@@ -26,8 +25,7 @@ public class GameController {
 	private Thread gameThread;
 	private Resources resources; //Usado para capturar as imagens locais
 
-	private PlayerItemizedOverlay cangaceirosItemizedOverlay;
-	private PlayerItemizedOverlay jaguncosItemizedOverlay;
+	private PlayerItemizedOverlay playerItemizedOverlay;
 	private MineItemizedOverlay mineItemizedOverlay;
 	private BarrierItemizedOverlay barrierItemizedOverlay;
 	
@@ -51,13 +49,11 @@ public class GameController {
 		this.resources = resources;
 		this.mapView = mapView;
 
-		cangaceirosItemizedOverlay = new PlayerItemizedOverlay(getResources().getDrawable(R.drawable.icon_cangaceiro), Player.CANGACEIRO);
-		jaguncosItemizedOverlay = new PlayerItemizedOverlay(getResources().getDrawable(R.drawable.icon_jagunco), Player.JAGUNCO);
+		playerItemizedOverlay = new PlayerItemizedOverlay(getResources());
 		mineItemizedOverlay = new MineItemizedOverlay(getResources().getDrawable(R.drawable.mine));
 		barrierItemizedOverlay = new BarrierItemizedOverlay(getResources().getDrawable(R.drawable.barrier));
 				
-		getMapView().getOverlays().add(cangaceirosItemizedOverlay);
-		getMapView().getOverlays().add(jaguncosItemizedOverlay);
+		getMapView().getOverlays().add(playerItemizedOverlay);
 		getMapView().getOverlays().add(mineItemizedOverlay);
 		getMapView().getOverlays().add(barrierItemizedOverlay);
 	}
@@ -81,8 +77,7 @@ public class GameController {
 					ClientGameState.updateState();					
 					
 					mineItemizedOverlay.invokePopulate();
-					cangaceirosItemizedOverlay.invokePopulate();
-					jaguncosItemizedOverlay.invokePopulate();
+					playerItemizedOverlay.invokePopulate();
 					barrierItemizedOverlay.invokePopulate();
 					
 					vida.setProgress(100);
@@ -148,19 +143,19 @@ public class GameController {
 		Barrier barrier = new Barrier(ClientGameState.myPlayerOnClient.getTipo(),
 				ClientGameState.myPlayerOnClient.getLatitude(), ClientGameState.myPlayerOnClient.getLongitude());
 		
-		int id = ServerFactory.getServer().createBarrier(barrier);
-		ClientGameState.barriers.put(id, new Barrier(id, ClientGameState.myPlayerOnClient.getTipo(),
-				ClientGameState.myPlayerOnClient.getLatitude(), ClientGameState.myPlayerOnClient.getLongitude()));
-		barrierItemizedOverlay.invokePopulate();
+		ServerFactory.getServer().createBarrier(barrier);
+//		ClientGameState.barriers.put(id, new Barrier(id, ClientGameState.myPlayerOnClient.getTipo(),
+//				ClientGameState.myPlayerOnClient.getLatitude(), ClientGameState.myPlayerOnClient.getLongitude()));
+//		barrierItemizedOverlay.invokePopulate();
 	}
 	
 	public void addMine() {		
 		Mine mine = new Mine(ClientGameState.myPlayerOnClient.getTipo(), 100,
 				ClientGameState.myPlayerOnClient.getLatitude(), ClientGameState.myPlayerOnClient.getLongitude());
 		
-		int id = ServerFactory.getServer().createMine(mine);		 
-		ClientGameState.mines.put(id, mine);
-		mineItemizedOverlay.invokePopulate();
+		ServerFactory.getServer().createMine(mine);		 
+//		ClientGameState.mines.put(id, mine);
+//		mineItemizedOverlay.invokePopulate();
 				
 //		System.out.println("Colocando mina em:" + ClientGameState.myPlayerOnClient.getLatitude() + " " + ClientGameState.myPlayerOnClient.getLongitude());		
 	}

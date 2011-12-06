@@ -1,6 +1,7 @@
 package br.ufc.util;
 
-import android.graphics.drawable.Drawable;
+import android.content.res.Resources;
+import br.ufc.activity.R;
 import br.ufc.model.ClientGameState;
 import br.ufc.model.Player;
 
@@ -9,12 +10,11 @@ import com.google.android.maps.OverlayItem;
 
 public class PlayerItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
-	private int type;
+	private Resources resources;
 
-	public PlayerItemizedOverlay(Drawable defaultMarker, int type) {
-		super(boundCenterBottom(defaultMarker));
-
-		this.type = type;
+	public PlayerItemizedOverlay(Resources resources) {
+		super(boundCenterBottom(resources.getDrawable(R.drawable.mapa_engenheiro_1)));
+		this.resources = resources;
 	}
 
 	public void accessPopulate() {
@@ -23,22 +23,49 @@ public class PlayerItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 	@Override
 	protected OverlayItem createItem(int i) {
-		Player player;
-
-		if(type == Player.CANGACEIRO)
-			player = ClientGameState.playersCangaceiros.get(ClientGameState.playersCangaceiros.keySet().toArray()[i]);
-		else
-			player = ClientGameState.playersJaguncos.get(ClientGameState.playersJaguncos.keySet().toArray()[i]);
-
-		return new OverlayItem(player.createLocationGeoPoint(), player.getNome(),  player.getNome()+" Snippet");
+		Player player = ClientGameState.players.get(ClientGameState.players.keySet().toArray()[i]);
+		OverlayItem item = new OverlayItem(player.createLocationGeoPoint(), player.getNome(),  player.getNome()+" Snippet"); 
+		if (player.getTipo() == Player.CANGACEIRO) {
+			switch (player.getPapel()) {
+				case Player.ENGENHEIRO:
+					item.setMarker(boundCenterBottom(resources.getDrawable(R.drawable.mapa_engenheiro_1)));
+					break;
+				case Player.ESPIAO:
+					item.setMarker(boundCenterBottom(resources.getDrawable(R.drawable.mapa_espiao_1)));
+					break;
+				case Player.MEDICO:
+					item.setMarker(boundCenterBottom(resources.getDrawable(R.drawable.mapa_medico_1)));
+					break;
+				case Player.MUNICIADOR:
+					item.setMarker(boundCenterBottom(resources.getDrawable(R.drawable.mapa_municiador_1)));
+					break;
+				default:
+					break;
+			}
+		} else {
+			switch (player.getPapel()) {
+				case Player.ENGENHEIRO:
+					item.setMarker(boundCenterBottom(resources.getDrawable(R.drawable.mapa_engenheiro_2)));
+					break;
+				case Player.ESPIAO:
+					item.setMarker(boundCenterBottom(resources.getDrawable(R.drawable.mapa_espiao_2)));
+					break;
+				case Player.MEDICO:
+					item.setMarker(boundCenterBottom(resources.getDrawable(R.drawable.mapa_medico_2)));
+					break;
+				case Player.MUNICIADOR:
+					item.setMarker(boundCenterBottom(resources.getDrawable(R.drawable.mapa_municiador_2)));
+					break;
+				default:
+					break;
+			}
+		}
+		return item;
 	}
 
 	@Override
 	public int size() {
-		if(type == Player.CANGACEIRO)
-			return ClientGameState.playersCangaceiros.size();
-		else
-			return ClientGameState.playersJaguncos.size();
+		return ClientGameState.players.size();
 	}
 
 	public void invokePopulate() {
