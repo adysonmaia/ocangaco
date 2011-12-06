@@ -23,9 +23,9 @@ public class ClientGameState {
 		List<MapObject> devicesOnServer = ServerFactory.getServer()
 				.getGameState(myPlayerOnClient);
 		
-//		players.clear();
-//		mines.clear();
-//		barriers.clear();
+		players.clear();
+		mines.clear();
+		barriers.clear();
 
 		if (devicesOnServer != null && devicesOnServer.size() > 0) {
 			for (MapObject device : devicesOnServer) {
