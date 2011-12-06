@@ -31,7 +31,7 @@ public class Conexao {
 
 		StringBuilder buffer = new StringBuilder();
 		String line = reader.readLine();
-		System.out.println(line);
+//		System.out.println(line);
 		if (line.equals("<response>")) {
 			while (!(line = reader.readLine()).equals("</response>")) {
 				buffer.append(line);

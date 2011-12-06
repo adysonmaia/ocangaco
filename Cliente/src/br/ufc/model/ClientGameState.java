@@ -23,30 +23,30 @@ public class ClientGameState {
 		List<MapObject> devicesOnServer = ServerFactory.getServer()
 				.getGameState(myPlayerOnClient);
 		
-		players.clear();
-		mines.clear();
-		barriers.clear();
+//		players.clear();
+//		mines.clear();
+//		barriers.clear();
 
 		if (devicesOnServer != null && devicesOnServer.size() > 0) {
 			for (MapObject device : devicesOnServer) {
 				// Atualiza instancias de objeto player
 				if (device instanceof Player) {
-					Player player = (Player) device;
-					players.put(player.getNome(), player);
-					System.out.println("Updated player: " + player);
+					Player playerUpdate = (Player) device;
+					players.put(playerUpdate.getNome(), playerUpdate);
+					System.out.println("Updated player: " + playerUpdate);
 
 				}
 				// Atualiza instancias de objeto mina
 				else if (device instanceof Mine) {
 					Mine mine = (Mine) device;
 					mines.put(mine.getId(), mine);
-					System.out.println("Updated mine: " + mine);
+//					System.out.println("Updated mine: " + mine);
 				}
 				// Atualiza instancias de objeto barrier
 				else if (device instanceof Barrier) {
 					Barrier barrier = (Barrier) device;
 					barriers.put(barrier.getId(), barrier);
-					System.out.println("Updated barrier: " + barrier);
+//					System.out.println("Updated barrier: " + barrier);
 				}
 			}
 		}
