@@ -28,7 +28,7 @@ public class DevicesPositionControl {
 	static DevicesPositionControl manager;
 
 	// Constantes
-	public static final double EARTHRATIO = 6371000; // Raio da terra em metros
+	public static final double EARTHRATIO = 6378160; // Raio da terra em metros
 
 	
 	static {

@@ -3,11 +3,14 @@ package br.ufc.location.test;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import br.ufc.location.geoengine.DevicesPositionControl;
+import br.ufc.location.geoengine.GeoPosition;
 import br.ufc.servidor.artefatos.Barricada;
 import br.ufc.servidor.artefatos.Mina;
 import br.ufc.servidor.player.Player;
@@ -24,7 +27,7 @@ public class LocationClientTest {
 	static String response;
 	
 	public static void main(String[] args) throws IOException {
-		//testMovimentacao();		
+		/*//testMovimentacao();		
 		//testGameState();
 		
 		testRegister();
@@ -33,7 +36,29 @@ public class LocationClientTest {
 		//testDisconnect();
 		testCriarMina();
 		testCriarBarricada();
-		testDevicesList();
+		testDevicesList();*/
+		testCalculateDistance();
+	}
+
+	
+	/**
+	 * Testa respectivamente a largura e comprimento do bloco do GREat
+	 * Foi usado esse site para comparação dos resultados:
+	 * http://www.sunearthtools.com/dp/tools/distance.php?lang=pt 
+	 * Obs: passou no teste
+	 */
+	private static void testCalculateDistance() {		
+		GeoPosition pos1 = new GeoPosition(new Date(), -3.74641, -38.57812);
+		GeoPosition pos2 = new GeoPosition(new Date(), -3.74669 ,-38.57803);
+		
+		double distance1 = DevicesPositionControl.calculateDistance(pos1, pos2);
+		System.out.println("Distancia deve ser 32.7 m. Obtido: " + distance1 + " m");
+		
+		pos1 = new GeoPosition(new Date(), -3.74671, -38.57807);
+		pos2 = new GeoPosition(new Date(), -3.74675, -38.57818);
+		
+		double distance2 = DevicesPositionControl.calculateDistance(pos1, pos2);
+		System.out.println("Distancia deve ser 13 m. Obtido: " + distance2 + " m");
 	}
 
 	private static void testCriarBarricada() {
