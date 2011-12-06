@@ -149,4 +149,25 @@ public class Player extends MobileDevice {
 	public Player clone(){
 		return new Player();
 	}
+
+	/**
+	 * @param increment
+	 * @return true se o player continua vivo ou false se ele morreu
+	 */
+	public boolean updateLife(int increment) {
+		int newLife = life + increment;
+		if(newLife >= 100){
+			life = 100;
+		}
+		else if(newLife <= 0)
+		{
+			life = 0;
+			return false;
+		}	
+		else
+		{
+			life = newLife;		
+		}
+		return true;
+	}
 }
