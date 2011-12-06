@@ -18,22 +18,18 @@ import br.ufc.util.XMLParser;
  * 
  */
 public class Player extends MobileDevice {
-	private String nome;	
+	private String nome;
+	private int life;
+
 	public static final int DEFAULT_TIPO = SOLDIER;
 	
 	public static final int VIEW_DISTANCE = 100;
 	public static final int COLISION_DISTANCE = 10;
+	
+	public static final int VIDA = 100;
 
 	public Player(String nome, int tipo) {
-
-		super();
-
-		this.nome = nome;
-		this.type = tipo;
-
-		proximity = new ProximityPlayerListener();
-		visibility = new VisibilityPlayerListener();
-		path = new DevicePath();
+		this(nome, DEFAULT_TIPO, 0 , 0);
 	}
 
 	public Player(String nome) {
@@ -46,12 +42,18 @@ public class Player extends MobileDevice {
 
 	public Player(String nome, int tipo, int group, double latitude,
 			double longitude) {
+		this(nome, tipo, group, latitude, longitude, VIDA);
+	}
+	
+	public Player(String nome, int tipo, int group, double latitude,
+			double longitude, int life) {
 		super();
 		this.nome = nome;
 		this.type = tipo;
 		this.groupId = group;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.life = life;
 		proximity = new ProximityPlayerListener();
 		visibility = new VisibilityPlayerListener();
 		path = new DevicePath();
@@ -68,14 +70,15 @@ public class Player extends MobileDevice {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}	
-
-	@Override
-	// sobrecarga apenas para fins de visualização do estado do objeto
-	public String toString() {
-		return "Player [latitude=" + latitude + ", longitude=" + longitude
-				+ ", nome=" + nome + ", tipo=" + type + "]";
+	
+	public int getLife() {
+		return life;
 	}
 
+	public void setLife(int life) {
+		this.life = life;
+	}
+	
 	@Override
 	public String toXML() throws Exception {
 		Document doc = XMLParser.createXMLDocument();
@@ -85,6 +88,13 @@ public class Player extends MobileDevice {
 		} else {
 			throw new Exception("XML parser error");
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Player [life=" + life + ", nome=" + nome + ", groupId="
+				+ groupId + ", latitude=" + latitude + ", longitude="
+				+ longitude + ", type=" + type + "]";
 	}
 
 	public void toXML(Element parent, Document doc) {
@@ -101,6 +111,7 @@ public class Player extends MobileDevice {
 		player.setAttribute("grupo", String.valueOf(this.getGroup()));
 		player.setAttribute("latitude", String.valueOf(this.getLatitude()));
 		player.setAttribute("longitude", String.valueOf(this.getLongitude()));
+		player.setAttribute("vida", String.valueOf(this.getLife()));
 	}
 
 	public void fromXML(String xmlString) throws Exception {
@@ -127,6 +138,7 @@ public class Player extends MobileDevice {
 						.getAttribute("latitude")));
 		this.setLongitude(Double.parseDouble(element
 				.getAttribute("longitude")));
+		this.setLife(Integer.parseInt(element.getAttribute("vida")));
 	}
 	
 	@Override
