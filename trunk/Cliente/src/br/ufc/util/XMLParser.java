@@ -95,7 +95,7 @@ public class XMLParser {
 				try {
 					MapObject aux = device.clone();
 					aux.fromXML((Element) nodes.item(i));
-					System.out.println("Returned " + string + ": " + aux);
+//					System.out.println("Returned " + string + ": " + aux);
 					devices.add(aux);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -104,7 +104,7 @@ public class XMLParser {
 		}
 		else
 		{
-			System.out.println("No " + string + "s returned.");
+//			System.out.println("No " + string + "s returned.");
 		}
 
 		return devices;
@@ -121,7 +121,7 @@ public class XMLParser {
 					Player player = new Player();
 					player.fromXML((Element) nodes.item(i));
 					players.add(player);
-					System.out.println(player);
+//					System.out.println(player);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -129,7 +129,7 @@ public class XMLParser {
 		}
 		else
 		{
-			System.out.println("No players returned.");
+//			System.out.println("No players returned.");
 		}
 
 		return players;
@@ -146,7 +146,7 @@ public class XMLParser {
 				Mine mina = new Mine();
 				mina.fromXML((Element) nodes.item(i));
 				minas.add(mina);
-				System.out.println(mina);
+//				System.out.println(mina);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -154,7 +154,7 @@ public class XMLParser {
 		}
 		else
 		{
-			System.out.println("No mines returned.");
+//			System.out.println("No mines returned.");
 		}
 
 		return minas;

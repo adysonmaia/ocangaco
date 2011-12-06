@@ -42,8 +42,8 @@ public class ServerImpl implements IServer{
 		comando = CommandUtil.makeCommand("register", params, 5);
 
 		response = getServerResponse(comando);
-	    System.out.println("player " + player.getNome() + " registered." + 
-	    		" Response content = " + response);
+//	    System.out.println("player " + player.getNome() + " registered." + 
+//	    		" Response content = " + response);
 		
 		Document doc = XMLParser.createXMLDocument(response);
         NodeList nodes = doc.getElementsByTagName("id");
@@ -51,7 +51,7 @@ public class ServerImpl implements IServer{
         int playerId = Integer.parseInt(id.getFirstChild().getNodeValue());
         
         if (id != null) {
-			System.out.println("Id: " + playerId);        
+//			System.out.println("Id: " + playerId);        
 		}
         
         player.setId(playerId);
@@ -63,7 +63,7 @@ public class ServerImpl implements IServer{
 		String comando = "<disconnect>," +	player.getId() + ",<disconnect>";	
 		
 		try {
-			System.out.println(Conexao.executaComando(comando, Properties.SERVER_IP, Properties.SERVER_PORT));		   
+//			System.out.println(Conexao.executaComando(comando, Properties.SERVER_IP, Properties.SERVER_PORT));		   
 		} catch (Exception e) {
 			System.out.println("Error disconnecting player from server. " + e.getMessage());
 			e.printStackTrace();
@@ -79,7 +79,7 @@ public class ServerImpl implements IServer{
 		comando = CommandUtil.makeCommand("updateposition", params, 3);
 		
 		response = getServerResponse(comando);
-        System.out.println("Response content: " + response);
+//        System.out.println("Response content: " + response);
 	}
 	
 	@Override
@@ -89,7 +89,7 @@ public class ServerImpl implements IServer{
 		comando = CommandUtil.makeCommand("visibledevices", params, 3);
 		
 		response = getServerResponse(comando);
-        System.out.println("List of devices content: \n" + response);
+//        System.out.println("List of devices content: \n" + response);
         
         ArrayList<MapObject> devices = new ArrayList<MapObject>();
         
@@ -114,7 +114,7 @@ public class ServerImpl implements IServer{
 		comando = CommandUtil.makeCommand("criarmina", params, 4);
 
 		String response = getServerResponse(comando);
-	    System.out.println("mina id = " + response);
+//	    System.out.println("mina id = " + response);
 		
 		Document doc = XMLParser.createXMLDocument(response);
         NodeList nodes = doc.getElementsByTagName("id");
@@ -123,7 +123,7 @@ public class ServerImpl implements IServer{
         Integer mineId = Integer.parseInt(id.getFirstChild().getNodeValue());
         
         if (id != null) {
-			System.out.println("id mina: " + mineId);
+//			System.out.println("id mina: " + mineId);
         }
         
         mine.setId(mineId);
@@ -142,7 +142,7 @@ public class ServerImpl implements IServer{
 		comando = CommandUtil.makeCommand("criarbarricada", params, 3);
 
 		String response = getServerResponse(comando);
-	    System.out.println("barricada id = " + response);
+//	    System.out.println("barricada id = " + response);
 		
 		Document doc = XMLParser.createXMLDocument(response);
         NodeList nodes = doc.getElementsByTagName("id");
@@ -151,7 +151,7 @@ public class ServerImpl implements IServer{
         Integer barrierId = Integer.parseInt(id.getFirstChild().getNodeValue());
         
         if (id != null) {
-			System.out.println("id barricada: " + barrierId);
+//			System.out.println("id barricada: " + barrierId);
         }
         barrier.setId(barrierId);
         
