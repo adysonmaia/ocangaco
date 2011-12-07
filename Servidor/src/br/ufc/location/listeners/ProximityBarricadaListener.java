@@ -17,15 +17,14 @@ public class ProximityBarricadaListener extends ProximityListener{
 	public void action(IMobileDevice device1, IMobileDevice device2,double distance) {
 		 this.device1 = device1;
 		 this.device2 = device2;
-		 // Verifica se o dispositivo ï¿½ do time adversï¿½rio
-		 if(device1.getGroup() != device2.getGroup()){
-			 if ((distance > Barricada.COLISION_DISTANCE)&&(distance < Barricada.VIEW_DISTANCE)){
-				 actionVisibleArea(device2);
-			 }
-			 else{
-				 if (distance <Barricada.COLISION_DISTANCE){
-					 actionCollisionArea(device2);
-				 }
+		 
+		 //A barricada serve para os dois times
+		 if ((distance > Barricada.COLISION_DISTANCE)&&(distance < Barricada.VIEW_DISTANCE)){
+			 actionVisibleArea(device2);
+		 }
+		 else{
+			 if (distance <Barricada.COLISION_DISTANCE){
+				 actionCollisionArea(device2);
 			 }
 		 }
 	}
@@ -38,22 +37,22 @@ public class ProximityBarricadaListener extends ProximityListener{
 		 switch(device.getType()){
 		    // Outro Jogador
 		 case Player.SOLDIER:
-			 msg = "Barricada sendo avistada por um soldado inimigo\n";
+			 msg = "Barricada sendo avistada por um soldado\n";
 			 break;
 		 case Player.DOCTOR:
-			 msg = "Barricada sendo avistada por um curandeiro inimigo\n";
+			 msg = "Barricada sendo avistada por um curandeiro\n";
 			 break;
 		 case Player.ENGINEER:
-			 msg = "Barricada sendo avistada por um pedreiro inimigo\n";
+			 msg = "Barricada sendo avistada por um pedreiro\n";
 			 break;
 		 case Player.SPY:
-			 msg = "Barricada sendo avistada por um dedo duro inimigo\n";
+			 msg = "Barricada sendo avistada por um dedo duro\n";
 			 break;
 		 case Mina.MINA:
-			 msg = "Barricada bem pertim de outra mina inimiga\n";
+			 msg = "Barricada bem pertim de outra mina\n";
 			 break;
 		 case Barricada.BARRICADA:
-			 msg = "Barricada bem pertim de uma barricada inimiga\n";
+			 msg = "Barricada bem pertim de uma barricada\n";
 			 break;
 		 default: 
 			 msg = "Barricada bem pertim de um Objeto não identificado\n";
@@ -72,25 +71,25 @@ public class ProximityBarricadaListener extends ProximityListener{
 		 switch(device.getType()){
 		 // Outro device
 		 case Player.SOLDIER:
-			 msg = "Soldado inimigo em riba de uma barricada\n";
+			 msg = "Barricada encostando em um soldado\n";
 			 break;
 		 case Player.DOCTOR:
-			 msg = "Curandeiro inimigo em riba de uma barricada\n";
+			 msg = "Barricada encostando em um curandeiro\n";
 			 break;
 		 case Player.ENGINEER:
-			 msg = "Pedreiro inimigo em riba de uma barricada\n";
+			 msg = "Barricada encostando em um pedreiro\n";
 			 break;
 		 case Player.SPY:
-			 msg = "Dedo duro inimigo em riba de uma barricada\n";
+			 msg = "Barricada encostando em um dedo duro\n";
 			 break;
 		 case Mina.MINA:
-			 msg = "Mina colocada em riba de uma barricada\n";
+			 msg = "Barricada encostando em uma mina\n";
 			 break;
 		 case Barricada.BARRICADA:
 			 msg = "Barricada colocada em riba de outra barricada\n";
 			 break;
 		 default: 
-			 msg = "Objeto não identificado está em riba da barricada\n";
+			 msg = "Barricada encostando em um objeto não identificado\n";
 			 break;		  
 		 }
 		 

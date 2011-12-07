@@ -75,49 +75,37 @@ public class ProximityMinaListener extends ProximityListener {
 		switch (device.getType()) {
 		// Outro Jogador
 		case Player.SOLDIER:
-			explodirMina((Player)device, (Mina)device1);
-			msg = "Soldado inimigo atingido por uma mina\n";
+			//Apenas remove a mina dos dispositivos. A redução do life é feita no listener do player.
+			control.removeDevice(device1);
+			msg = "Mina atingiu um soldado inimigo\n";
 			break;
 		case Player.DOCTOR:
-			explodirMina((Player)device, (Mina)device1);
-			msg = "Curandeiro inimigo atingido por uma mina\n";
+			//Apenas remove a mina dos dispositivos. A redução do life é feita no listener do player.
+			control.removeDevice(device1);
+			msg = "Mina atingiu um curandeiro inimigo\n";
 			break;
 		case Player.ENGINEER:
-			explodirMina((Player)device, (Mina)device1);
-			msg = "Pedreiro inimigo atingido por uma mina\n";
+			//Apenas remove a mina dos dispositivos. A redução do life é feita no listener do player.
+			control.removeDevice(device1);
+			msg = "Mina atingiu um pedreiro inimigo\n";
 			break;
 		case Player.SPY:
-			explodirMina((Player)device, (Mina)device1);
-			msg = "Dedo duro inimigo atingido por uma mina\n";
+			//Apenas remove a mina dos dispositivos. A redução do life é feita no listener do player.
+			control.removeDevice(device1);
+			msg = "Mina atingiu um espião inimigo\n";
 			break;
 		case Mina.MINA:			
 			msg = "Mina colocada em riba da outra\n";
 			break;
 		case Barricada.BARRICADA:
-			msg = "Barricada colocada em riba da mina\n";
+			msg = "Mina colocada em riba de barricada\n";
 			break;
 		default:
-			msg = "Objeto não identificado está em riba da mina\n";
+			msg = "Mina colocada em riba de objeto não identificado\n";
 			break;
 		}
 
 		// Adiciona a mensagem ao gameStory
 		logMessage(msg);
-	}
-
-	private void explodirMina(Player player, Mina mina) {
-		//atualiza a vida do jogador e atualiza o status se ele morrer
-		if(player.updateLife(-mina.getDamage())){
-			msg = "Soldado: " + player.getNome() + " perdeu " + mina.getDamage() + "pontos de vida\nSoldado continua vivo\n";
-		}
-		else
-		{
-			msg = "Soldado: " + player.getNome() + " perdeu " + mina.getDamage() + "pontos de vida\nSoldado esta morto\n";
-		}
-		
-		logMessage(msg);
-		
-		//remove a mina dos dispositivos ativos
-		control.removeDevice(mina);
-	}
+	}	
 }

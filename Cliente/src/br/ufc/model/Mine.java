@@ -12,7 +12,8 @@ public class Mine extends MapObject {
 	private int id;
 
 	// Damage this mine causes
-	private int damage;
+	private int damage;	
+	public static final int DEFAULT_DAMAGE = 20;
 
 	// ver Player.CANGACEIRO e Player.JAGUNCO
 	private int tipo;
@@ -25,7 +26,7 @@ public class Mine extends MapObject {
 	}
 
 	public Mine() {
-		this(0, 0 , 0, 0, 0);
+		this(0, 1 , DEFAULT_DAMAGE, 0, 0);
 	}
 
 	public Mine(int tipo, int damage, double latitude, double longitude) {

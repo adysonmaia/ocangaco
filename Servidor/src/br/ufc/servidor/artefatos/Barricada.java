@@ -28,7 +28,7 @@ public class Barricada extends MobileDevice{
 	}
 	
 	public Barricada(){
-		this(1,0,0);
+		this(DEFAULT_GROUP,0,0);
 	}
 	
 	@Override
