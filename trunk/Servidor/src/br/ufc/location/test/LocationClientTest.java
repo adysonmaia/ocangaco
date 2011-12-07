@@ -27,17 +27,17 @@ public class LocationClientTest {
 	static String response;
 	
 	public static void main(String[] args) throws IOException {
-		/*//testMovimentacao();		
+		//testMovimentacao();		
 		//testGameState();
 		
-		testRegister();
+		//testRegister();
 		testUpdatePosition();
 		//testDevicesList();
 		//testDisconnect();
-		testCriarMina();
-		testCriarBarricada();
-		testDevicesList();*/
-		testCalculateDistance();
+		//testCriarMina();
+		//testCriarBarricada();
+		testDevicesList();
+		//testCalculateDistance();
 	}
 
 	
@@ -152,9 +152,9 @@ public class LocationClientTest {
 			System.out.println("id 2: " + node.getTextContent());
         }*/
         
-		params[0] = "1";//node.getTextContent();
-		params[1] = "0";
-		params[2] = "0";//"38.539906";
+		params[0] = "3";//node.getTextContent();
+		params[1] = "-3.74641";
+		params[2] = "-38.57812";//"38.539906";
 		
 		comando = CommandUtil.makeCommand("updateposition", params, 5);
 		
@@ -173,8 +173,8 @@ public class LocationClientTest {
 		params[0] ="Fulano";
 		params[1] ="1";
 		params[2] ="1";
-		params[3] ="0.000281";
-		params[4] ="0";
+		params[3] ="-3.74671";
+		params[4] ="-38.57807";
 		
 		comando = CommandUtil.makeCommand("register", params, 5);
 
@@ -192,8 +192,8 @@ public class LocationClientTest {
 		params[0] ="Beltrano";
 		params[1] ="2";
 		params[2] ="2";
-        params[3] ="0";
-        params[4] ="0";
+        params[3] ="-3.74669";
+        params[4] ="-38.57803";
         
         comando = CommandUtil.makeCommand("register", params, 5);
         

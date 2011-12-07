@@ -20,6 +20,7 @@ import br.ufc.util.XMLParser;
 public class Player extends MobileDevice {
 	private String nome;
 	private int life;
+	private boolean escondido = false;	
 
 	public static final int DEFAULT_TIPO = SOLDIER;
 	
@@ -169,5 +170,13 @@ public class Player extends MobileDevice {
 			life = newLife;		
 		}
 		return true;
+	}
+
+	public boolean isEscondido() {
+		return escondido;
+	}
+	
+	public void setEscondido(boolean escondido) {
+		this.escondido = escondido;	
 	}
 }

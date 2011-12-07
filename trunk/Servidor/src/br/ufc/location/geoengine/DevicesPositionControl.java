@@ -16,6 +16,7 @@ import br.ufc.location.facade.IGeoPosition;
 import br.ufc.location.facade.IMobileDevice;
 import br.ufc.servidor.gamestory.GameStoryControl;
 import br.ufc.servidor.gamestory.Message;
+import br.ufc.servidor.player.Player;
 
 /**
  * Classe controladora do gerenciamento de posições
@@ -119,9 +120,12 @@ public class DevicesPositionControl {
 			Message message = new Message("Soldado atualizou a posição", device);
 			storyControl.addMessage(message);
 			
+			//Reset no status de escondido do player
+			if(device instanceof Player){			
+				((Player)device).setEscondido(false);
+			}
 			// executa os Listener de proximidade
 			performProximityListeners(device);
-			
 		}
 		return true;
 	}

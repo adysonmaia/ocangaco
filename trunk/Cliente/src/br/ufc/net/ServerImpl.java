@@ -63,7 +63,8 @@ public class ServerImpl implements IServer{
 		String comando = "<disconnect>," +	player.getId() + ",<disconnect>";	
 		
 		try {
-//			System.out.println(Conexao.executaComando(comando, Properties.SERVER_IP, Properties.SERVER_PORT));		   
+			response = Conexao.executaComando(comando, Properties.SERVER_IP, Properties.SERVER_PORT);
+//			System.out.println("Response: " + response));		   
 		} catch (Exception e) {
 			System.out.println("Error disconnecting player from server. " + e.getMessage());
 			e.printStackTrace();
@@ -113,18 +114,20 @@ public class ServerImpl implements IServer{
 		
 		comando = CommandUtil.makeCommand("criarmina", params, 4);
 
-		String response = getServerResponse(comando);
+		response = getServerResponse(comando);
 //	    System.out.println("mina id = " + response);
 		
 		Document doc = XMLParser.createXMLDocument(response);
         NodeList nodes = doc.getElementsByTagName("id");
         Node id = (Element)nodes.item(0);
         
-        Integer mineId = Integer.parseInt(id.getFirstChild().getNodeValue());
+        Integer mineId = 0;
         
         if (id != null) {
-//			System.out.println("id mina: " + mineId);
+        	mineId = Integer.parseInt(id.getFirstChild().getNodeValue());
         }
+        
+		//System.out.println("id mina: " + mineId);
         
         mine.setId(mineId);
         
@@ -148,11 +151,13 @@ public class ServerImpl implements IServer{
         NodeList nodes = doc.getElementsByTagName("id");
         Node id = (Element)nodes.item(0);
         
-        Integer barrierId = Integer.parseInt(id.getFirstChild().getNodeValue());
-        
+        Integer barrierId = 0;        
         if (id != null) {
-//			System.out.println("id barricada: " + barrierId);
+        	barrierId = Integer.parseInt(id.getFirstChild().getNodeValue());
         }
+        
+//		System.out.println("id barricada: " + barrierId);
+        
         barrier.setId(barrierId);
         
         return barrierId;

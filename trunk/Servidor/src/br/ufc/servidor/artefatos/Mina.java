@@ -16,6 +16,10 @@ public class Mina extends MobileDevice{
 	
 	public static final int VIEW_DISTANCE = 100;
 	public static final int COLISION_DISTANCE = 10;
+	
+	public static final int DAMAGE = 20;
+	public static final int DEFAULT_DAMAGE = DAMAGE;
+	
 
 	public Mina(int group, double latitude, double longitude, int damage) {
 		this.type = DEFAULT_TYPE;
@@ -30,7 +34,7 @@ public class Mina extends MobileDevice{
 	}	
 
 	public Mina() {
-		this(1, 0, 0, 0);
+		this(DEFAULT_GROUP, 0, 0, DEFAULT_DAMAGE);
 	}
 
 	@Override
