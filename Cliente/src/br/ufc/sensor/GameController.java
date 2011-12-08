@@ -80,7 +80,7 @@ public class GameController {
 					playerItemizedOverlay.invokePopulate();
 					barrierItemizedOverlay.invokePopulate();
 					
-					vida.setProgress(100);
+					vida.setProgress(ClientGameState.myPlayerOnClient.getVida());
 					
 					// Atualiza o mapa
 					handler.sendMessage(handler.obtainMessage());
